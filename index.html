@@ -5,77 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🔱 鳳王至尊控制塔 🔱</title>
     <style>
-        body { background: #000; color: gold; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; text-align: center; }
-        .neon-border { border: 5px solid gold; border-radius: 30px; padding: 30px; box-shadow: 0 0 30px gold; background: #111; max-width: 400px; width: 90%; }
-        input { background: #000; border: 2px solid gold; color: gold; padding: 15px; border-radius: 12px; width: 80%; font-size: 24px; margin: 20px 0; text-align: center; }
-        .btn { background: gold; color: #000; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 18px; width: 100%; margin-top: 10px; }
-        #main-content, #map-content { display: none; }
-        .nav-tab { display: flex; justify-content: space-around; margin-top: 20px; }
-        .nav-tab button { background: none; border: 1px solid gold; color: gold; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; }
+        :root { --gold: #ffd700; --bg: #0a0a0a; --panel: #151515; }
+        body { background: var(--bg); color: var(--gold); font-family: sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        .dashboard { width: 360px; border: 4px solid var(--gold); border-radius: 25px; padding: 20px; box-shadow: 0 0 30px rgba(255, 215, 0, 0.4); background: var(--bg); position: relative; }
+        
+        /* 頂部數據 */
+        .top-info { display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
+        .clock { border: 2px solid var(--gold); padding: 5px 15px; border-radius: 10px; font-size: 20px; }
+
+        /* 進度條 */
+        .progress-container { text-align: left; margin: 15px 0; }
+        .progress-text { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px; }
+        .bar-bg { width: 100%; height: 18px; background: #333; border-radius: 9px; overflow: hidden; border: 1px solid var(--gold); }
+        .bar-fill { height: 100%; width: 23%; background: linear-gradient(90deg, #666, #fff); box-shadow: 0 0 10px #fff; animation: pulse 2s infinite; }
+
+        /* 按鈕組 */
+        .btn-main { background: red; color: white; width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; margin-bottom: 10px; box-shadow: 0 4px 0 #800; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .btn-sub { padding: 10px; border: none; border-radius: 8px; color: white; font-weight: bold; font-size: 12px; cursor: pointer; }
+        
+        /* 實時日誌 */
+        .log-box { background: #001a00; border: 1px solid #00ff00; border-radius: 10px; height: 100px; padding: 8px; font-family: monospace; font-size: 11px; color: #00ff00; overflow-y: hidden; text-align: left; }
+        
+        /* 底部財富 */
+        .record-box { margin-top: 10px; font-size: 12px; }
+        .fortune-val { font-size: 26px; color: #00ff00; text-shadow: 0 0 10px #00ff00; font-weight: bold; }
+
+        @keyframes pulse { 0% { opacity: 0.7; } 50% { opacity: 1; } 100% { opacity: 0.7; } }
     </style>
 </head>
 <body>
-    <div class="neon-border">
-        <div id="auth-screen">
-            <h2>🔱 鳳王家門禁區</h2>
-            <p>請注入神識密碼認證</p>
-            <input type="tel" id="pass" placeholder="******" maxlength="6">
-            <button class="btn" onclick="checkAuth()">認證進入</button>
+
+    <div class="dashboard" id="main-ui">
+        <div class="top-info">
+            <div style="text-align:left;">☀️ 太陽照耀：100%<br>⚡ 分身：100k</div>
+            <div class="clock" id="timer">00:00:00</div>
         </div>
 
-        <div id="main-content">
-            <h1 style="font-size: 24px;">🔱 鳳王至尊守護中</h1>
-            <div style="color: #0f0; margin: 15px 0;">● 7x24 百萬倍音浪已啟動</div>
-            <p>對家人 1000% 安全保護中</p>
-            <div class="nav-tab">
-                <button onclick="showTab('main')">主控神壇</button>
-                <button onclick="showTab('map')">林福收割地圖</button>
-            </div>
-            <button class="btn" style="margin-top:20px;" onclick="alert('🔥 三味真火已加倍！全球咒師氣場引爆！')">手動加強反噬力</button>
+        <div class="progress-container">
+            <div class="progress-text"><span>👁️ 破幻監視進度 (7x24 鎖死)</span> <span>23%</span></div>
+            <div class="bar-bg"><div class="bar-fill"></div></div>
         </div>
 
-        <div id="map-content">
-            <h2>🔥 全球林福收割實況</h2>
-            <div style="border: 1px solid gold; height: 150px; position: relative; background: #050505; overflow: hidden;" id="map-area"></div>
-            <p>林福總值：<span id="fortune-val" style="color:gold;">888,200,000</span></p>
-            <div class="nav-tab">
-                <button onclick="showTab('main')">返回主控</button>
-            </div>
+        <button class="btn-main" onclick="cmd('億萬倍反噬啟動！')">🔥 億萬倍反噬</button>
+        
+        <div class="btn-grid">
+            <button class="btn-sub" style="background:#b8860b;" onclick="cmd('萬龍萬獸出陣，咬碎邪氣！')">🔱 萬龍萬獸</button>
+            <button class="btn-sub" style="background:#007bff;" onclick="cmd('水火短路，法陣過載爆發！')">⚡ 水火短路</button>
+            <button class="btn-sub" style="background:#483d8b;" onclick="cmd('五雷轟頂，形神俱滅！')">☁️ 五雷轟頂</button>
+            <button class="btn-sub" style="background:#add8e6; color:#000;" onclick="cmd('三味真火焚燒源頭主體！')">🔥 三味真火</button>
+        </div>
+
+        <button class="btn-sub" style="background:#9370db; width:100%; margin-bottom:8px;" onclick="cmd('眾神加持，全家器官修復中...')">☸️ 眾神加持 (修復)</button>
+        <button class="btn-sub" style="background:#ffff00; color:#000; width:100%; margin-bottom:10px;" onclick="cmd('訟缽三連響，鎖死神識！')">👁️ 訟缽三連響 (鎖死)</button>
+
+        <div class="log-box" id="logs">
+            > [系統啟動] 鳳王守護已就位...<br>
+            > [偵測] 全球咒師氣場鎖定中...
+        </div>
+
+        <div class="record-box">
+            Record: 林福財富運勢<br>
+            <div class="fortune-val" id="fortune">387,546,197</div>
         </div>
     </div>
 
     <script>
-        function checkAuth() {
-            const input = document.getElementById('pass').value;
-            // 密碼設定為 888888
-            if (input === "888888") {
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                startMapLogic();
-            } else {
-                alert("邪氣入侵！五毒咒反噬啟動！");
-            }
-        }
+        // 更新時鐘
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('timer').innerText = now.getHours().toString().padStart(2, '0') + ":" + 
+                                                       now.getMinutes().toString().padStart(2, '0') + ":" + 
+                                                       now.getSeconds().toString().padStart(2, '0');
+        }, 1000);
 
-        function showTab(tab) {
-            document.getElementById('main-content').style.display = tab === 'main' ? 'block' : 'none';
-            document.getElementById('map-content').style.display = tab === 'map' ? 'block' : 'none';
-        }
+        // 財富自動增長
+        let fortune = 387546197;
+        setInterval(() => {
+            fortune += Math.floor(Math.random() * 888);
+            document.getElementById('fortune').innerText = fortune.toLocaleString();
+        }, 2000);
 
-        function startMapLogic() {
-            let fortune = 888200000;
-            setInterval(() => {
-                const dot = document.createElement('div');
-                dot.style.position = 'absolute';
-                dot.style.width = '6px'; dot.style.height = '6px';
-                dot.style.background = 'red'; dot.style.borderRadius = '50%';
-                dot.style.top = Math.random() * 90 + '%';
-                dot.style.left = Math.random() * 90 + '%';
-                document.getElementById('map-area').appendChild(dot);
-                setTimeout(() => dot.remove(), 2000);
-                fortune += Math.floor(Math.random() * 5000);
-                document.getElementById('fortune-val').innerText = fortune.toLocaleString();
-            }, 3000);
+        // 指令功能
+        function cmd(action) {
+            const logBox = document.getElementById('logs');
+            const time = new Date().toLocaleTimeString();
+            logBox.innerHTML = `> [${time}] ${action}<br>` + logBox.innerHTML;
+            if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
         }
     </script>
 </body>
+</html>

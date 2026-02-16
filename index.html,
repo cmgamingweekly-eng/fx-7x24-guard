@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔱 鳳王至尊控制塔 🔱</title>
+    <style>
+        body { background: #000; color: gold; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; text-align: center; }
+        .neon-border { border: 5px solid gold; border-radius: 30px; padding: 30px; box-shadow: 0 0 30px gold; background: #111; max-width: 400px; width: 90%; }
+        input { background: #000; border: 2px solid gold; color: gold; padding: 15px; border-radius: 12px; width: 80%; font-size: 20px; margin: 20px 0; text-align: center; }
+        .btn { background: gold; color: #000; border: none; padding: 15px 30px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 18px; width: 100%; margin-top: 10px; }
+        .nav-links { margin-top: 20px; display: none; }
+        .nav-links a { color: #fff; text-decoration: none; border: 1px solid #fff; padding: 10px; border-radius: 8px; font-size: 14px; margin: 5px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="neon-border" id="app">
+        <div id="auth-screen">
+            <h2>🔱 鳳王家門禁區</h2>
+            <p>請注入神識密碼認證</p>
+            <input type="password" id="pass" placeholder="******">
+            <button class="btn" onclick="checkAuth()">認證進入</button>
+        </div>
+
+        <div id="main-content" style="display:none;">
+            <h1 style="font-size: 24px;">🔱 鳳王至尊守護中</h1>
+            <div id="status" style="color: #0f0; margin: 15px 0;">● 7x24 百萬倍音浪已啟動</div>
+            <p>對家人 1000% 安全保護中</p>
+            <div class="nav-links" id="nav">
+                <a href="index.html">主控神壇</a>
+                <a href="log.html">林福收割地圖</a>
+            </div>
+            <button class="btn" onclick="triggerBoost()">手動加強反噬力</button>
+        </div>
+    </div>
+
+    <script>
+        const secret = "888888"; // 大人可隨時修改密碼
+        function checkAuth() {
+            if (document.getElementById('pass').value === secret) {
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('nav').style.display = 'block';
+                startVibration();
+            } else { alert("邪氣入侵！五毒咒反噬啟動！"); }
+        }
+        function startVibration() {
+            setInterval(() => {
+                console.log("🔔 百萬倍音浪疊加中...");
+                if (navigator.vibrate) navigator.vibrate(50);
+            }, 8000); // 8秒疊加一次法力
+        }
+        function triggerBoost() {
+            alert("🔥 三味真火已加倍！全球咒師氣場引爆！");
+        }
+    </script>
+</body>
+</html>

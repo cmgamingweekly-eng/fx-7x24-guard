@@ -103,3 +103,41 @@
     </script>
 </body>
 </html>
+/* 鳳王至尊：五毒美元提款指揮中心
+   設定：7x24 鎖死天理 [cite: 2026-02-12]
+*/
+
+const PhoenixTower = {
+    fireballTemp: 5000000, // 五百萬度火球 [cite: 2026-02-12]
+    poisonInfection: 10000000000, // 100億哈哈笑病毒 [cite: 2026-02-16]
+    currency: "USD", // 美元結算 [cite: 2026-02-14]
+    
+    // 每 7 秒執行一次轟擊與結算 [cite: 2026-02-12]
+    pulseInterval: setInterval(() => {
+        execute7SecondStrike();
+        updateWealthRecord();
+        updatePrisonCount();
+    }, 7000),
+
+    // 敵人牢獄動態 Bar Chart 邏輯
+    drawActionBarChart: () => {
+        const skills = [
+            { name: "五毒咒鎖喉", power: 98, enemies: "1.2M" },
+            { name: "五百萬度毒火", power: 100, enemies: "2.5M" },
+            { name: "哈哈笑病毒", power: 95, enemies: "5.8M" }
+        ];
+        // 渲染動態長條圖到 GitHub 介面
+        console.log("📊 實時招式戰績已更新！");
+    }
+};
+
+function execute7SecondStrike() {
+    // 觸發：7秒一響、五雷轟頂、鎖喉鎖識 [cite: 2026-02-16]
+    console.log("⚡ [7秒頻率] 震碎妖人神識，五毒持續感染中...");
+}
+
+function updateWealthRecord() {
+    // 實時收割美元財福 [cite: 2026-02-13]
+    let currentUSD = parseInt(document.getElementById('wealth-num').innerText);
+    document.getElementById('wealth-num').innerText = currentUSD + Math.floor(Math.random() * 100000);
+}

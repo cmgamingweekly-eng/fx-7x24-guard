@@ -3,118 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王企業：V44 滅絕版</title>
+    <title>鳳王哈哈笑企業：V48 終極滅絕陣</title>
     <style>
         :root { --gold: #ffd700; --red: #ff3b30; --blue: #007aff; --purple: #a020f0; --green: #00ff41; --cyan: #00ffff; }
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; justify-content: center; min-height: 100vh; overflow: hidden; }
-        .main-container { width: 100%; max-width: 480px; padding: 15px; text-align: center; }
-        .safety-header { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; }
-        .safety-tag { border: 1.5px solid var(--green); color: var(--green); padding: 4px 8px; border-radius: 20px; font-size: 11px; font-weight: bold; background: rgba(0,255,65,0.1); }
-        .clock-box { border: 2px solid var(--gold); border-radius: 15px; padding: 10px; font-size: 36px; margin: 10px 0; box-shadow: 0 0 20px var(--gold); display: block; width: 100%; box-sizing: border-box; font-family: monospace; }
-        .monitor-label { font-size: 18px; color: var(--gold); text-align: left; margin: 15px 0 5px 5px; }
-        .progress-bg { background: #222; height: 35px; border-radius: 18px; overflow: hidden; border: 1.5px solid #444; margin-bottom: 20px; position: relative; }
-        #progress-fill { background: linear-gradient(90deg, var(--red), var(--gold), var(--cyan)); width: 99%; height: 100%; transition: width 0.05s; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn { padding: 20px 5px; border-radius: 18px; border: none; font-size: 17px; font-weight: bold; color: #fff; cursor: pointer; }
+        body { background: #000; color: #fff; font-family: 'Courier New', Courier, monospace; margin: 0; display: flex; justify-content: center; min-height: 100vh; overflow: hidden; }
+        .tower { width: 100%; max-width: 480px; padding: 20px; text-align: center; border: 2px solid var(--gold); box-shadow: inset 0 0 20px var(--gold); }
+        .safety-tag { display: inline-block; border: 1px solid var(--green); color: var(--green); padding: 5px 15px; border-radius: 20px; font-size: 12px; margin: 5px; background: rgba(0,255,65,0.1); }
+        .clock { font-size: 40px; color: var(--gold); text-shadow: 0 0 10px var(--gold); margin: 15px 0; }
+        .bar-container { background: #111; height: 35px; border-radius: 20px; border: 1px solid #444; margin: 15px 0; position: relative; overflow: hidden; }
+        #bar-fill { height: 100%; width: 99%; background: linear-gradient(90deg, var(--red), var(--gold), var(--cyan)); transition: width 0.05s; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn { padding: 15px 5px; border-radius: 12px; border: none; font-weight: bold; color: #fff; cursor: pointer; font-size: 16px; }
         .full { grid-column: span 2; }
-        .btn-red { background: linear-gradient(145deg, #ff4444, #900); }
-        .btn-cyan { background: linear-gradient(145deg, var(--cyan), #008b8b); color: #000; box-shadow: 0 0 15px var(--cyan); animation: flash 1s infinite; }
-        .btn-purple { background: linear-gradient(145deg, #a020f0, #6600cc); }
-        .btn-bell { background: linear-gradient(145deg, #ffff00, #ccaa00); color: #000; }
-        @keyframes flash { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-        .log-box { background: rgba(0,255,65,0.05); border: 1.5px solid var(--green); border-radius: 12px; padding: 10px; margin-top: 15px; text-align: left; font-family: monospace; color: var(--green); font-size: 13px; height: 160px; overflow-y: auto; }
-        .money { color: var(--green); font-size: 30px; font-weight: bold; margin-top: 15px; }
-        #gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; }
+        .btn-cyan { background: linear-gradient(145deg, var(--cyan), #008b8b); color: #000; box-shadow: 0 0 15px var(--cyan); }
+        .btn-red { background: linear-gradient(145deg, var(--red), #800); }
+        .btn-purple { background: linear-gradient(145deg, var(--purple), #400080); }
+        .btn-gold { background: linear-gradient(145deg, var(--gold), #b8860b); color: #000; }
+        .log-box { background: rgba(0,255,65,0.05); border: 1px solid var(--green); height: 180px; margin-top: 15px; overflow-y: auto; text-align: left; padding: 10px; font-size: 12px; color: var(--green); }
+        .money { font-size: 28px; color: var(--green); font-weight: bold; margin-top: 15px; }
+        #gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     </style>
 </head>
 <body onload="init()">
-    <div id="gate" onclick="v44_unlock()">
-        <div style="font-size:70px;">🔱</div>
-        <div style="color:var(--gold); letter-spacing:5px; font-weight:bold; margin-top:20px;">V44：水火雷霆．絕命重鑄</div>
+    <div id="gate" onclick="unlock()">
+        <div style="font-size:80px;">🔱</div>
+        <div style="color:var(--gold); font-size:20px; letter-spacing:5px;">解開格古洛封印</div>
     </div>
 
-    <div class="main-container">
-        <div class="safety-header">
-            <div class="safety-tag">🏢 工作間: 絕對清淨</div>
-            <div class="safety-tag">☣️ 五毒咒: 鎖死中</div>
-        </div>
-
-        <div class="clock-box" id="timer">00:00:00</div>
-
-        <div class="monitor-label">👁️ 破幻動態 (雷火洗刷中)</div>
-        <div class="progress-bg"><div id="progress-fill"></div></div>
+    <div class="tower">
+        <div class="safety-tag">🏢 鳳王企業基地</div>
+        <div class="safety-tag">☣️ 五毒咒鎖死</div>
+        <div class="clock" id="clock">00:00:00</div>
+        
+        <div style="color:var(--gold); text-align:left; font-size:14px;">👁️ 破幻動態偵測 (妖人頂唔住喇!):</div>
+        <div class="bar-container"><div id="bar-fill"></div></div>
 
         <div class="grid">
-            <button class="btn full btn-cyan" onclick="v44_act('⚡ 水火短路：炸碎邪術分裂體！')">⚡ 水火短路 (必殺)</button>
-            <button class="btn btn-red" onclick="v44_act('🔥 三昧真火：無限焚燒！')">🔥 無限三昧真火</button>
-            <button class="btn btn-purple" onclick="v44_act('☁️ 五雷轟頂：五十萬雷擊！')">☁️ 五十萬五雷</button>
-            <button class="btn full btn-red" onclick="v44_act('☣️ 五毒咒：絕命鎖喉鎖識！')">☣️ 五毒咒 (禁止分身)</button>
-            <button class="btn full btn-bell" onclick="v44_bell()">🔔 執行 432Hz 鎮妖清鳴 (鎖死天理)</button>
+            <button class="btn full btn-cyan" onclick="act('⚡ 水火短路：炸碎分裂體！')">⚡ 水火短路 (AI 滅絕)</button>
+            <button class="btn btn-red" onclick="act('🔥 三昧真火：物理燒毀！')">🔥 無限三昧真火</button>
+            <button class="btn btn-purple" onclick="act('☁️ 五雷轟頂：飽和轟擊！')">☁️ 五十萬五雷</button>
+            <button class="btn full btn-red" onclick="act('☣️ 五毒咒：鎖喉鎖識！')">☣️ 五毒咒 (禁止分身)</button>
+            <button class="btn full btn-gold" onclick="bell()">🔔 執行 432Hz 鎮妖清鳴</button>
         </div>
 
-        <div class="log-box" id="log-box">:Log:<br>> V44 防禦塔啟動，正在強制清理房間雜音...</div>
-        <div class="money">$ <span id="money_val">0</span> USD 🎉</div>
+        <div class="log-box" id="log">>> 鳳王系統啟動... 正在掃描 M28 領地...</div>
+        <div class="money">$ <span id="money">0</span> USD</div>
     </div>
 
 <script>
-    let aCtx = null;
-    let thunder = 0;
-    const START_TS = new Date('2026-02-11T00:00:00').getTime();
+    let thunder = 0; let aCtx = null;
+    const START_MONEY = 13100149637;
 
-    function v44_unlock() {
+    function unlock() {
         aCtx = new (window.AudioContext || window.webkitAudioContext)();
         document.getElementById('gate').style.display = 'none';
-        v44_bell();
-        setInterval(auto_logic, 400); 
+        bell();
+        // 核心：無限自動攻擊邏輯
+        setInterval(() => {
+            const fill = document.getElementById('bar-fill');
+            fill.style.width = (97.5 + Math.random() * 2.4) + "%"; // Bar 瘋狂跳動
+            
+            const msgs = [
+                "🔥 真火焚燒：熱度 10,000℃",
+                "⚡ 水火短路：炸毀邪惡分身",
+                "☁️ 雷擊：累計轟擊 " + (thunder += 333) + " 下",
+                "☣️ 五毒咒：鎖喉效果疊加 1000%",
+                "👁️ 偵測到邪師掙扎：立即物理反噬！"
+            ];
+            act(msgs[Math.floor(Math.random()*msgs.length)], true);
+        }, 500); // 每 0.5 秒跳一次 Log
     }
 
-    function auto_logic() {
-        // 1. 強制更新 Bar，讓它在 97%-100% 之間瘋狂跳動
-        const fill = document.getElementById('progress-fill');
-        fill.style.width = (97 + Math.random() * 3) + "%";
-        
-        // 2. 自動攻擊 Log
-        const msgs = [
-            "⚡ 水火短路：正在燒毀 AI 操作烈...",
-            "🔥 真火加壓：目前熱度 10,000℃",
-            "☁️ 雷擊：累計第 " + (thunder += 250) + " 下",
-            "☣️ 檢測到殘餘干擾：立即執行五毒鎖喉！"
-        ];
-        v44_act(msgs[Math.floor(Math.random()*msgs.length)], true);
+    function act(m, auto=false) {
+        const l = document.getElementById('log');
+        const t = new Date().toLocaleTimeString('zh-HK',{hour12:false});
+        l.innerHTML = `<div style="color:${auto?'var(--green)':'var(--cyan)'}">> [${t}] ${m}</div>` + l.innerHTML;
+        if (l.childNodes.length > 60) l.removeChild(l.lastChild);
     }
 
-    function v44_act(m, isAuto=false) {
-        if (!isAuto && aCtx) {
+    function bell() {
+        if(!aCtx) return;
+        [432, 528].forEach(f => {
             const o = aCtx.createOscillator(); const g = aCtx.createGain();
-            o.type = 'sawtooth'; o.frequency.setValueAtTime(300, aCtx.currentTime);
-            g.gain.setValueAtTime(0.05, aCtx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + 0.1);
+            o.type = 'sine'; o.frequency.value = f;
+            g.gain.setValueAtTime(0.2, aCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + 5);
             o.connect(g); g.connect(aCtx.destination);
-            o.start(); o.stop(aCtx.currentTime + 0.1);
-        }
-        const lb = document.getElementById('log-box');
-        lb.innerHTML = `<span style="color:${isAuto ? 'var(--green)' : 'var(--cyan)'}">> [${new Date().toLocaleTimeString('zh-HK',{hour12:false})}] ${m}</span><br>` + lb.innerHTML;
-        if (lb.childNodes.length > 50) lb.removeChild(lb.lastChild);
-    }
-
-    function v44_bell() {
-        if (!aCtx) return;
-        const now = aCtx.currentTime;
-        [432, 528].forEach((f, i) => {
-            const o = aCtx.createOscillator(); const g = aCtx.createGain();
-            o.type = 'sine'; o.frequency.setValueAtTime(f, now);
-            g.gain.setValueAtTime(i === 0 ? 0.3 : 0.15, now);
-            g.gain.exponentialRampToValueAtTime(0.0001, now + 6);
-            o.connect(g); g.connect(aCtx.destination);
-            o.start(); o.stop(now + 6);
+            o.start(); o.stop(aCtx.currentTime + 5);
         });
     }
 
     function init() {
         setInterval(() => {
-            const diff = Math.floor((Date.now() - START_TS) / 1000);
-            document.getElementById('money_val').innerText = (12326321813 + (diff * 1588)).toLocaleString();
-            document.getElementById('timer').innerText = new Date().toLocaleTimeString('zh-HK',{hour12:false});
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString('zh-HK',{hour12:false});
+            const diff = Math.floor((Date.now() - 1739232000000) / 1000); // 模擬增長
+            document.getElementById('money').innerText = (START_MONEY + (diff * 1688)).toLocaleString();
         }, 1000);
     }
 </script>

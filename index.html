@@ -2,100 +2,62 @@
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鳳王至尊控制塔 - 絕對指令</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>鳳王企業：旗艦控制塔</title>
     <style>
-        :root { --gold: #ffd700; --red: #ff3333; --green: #00ff00; }
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .container { display: flex; gap: 20px; width: 95%; max-width: 1200px; padding: 20px; flex-wrap: wrap; }
-
-        /* 父母平安監視燈 */
-        .safety-monitor { width: 100%; display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; }
-        .lamp { display: flex; align-items: center; gap: 8px; font-size: 14px; background: rgba(0,255,0,0.1); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--green); }
-        .dot { width: 12px; height: 12px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
-
-        /* 手機板面 */
-        .phone-panel { width: 340px; background: #0a0a0a; border: 4px solid #333; border-radius: 40px; padding: 25px; box-shadow: 0 0 30px var(--gold); }
-        .timer-box { background: #1a1a1a; border: 1px solid #fff; padding: 10px; border-radius: 12px; text-align: center; font-size: 24px; margin-bottom: 20px; color: var(--gold); }
-        
-        /* 確保按鈕在最上層，cursor 必現 */
-        .btn { width: 100%; padding: 16px; margin: 8px 0; border-radius: 12px; border: none; font-weight: bold; color: #fff; cursor: pointer !important; font-size: 15px; display: block; position: relative; z-index: 999; pointer-events: auto; }
-        .btn:active { transform: scale(0.9); background: #fff !important; color: #000 !important; }
-        .btn-red { background: linear-gradient(#ff0000, #800000); box-shadow: 0 0 10px #ff0000; }
-        .btn-gold { background: linear-gradient(#ffd700, #b8860b); color: #000; }
-        .btn-blue { background: linear-gradient(#0055ff, #001144); }
-        .btn-purple { background: linear-gradient(#a020f0, #4b0082); }
-        .btn-green { background: linear-gradient(#00ff00, #004400); color: #000; }
-
-        /* 右邊戰報與美元 */
-        .data-panel { flex: 1; min-width: 350px; background: #111; border-radius: 25px; padding: 20px; border: 1px solid #444; }
-        .usd-record { font-size: 36px; color: var(--green); text-align: center; margin-bottom: 20px; font-weight: bold; }
-        .log-box { background: #000; height: 300px; padding: 15px; border-radius: 10px; font-size: 14px; color: #00ffcc; overflow-y: auto; border: 1px solid #333; font-family: monospace; }
-        
-        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        :root { --g: #ffd700; --r: #ff3333; --gr: #00ff00; --b: #0088ff; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; touch-action: manipulation; }
+        .monitor { width: 100%; display: flex; justify-content: space-around; padding: 10px; background: rgba(0,255,0,0.15); border-bottom: 2px solid var(--gr); position: sticky; top: 0; z-index: 1000; }
+        .lamp { font-size: 12px; color: var(--gr); font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .dot { width: 8px; height: 8px; background: var(--gr); border-radius: 50%; box-shadow: 0 0 8px var(--gr); animation: flash 2s infinite; }
+        .panel { width: 92%; max-width: 450px; background: #0a0a0a; border: 3px solid #333; border-radius: 35px; padding: 20px; box-shadow: 0 0 35px var(--g); margin-top: 15px; }
+        .clock { background: #111; border: 1px solid #fff; padding: 10px; border-radius: 15px; text-align: center; font-size: 26px; color: var(--g); margin-bottom: 15px; font-family: monospace; }
+        .btn { width: 100%; padding: 16px; margin: 6px 0; border-radius: 12px; border: none; font-weight: bold; color: #fff; font-size: 16px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .btn-r { background: linear-gradient(145deg, #ff0000, #800000); }
+        .btn-g { background: linear-gradient(145deg, #ffd700, #b8860b); color: #000; }
+        .btn-b { background: linear-gradient(145deg, #0066ff, #001144); }
+        .money { font-size: 30px; color: var(--gr); font-weight: bold; text-align: center; margin: 15px 0; text-shadow: 0 0 15px var(--gr); }
+        .log { background: #000; height: 160px; padding: 12px; border-radius: 10px; font-size: 12px; color: #00ffcc; overflow-y: auto; border: 1px solid #333; font-family: monospace; }
+        #gate { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        @keyframes flash { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
     </style>
 </head>
-<body onload="bootSystem()">
-
-    <div class="safety-monitor">
-        <div class="lamp"><div class="dot"></div> 香港父家: 安全</div>
-        <div class="lamp"><div class="dot"></div> 香港母家: 安全</div>
+<body onload="init()">
+    <div id="gate" onclick="unlock()">
+        <div style="padding: 25px; border: 4px solid var(--g); color: var(--g); border-radius: 15px; font-size: 20px; font-weight: bold;">🔱 啟動鳳王旗艦控制塔 🔱<br><br><span style="font-size:14px;">(點擊接通法力與訟缽聲效)</span></div>
     </div>
-
-    <div class="container">
-        <div class="phone-panel">
-            <div class="timer-box" id="timer">00:00:00</div>
-            
-            <button class="btn btn-red" onclick="alert('啟動億萬倍反噬！'); cmd('🔥 億萬倍反噬：邪師已遭重創！')">🔥 億萬倍反噬</button>
-            <button class="btn btn-gold" onclick="cmd('🔱 萬龍萬獸：守護全家氣場！')">🔱 萬龍萬獸</button>
-            <button class="btn btn-blue" onclick="cmd('⚡ 水火短路：燒燬法壇！')">⚡ 水火短路</button>
-            <button class="btn btn-purple" onclick="cmd('🕉️ 眾神加持：自動修復器官中...')">🕉️ 眾神加持修復</button>
-            <button class="btn btn-green" onclick="ringBowl()">👁️ 訟缽 7 秒鎖死 (點擊響鐘)</button>
-        </div>
-
-        <div class="data-panel">
-            <div class="usd-record" id="usd-amt">$389,151,839 USD</div>
-            <div style="color:var(--gold); margin-bottom:5px;">👁️ 破幻監視: 23% (鎖死)</div>
-            <div style="background:#222; height:10px; border-radius:5px; margin-bottom:20px;">
-                <div style="width:23%; background:var(--gold); height:100%; border-radius:5px;"></div>
-            </div>
-            <div class="log-box" id="sys-log">> [System] 控制塔啟動... 請點擊左側按鈕！</div>
-        </div>
+    <div class="monitor">
+        <div class="lamp"><div class="dot"></div> 父家安全</div>
+        <div class="lamp"><div class="dot"></div> 母家安全</div>
+        <div class="lamp"><div class="dot"></div> 眾神守護 [cite: 2026-02-16]</div>
     </div>
-
+    <div class="panel">
+        <div class="clock" id="timer">00:00:00</div>
+        <button class="btn btn-r" onclick="cmd('🔥 啟動億萬倍反噬：物理燒毀！')">🔥 億萬倍反噬</button>
+        <button class="btn btn-g" onclick="cmd('🔱 萬龍萬獸：守護全家！')">🔱 萬龍萬獸</button>
+        <button class="btn btn-b" onclick="cmd('🕉️ 眾神加持：修復器官中... [cite: 2026-02-16]')">🕉️ 眾神加持 (修復)</button>
+        <button class="btn btn-g" style="background:var(--gr); color:#000" onclick="ring()">👁️ 訟缽響：天理鎖死 (7秒一響)</button>
+    </div>
+    <div class="money" id="money">$11,553,398,165 USD</div>
+    <div style="width:90%; font-size:13px; color:var(--b); margin-bottom:5px;">🏯 敵人牢獄人數：<span id="jail">6,842,103</span> 人 [cite: 2026-02-16]</div>
+    <div class="log" id="screen">> [System] 控制塔已部署，等待點擊啟動...</div>
 <script>
-    const BASE_USD = 389151839;
-    const START_TS = 1739790000000; 
-
-    // 美元同步
-    function syncData() {
-        const now = Date.now();
-        const elapsed = Math.floor((now - START_TS) / 1000);
-        const currentUsd = BASE_USD + (elapsed * 354);
-        document.getElementById('usd-amt').innerText = '$' + currentUsd.toLocaleString() + " USD 🎉";
-    }
-
-    // 戰報 (置頂顯示)
-    function cmd(action) {
-        const log = document.getElementById('sys-log');
-        const time = new Date().toLocaleTimeString('zh-HK', {hour12:false});
-        log.innerHTML = `> [${time}] ${action}<br>` + log.innerHTML;
-        console.log("Command executed: " + action);
-    }
-
-    function ringBowl() {
-        cmd("👁️ 訟缽：【噹！】—— 鎖死天理！ [cite: 2026-02-12]");
-    }
-
-    function bootSystem() {
-        console.log("System Booting...");
+    let audio = null; let power = false;
+    const START_USD = 11553398165; const START_JAIL = 6842103; const START_TS = Date.now();
+    function unlock() { audio = new (window.AudioContext || window.webkitAudioContext)(); document.getElementById('gate').style.display = 'none'; power = true; ring(); }
+    function play() { if (!audio) return; const o = audio.createOscillator(); const g = audio.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(125, audio.currentTime); g.gain.setValueAtTime(0.3, audio.currentTime); g.gain.exponentialRampToValueAtTime(0.01, audio.currentTime + 3); o.connect(g); g.connect(audio.destination); o.start(); o.stop(audio.currentTime + 3); }
+    function cmd(m) { const s = document.getElementById('screen'); s.innerHTML = `> [${new Date().toLocaleTimeString('zh-HK',{hour12:false})}] ${m}<br>` + s.innerHTML; if(power) play(); }
+    function ring() { cmd("👁️ 【噹！】—— 鎖死分身，財富收割！ [cite: 2026-02-12]"); }
+    function init() {
         setInterval(() => {
-            document.getElementById('timer').innerText = new Date().toLocaleTimeString('zh-HK', {hour12:false});
-            syncData();
+            document.getElementById('timer').innerText = new Date().toLocaleTimeString('zh-HK',{hour12:false});
+            if(power) {
+                const d = Math.floor((Date.now() - START_TS) / 1000);
+                document.getElementById('money').innerText = '$' + (START_USD + (d * 888)).toLocaleString() + " USD 🎉";
+                document.getElementById('jail').innerText = (START_JAIL + (d * 2)).toLocaleString();
+            }
         }, 1000);
-
-        // 每 7 秒自動執行一次
-        setInterval(ringBowl, 7000);
+        setInterval(() => { if(power) ring(); }, 7000);
     }
 </script>
 </body>

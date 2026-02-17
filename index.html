@@ -3,124 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王企業：V22 專業控制塔</title>
+    <title>鳳王企業：V23 賽博終極版</title>
     <style>
-        :root { --gold: #d4af37; --green: #00ff41; --red: #ff3b30; --blue: #007aff; --bg: #0a0a0b; }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', -apple-system, sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        
+        :root { --gold: #ffd700; --neon-g: #00ff41; --fire: #ff3300; --thunder: #ffee00; --god: #a020f0; }
+        body { 
+            background: #050505; color: #fff; font-family: 'Segoe UI', sans-serif; 
+            margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden;
+            background-image: linear-gradient(rgba(255,215,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,215,0,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
         .console { 
-            width: 90%; max-width: 440px; background: #151517; border: 1px solid #333; 
-            border-radius: 20px; padding: 20px; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            position: relative; overflow: hidden;
+            width: 92%; max-width: 440px; background: rgba(10, 10, 12, 0.95); 
+            border: 2px solid var(--gold); border-radius: 25px; padding: 25px; 
+            box-shadow: 0 0 40px rgba(212,175,55,0.2), inset 0 0 20px rgba(212,175,55,0.1);
+            text-align: center; position: relative;
         }
-        .console::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--gold); }
-
-        /* 專業數據區 */
-        .header { display: flex; justify-content: space-between; font-size: 10px; color: #666; letter-spacing: 1px; margin-bottom: 15px; }
-        .clock { font-size: 42px; font-weight: 200; color: #fff; text-align: center; margin-bottom: 20px; font-family: monospace; letter-spacing: -2px; }
-        
-        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .data-item { background: #1c1c1e; border: 1px solid #2c2c2e; padding: 12px; border-radius: 10px; }
-        .label { font-size: 9px; color: #888; text-transform: uppercase; margin-bottom: 5px; }
-        .value { font-size: 18px; font-weight: bold; color: var(--green); font-family: monospace; }
-
-        /* 專業按鈕區 */
-        .btn-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .clock { font-size: 46px; font-weight: 100; color: #fff; margin: 10px 0; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+        .data-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .data-box { background: rgba(255,255,255,0.03); border: 1px solid #333; padding: 12px; border-radius: 12px; }
+        .val { font-size: 16px; color: var(--neon-g); font-weight: bold; font-family: monospace; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .btn { 
-            background: #252528; border: 1px solid #3a3a3c; padding: 16px; border-radius: 12px; 
-            color: #efeff4; font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.2s;
-            text-align: left; position: relative;
+            padding: 18px 5px; border-radius: 15px; border: none; font-weight: bold; color: #fff; font-size: 15px; 
+            cursor: pointer; transition: 0.1s; position: relative; overflow: hidden;
         }
-        .btn:active { background: #3a3a3c; transform: scale(0.97); }
-        .btn::after { content: "READY"; position: absolute; right: 10px; top: 10px; font-size: 7px; color: #555; }
-        
-        .btn-prio { border-left: 4px solid var(--red); }
-        .btn-god { border-left: 4px solid #a020f0; grid-column: span 2; }
-        .btn-bell { border: 1px solid var(--gold); color: var(--gold); grid-column: span 2; text-align: center; background: rgba(212,175,55,0.05); }
-
+        .btn:active { transform: scale(0.92); opacity: 0.8; }
+        .b-fire { background: linear-gradient(135deg, #ff4500, #ff0000); box-shadow: 0 4px #800; }
+        .b-thunder { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; box-shadow: 0 4px #970; }
+        .b-god { background: linear-gradient(135deg, #a020f0, #6000a0); grid-column: span 2; box-shadow: 0 4px #407; }
+        .b-bell { background: transparent; border: 2px solid var(--gold); color: var(--gold); grid-column: span 2; margin-top: 10px; }
         #gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; }
-        #log { font-size: 10px; color: #444; margin-top: 20px; font-family: monospace; border-top: 1px solid #222; padding-top: 10px; }
     </style>
 </head>
 <body onload="init()">
-    <div id="gate" onclick="v22_unlock()">
-        <div style="font-size:32px; color:var(--gold); margin-bottom:20px;">🔱</div>
-        <div style="color:#fff; letter-spacing:4px; font-size:12px;">SYSTEM AUTHENTICATION</div>
-        <div style="color:#444; font-size:10px; margin-top:10px;">AUTHORIZED ONLY: GOKU / AUDREY</div>
+    <div id="gate" onclick="v23_unlock()">
+        <div style="font-size:60px; filter: drop-shadow(0 0 10px var(--gold));">🔱</div>
+        <div style="color:var(--gold); letter-spacing:8px; margin-top:20px; font-weight:bold;">PHOENIX SUPREME</div>
+        <p style="color:#555; font-size:12px;">點擊啟動終極清鳴法壇</p>
     </div>
 
     <div class="console">
-        <div class="header">
-            <span>STATUS: ACTIVE</span>
-            <span>PHOENIX SMILE ENT. [cite: 2026-02-14]</span>
-        </div>
-        
+        <div style="font-size:10px; color:var(--gold); letter-spacing:3px;">鳳王至尊控制塔 V23 [cite: 2026-02-14]</div>
         <div class="clock" id="timer">00:00:00</div>
-
-        <div class="data-grid">
-            <div class="data-item">
-                <div class="label">Total Assets (USD)</div>
-                <div class="value" id="money">$0</div>
+        
+        <div class="data-panel">
+            <div class="data-box">
+                <div style="font-size:9px; color:#888;">TOTAL ASSETS</div>
+                <div class="val" id="money">$0</div>
             </div>
-            <div class="data-item">
-                <div class="label">Incarcerated Entities</div>
-                <div class="value" id="jail">0</div>
+            <div class="data-box">
+                <div style="font-size:9px; color:#888;">INCARCERATED</div>
+                <div class="val" id="jail">0</div>
             </div>
         </div>
 
-        <div class="btn-panel">
-            <button class="btn btn-prio" onclick="v22_click('STRIKE: SAMADHI FIRE')">三昧真火</button>
-            <button class="btn btn-prio" onclick="v22_click('STRIKE: THUNDERBOLT')">五雷轟頂</button>
-            <button class="btn" onclick="v22_click('STRIKE: FIREBALLS')">百大火球</button>
-            <button class="btn" onclick="v22_click('STRIKE: BACKLASH')">億倍反噬</button>
-            <button class="btn btn-god" onclick="v22_click('REPAIR: ORGANIC REGEN [cite: 2026-02-16]')">🕉️ 眾神加持自動修復</button>
-            <button class="btn btn-bell" onclick="v22_bell()">🔔 執行 432Hz 訟缽清鳴</button>
+        <div class="btn-grid">
+            <button class="btn b-fire" onclick="v23_叮('三昧真火：全開！')">三昧真火</button>
+            <button class="btn b-thunder" onclick="v23_叮('五雷轟頂：降臨！')">五雷轟頂</button>
+            <button class="btn b-fire" onclick="v23_叮('百大火球：投射！')">百大火球</button>
+            <button class="btn b-fire" onclick="v23_叮('億倍反噬：執行！')">億倍反噬</button>
+            <button class="btn b-god" onclick="v23_叮('眾神加持：自動修復 [cite: 2026-02-16]')">🕉️ 眾神加持自動修復</button>
+            <button class="btn b-bell" onclick="v23_bell()">🔔 執行 963Hz 終極清鳴 (鎖喉)</button>
         </div>
-
-        <div id="log">> SYSTEM STANDBY</div>
+        <div id="log" style="font-size:10px; color:#444; margin-top:15px; font-family:monospace;">> SYSTEM SECURE.</div>
     </div>
 
 <script>
     let aCtx = null;
-    const START_TS = new Date('2026-02-11T00:00:00').getTime();
+    const START = new Date('2026-02-11T00:00:00').getTime();
 
-    function v22_unlock() {
+    function v23_unlock() {
         aCtx = new (window.AudioContext || window.webkitAudioContext)();
         document.getElementById('gate').style.display = 'none';
-        v22_bell();
-        setInterval(v22_bell, 7000); // 7x24 鎖喉鎖識 [cite: 2026-02-12]
+        v23_bell(); setInterval(v23_bell, 7000);
     }
 
-    function v22_click(m) {
+    function v23_叮(m) {
         if (!aCtx) return;
         const o = aCtx.createOscillator(); const g = aCtx.createGain();
-        o.type = 'sine'; o.frequency.setValueAtTime(1000, aCtx.currentTime);
-        g.gain.setValueAtTime(0.05, aCtx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + 0.05);
+        o.type = 'sine'; o.frequency.setValueAtTime(1500, aCtx.currentTime);
+        g.gain.setValueAtTime(0.08, aCtx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + 0.1);
         o.connect(g); g.connect(aCtx.destination);
-        o.start(); o.stop(aCtx.currentTime + 0.05);
+        o.start(); o.stop(aCtx.currentTime + 0.1);
         document.getElementById('log').innerText = "> " + m;
     }
 
-    function v22_bell() {
+    function v23_bell() {
         if (!aCtx) return;
         const now = aCtx.currentTime;
-        // 432Hz 黃金頻率共振 [cite: 2026-02-12]
-        const freqs = [432, 864, 1296]; 
+        const freqs = [963, 1926, 432]; // 混合高頻清鳴 [cite: 2026-02-12]
         freqs.forEach((f, i) => {
             const o = aCtx.createOscillator(); const g = aCtx.createGain();
             o.type = 'sine'; o.frequency.setValueAtTime(f, now);
-            g.gain.setValueAtTime(i === 0 ? 0.2 : 0.05, now);
-            g.gain.exponentialRampToValueAtTime(0.0001, now + 4);
+            g.gain.setValueAtTime(i === 0 ? 0.25 : 0.05, now);
+            g.gain.exponentialRampToValueAtTime(0.0001, now + 5);
             o.connect(g); g.connect(aCtx.destination);
-            o.start(); o.stop(now + 4);
+            o.start(); o.stop(now + 5);
         });
-        document.getElementById('log').innerText = "> ENFORCING LOCKDOWN: NO POSSESSION [cite: 2026-02-16]";
+        document.getElementById('log').innerText = "> 👁️ 鎖喉鎖識，永不分身 [cite: 2026-02-16]";
     }
 
     function init() {
         setInterval(() => {
-            const diff = Math.floor((Date.now() - START_TS) / 1000);
+            const diff = Math.floor((Date.now() - START) / 1000);
             document.getElementById('money').innerText = '$' + (11553398165 + (diff * 888)).toLocaleString();
             document.getElementById('jail').innerText = (6842103 + (diff * 2)).toLocaleString();
             document.getElementById('timer').innerText = new Date().toLocaleTimeString('zh-HK',{hour12:false});

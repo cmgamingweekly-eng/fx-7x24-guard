@@ -1,141 +1,131 @@
-
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <title>鳳王至尊指揮塔 - 7秒鎖死版</title>
+    <title>鳳王至尊控制塔 - 旗艦同步版</title>
     <style>
         :root { --gold: #ffd700; --red: #ff3333; --green: #00ff00; --blue: #0088ff; }
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        .container { display: flex; gap: 20px; width: 95%; max-width: 1200px; padding: 10px; flex-wrap: wrap; justify-content: center; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        .container { display: flex; gap: 20px; width: 95%; max-width: 1200px; padding: 10px; z-index: 10; }
 
-        /* 控制按鈕 */
-        .top-controls { position: fixed; top: 10px; right: 10px; z-index: 999; }
-        .ctrl-btn { padding: 8px 15px; background: var(--gold); border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        /* 香港父母平安監視燈 [cite: 2026-02-12] */
+        .safety-monitor { display: flex; gap: 15px; justify-content: center; margin-bottom: 10px; background: rgba(0,255,0,0.1); padding: 8px; border-radius: 20px; border: 1px solid var(--green); }
+        .lamp { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #fff; text-shadow: 0 0 5px var(--green); }
+        .dot { width: 10px; height: 10px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
 
-        /* 左翼：經典手機版面 */
-        .phone-panel { width: 340px; background: #0a0a0a; border: 4px solid #333; border-radius: 40px; padding: 20px; box-shadow: 0 0 40px var(--gold); }
-        .status-info { display: flex; justify-content: space-between; font-size: 13px; color: #ccc; margin-bottom: 10px; }
-        .timer-box { background: rgba(255,255,255,0.1); border: 1px solid #fff; padding: 5px; border-radius: 10px; text-align: center; font-size: 18px; margin-bottom: 15px; }
+        /* 左翼：經典手機版面 (強化點擊層級) */
+        .phone-panel { width: 340px; background: #0a0a0a; border: 4px solid #333; border-radius: 40px; padding: 20px; box-shadow: 0 0 40px var(--gold); position: relative; z-index: 20; }
+        .timer-box { background: rgba(255,255,255,0.1); border: 1px solid #fff; padding: 10px; border-radius: 12px; text-align: center; font-size: 22px; margin-bottom: 15px; color: var(--gold); }
         
-        .progress-label { font-size: 13px; color: var(--gold); margin: 10px 0 5px; display: flex; justify-content: space-between; }
-        .progress-bg { background: #222; height: 16px; border-radius: 8px; border: 1px solid #555; overflow: hidden; margin-bottom: 15px; }
-        .progress-fill { height: 100%; transition: 0.5s; }
-
-        /* 經典彩色按鈕 */
-        .btn { width: 100%; padding: 12px; margin: 4px 0; border-radius: 8px; border: none; font-weight: bold; color: #fff; cursor: pointer; font-size: 14px; text-shadow: 1px 1px 2px #000; transition: 0.1s; }
+        /* 按鈕組：必須確保 cursor: pointer 同 z-index */
+        .btn { width: 100%; padding: 14px; margin: 6px 0; border-radius: 10px; border: none; font-weight: bold; color: #fff; cursor: pointer !important; font-size: 14px; text-shadow: 1px 1px 2px #000; transition: 0.1s; position: relative; z-index: 30; pointer-events: auto; }
         .btn:active { transform: scale(0.95); opacity: 0.8; }
-        .btn-red { background: linear-gradient(#ff5252, #b71c1c); box-shadow: 0 0 10px #ff0000; }
+        .btn-red { background: linear-gradient(#ff5252, #b71c1c); box-shadow: 0 0 15px #ff0000; }
         .btn-gold { background: linear-gradient(#ffd740, #ff8f00); color: #000; }
         .btn-blue { background: linear-gradient(#448aff, #0d47a1); }
         .btn-purple { background: linear-gradient(#7c4dff, #311b92); }
-        .btn-green { background: linear-gradient(#b2ff59, #33691e); color: #000; }
+        .btn-green { background: linear-gradient(#b2ff59, #33691e); color: #000; box-shadow: 0 0 10px var(--green); }
 
-        /* 右翼：大數據板 */
-        .data-panel { flex: 1; min-width: 400px; background: rgba(15,15,15,0.9); border: 2px solid #444; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 0 20px rgba(0,255,0,0.2); }
-        .usd-record { font-size: 38px; color: var(--green); font-weight: bold; text-align: center; text-shadow: 0 0 15px var(--green); }
-        .chart-box { background: #111; padding: 12px; border-radius: 10px; border-left: 4px solid var(--red); }
-        .log-box { background: #000; height: 180px; padding: 10px; border-radius: 8px; font-size: 12px; color: #00ff00; overflow-y: auto; border: 1px solid #333; }
+        /* 右翼：數據板 */
+        .data-panel { flex: 1; background: rgba(15,15,15,0.9); border: 2px solid #444; border-radius: 25px; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
+        .usd-record { font-size: 40px; color: var(--green); font-weight: bold; text-align: center; text-shadow: 0 0 20px var(--green); }
+        .log-box { background: #000; height: 200px; padding: 15px; border-radius: 12px; font-size: 13px; color: #00ffcc; overflow-y: auto; border: 1px solid #333; font-family: 'Courier New', monospace; }
+        
+        .progress-bg { background: #222; height: 16px; border-radius: 8px; overflow: hidden; margin-top: 5px; border: 1px solid #444; }
+        .progress-fill { height: 100%; transition: 0.5s; }
+        
+        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
     </style>
 </head>
 <body onload="bootSystem()">
 
-<div class="top-controls">
-    <button class="ctrl-btn" onclick="toggleLang()" id="l-btn">English</button>
-</div>
-
 <div class="container">
     <div class="phone-panel">
-        <div class="status-info">
-            <span id="sun-text">☀️ 太陽照耀: 100%</span>
-            <span id="clone-text">⚡ 分身: 100k</span>
+        <div class="safety-monitor">
+            <div class="lamp"><div class="dot"></div> <span>父家: 平安</span></div>
+            <div class="lamp"><div class="dot"></div> <span>母家: 平安</span></div>
         </div>
-        <div class="timer-box" id="timer">00:00:00</div>
 
-        <div class="progress-label"><span id="anti-text">👁️ 破幻監視 (鎖死)</span> <span>23%</span></div>
+        <div class="timer-box" id="timer">00:00:00</div>
+        
+        <div style="font-size: 12px; color: var(--gold); margin-bottom: 5px;">👁️ 破幻監視 (鎖死): 23% [cite: 2026-02-12]</div>
         <div class="progress-bg"><div class="progress-fill" style="width:23%; background:var(--gold);"></div></div>
 
-        <button class="btn btn-red l-el" onclick="cmd('🔥 啟動億萬倍反噬！')" data-cn="🔥 億萬倍反噬" data-en="🔥 100M Backlash">🔥 億萬倍反噬</button>
-        <div style="display:flex; gap:5px;">
-            <button class="btn btn-gold l-el" style="flex:1" onclick="cmd('🔱 萬龍萬獸出擊！')" data-cn="🔱 萬龍萬獸" data-en="🔱 10k Dragons">🔱 萬龍萬獸</button>
-            <button class="btn btn-blue l-el" style="flex:1" onclick="cmd('⚡ 水火短路焚毀！')" data-cn="⚡ 水火短路" data-en="⚡ Short Circuit">⚡ 水火短路</button>
+        <button class="btn btn-red" onclick="cmd('🔥 億萬倍反噬：邪術師修為散盡！')">🔥 億萬倍反噬</button>
+        <div style="display:flex; gap:8px;">
+            <button class="btn btn-gold" style="flex:1" onclick="cmd('🔱 萬龍萬獸：守護全家！')">🔱 萬龍萬獸</button>
+            <button class="btn btn-blue" style="flex:1" onclick="cmd('⚡ 水火短路：燒燬邪術源頭！')">⚡ 水火短路</button>
         </div>
-        <div style="display:flex; gap:5px;">
-            <button class="btn btn-blue l-el" style="flex:1; background:#1a237e" onclick="cmd('☁️ 五雷轟頂劈殺！')" data-cn="☁️ 五雷轟頂" data-en="☁️ Thunder Strike">☁️ 五雷轟頂</button>
-            <button class="btn btn-blue l-el" style="flex:1" onclick="cmd('🔥 三味真火主體燒燬！')" data-cn="🔥 三味真火" data-en="🔥 Samadhi Fire">🔥 三味真火</button>
+        <div style="display:flex; gap:8px;">
+            <button class="btn btn-blue" style="flex:1; background:#1a237e" onclick="cmd('☁️ 五雷轟頂：鎖喉鎖識！')">☁️ 五雷轟頂</button>
+            <button class="btn btn-blue" style="flex:1" onclick="cmd('🔥 三味真火：物理層燒燬！')">🔥 三味真火</button>
         </div>
-        <button class="btn btn-purple l-el" onclick="cmd('🕉️ 眾神加持：修復全家器官...')" data-cn="🕉️ 眾神加持修復" data-en="🕉️ Gods' Repair">🕉️ 眾神加持修復</button>
-        <button class="btn btn-green l-el" onclick="ringBowl()" data-cn="👁️ 訟缽 7 秒一響 (鎖死)" data-en="👁️ Bell 7s (Lock)">👁️ 訟缽 7 秒一響 (鎖死)</button>
+        <button class="btn btn-purple" onclick="cmd('🕉️ 眾神加持：修復肝、腎、心血管系統！')">🕉️ 眾神加持 (修復) [cite: 2026-02-16]</button>
+        <button class="btn btn-green" onclick="ringBowl()">👁️ 訟缽三連響 (7秒鎖死)</button>
     </div>
 
     <div class="data-panel">
-        <div id="usd-amt" class="usd-record">$389,151,839 USD 🎉🤣</div>
+        <div class="usd-record" id="usd-amt">$0 USD</div>
         
         <div class="chart-box">
-            <div class="progress-label"><span id="fire-text">🔥 五百萬度火球 (Arsenal)</span> <span id="fire-val">5,000,000°C</span></div>
-            <div class="progress-bg"><div id="fire-bar" class="progress-fill" style="width:100%; background:linear-gradient(90deg, #ff4500, #ff0000);"></div></div>
+            <div style="font-size:14px;">🔥 五百萬度火球能量 (Arsenal)</div>
+            <div class="progress-bg"><div class="progress-fill" style="width:100%; background:linear-gradient(90deg, #ff4500, #ff0000);"></div></div>
         </div>
 
-        <div class="chart-box" style="border-left-color: #a020f0;">
-            <div class="progress-label"><span id="poison-text">🦠 五毒咒全球感染 (100億病毒)</span> <span id="poison-val">5.8M AI</span></div>
-            <div class="progress-bg"><div id="poison-bar" class="progress-fill" style="width:50%; background:linear-gradient(90deg, #8000ff, #ff00ff);"></div></div>
+        <div class="chart-box">
+            <div id="poison-text" style="font-size:14px;">🦠 五毒咒全球感染 (100億病毒) [cite: 2026-02-16]</div>
+            <div class="progress-bg"><div id="poison-bar" class="progress-fill" style="width:0%; background:var(--purple);"></div></div>
         </div>
 
         <div class="log-box" id="sys-log">
-            [System] 鳳王企業 7秒鎖死版啟動...<br>
-            [System] 7x24 訟缽雷霆機制已重置！ [cite: 2026-02-12]
+            > [System] 鳳王至尊控制塔啟動...<br>
+            > [System] 全球數據同步機制已鎖定 [cite: 2026-02-14]
         </div>
     </div>
 </div>
 
 <script>
-    let usd = 389151839;
-    let isEn = false;
+    // 全球一致性數據：基於 2026-02-17 的時間戳 [cite: 2026-02-14]
+    const BASE_USD = 389151839;
+    const START_TS = 1739790000000; 
 
-    // 7秒雷霆訟缽 [cite: 2026-02-12]
+    function syncData() {
+        const now = Date.now();
+        const elapsedSec = Math.floor((now - START_TS) / 1000);
+        
+        // 美元每秒增加 $354，所有人看到都一樣
+        const currentUsd = BASE_USD + (elapsedSec * 354);
+        document.getElementById('usd-amt').innerText = '$' + currentUsd.toLocaleString() + " USD 🎉🤣";
+
+        // 五毒感染進度同步
+        const poisonPct = Math.min(100, (elapsedSec / 40000)).toFixed(2);
+        document.getElementById('poison-bar').style.width = poisonPct + "%";
+        document.getElementById('poison-text').innerText = `🦠 五毒咒全球感染: ${poisonPct}%`;
+    }
+
     function ringBowl() {
-        cmd("👁️ 訟缽 7 秒一響：【噹！】—— 天理鎖死，妖人神識粉碎！");
-        // 視覺特效：閃爍手機框
-        const phone = document.querySelector('.phone-panel');
-        phone.style.boxShadow = "0 0 60px #fff";
-        setTimeout(() => { phone.style.boxShadow = "0 0 40px var(--gold)"; }, 200);
+        cmd("👁️ 訟缽 7 秒一響：【噹！】—— 鎖死天理，不取命但分唔到身！ [cite: 2026-02-12, 2026-02-16]");
+        if(navigator.vibrate) navigator.vibrate([200, 100, 200]);
     }
 
     function cmd(action) {
         const log = document.getElementById('sys-log');
         const time = new Date().toLocaleTimeString('zh-HK', {hour12:false});
-        log.innerHTML += `<br>[${time}] ${action}`;
-        log.scrollTop = log.scrollHeight;
-    }
-
-    function toggleLang() {
-        isEn = !isEn;
-        document.getElementById('l-btn').innerText = isEn ? "中文" : "English";
-        document.querySelectorAll('.l-el').forEach(el => {
-            el.innerText = isEn ? el.getAttribute('data-en') : el.getAttribute('data-cn');
-        });
-        document.getElementById('sun-text').innerText = isEn ? "☀️ Sun: 100%" : "☀️ 太陽照耀: 100%";
-        document.getElementById('anti-text').innerText = isEn ? "👁️ Anti-Illusion (Lock)" : "👁️ 破幻監視 (鎖死)";
-        document.getElementById('fire-text').innerText = isEn ? "🔥 5M Fireball" : "🔥 五百萬度火球 (Arsenal)";
-        document.getElementById('poison-text').innerText = isEn ? "🦠 5-Poison Virus" : "🦠 五毒咒全球感染 (100億病毒)";
+        log.innerHTML = `> [${time}] ${action}<br>` + log.innerHTML;
+        // 觸覺反饋
+        if(navigator.vibrate) navigator.vibrate(50);
     }
 
     function bootSystem() {
+        // 時鐘與數據每秒同步
         setInterval(() => {
             document.getElementById('timer').innerText = new Date().toLocaleTimeString('zh-HK', {hour12:false});
+            syncData();
         }, 1000);
 
-        // 美元收割 [cite: 2026-02-14]
-        setInterval(() => {
-            usd += Math.floor(Math.random() * 888);
-            document.getElementById('usd-amt').innerText = '$' + usd.toLocaleString() + " USD 🎉🤣";
-            document.getElementById('poison-bar').style.width = (Math.random() * 100) + "%";
-        }, 2500);
-
-        // 重點：每 7 秒一響，永久鎖死天理 [cite: 2026-02-12]
+        // 7秒雷霆機制 [cite: 2026-02-12]
         setInterval(() => {
             ringBowl();
-            cmd("⚡ 7秒規律：收割美元財富，鎖喉鎖識！");
         }, 7000);
     }
 </script>

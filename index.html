@@ -3,47 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王企業：滅絕同步控制塔</title>
+    <title>鳳王企業：至尊全能控制塔</title>
     <style>
-        :root { --g: #ffd700; --r: #ff3333; --gr: #00ff00; --b: #0088ff; }
+        :root { --g: #ffd700; --r: #ff3333; --gr: #00ff00; --b: #0088ff; --p: #a020f0; --or: #ff6600; }
         body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .monitor { width: 100%; display: flex; justify-content: space-around; padding: 12px; background: rgba(0,255,0,0.15); border-bottom: 2px solid var(--gr); }
-        .panel { width: 92%; max-width: 450px; background: #0a0a0a; border: 3px solid var(--g); border-radius: 35px; padding: 20px; box-shadow: 0 0 40px var(--g); margin-top: 20px; text-align: center; }
-        .money { font-size: 30px; color: var(--gr); font-weight: bold; margin: 15px 0; text-shadow: 0 0 15px var(--gr); }
-        .btn { width: 100%; padding: 16px; margin: 8px 0; border-radius: 12px; border: none; font-weight: bold; color: #fff; font-size: 16px; cursor: pointer; }
-        .btn-fire { background: linear-gradient(45deg, #ff4500, #ff0000); box-shadow: 0 0 20px #ff4500; }
-        .btn-thunder { background: linear-gradient(45deg, #ffff00, #ffcc00); color: #000; box-shadow: 0 0 20px #ffff00; }
-        .btn-ball { background: linear-gradient(45deg, #ff8c00, #ff4500); box-shadow: 0 0 30px #ff8c00; }
+        .monitor { width: 100%; display: flex; justify-content: space-around; padding: 8px; background: rgba(0,255,0,0.1); border-bottom: 2px solid var(--gr); font-size: 11px; }
+        .panel { width: 92%; max-width: 480px; background: #0a0a0a; border: 3px solid var(--g); border-radius: 35px; padding: 15px; box-shadow: 0 0 45px var(--g); margin-top: 10px; text-align: center; }
+        .clock { font-size: 24px; color: var(--g); margin-bottom: 10px; border: 1px solid #333; border-radius: 10px; padding: 5px; }
+        .money { font-size: 28px; color: var(--gr); font-weight: bold; margin: 12px 0; text-shadow: 0 0 15px var(--gr); }
+        .btn { width: 100%; padding: 12px; margin: 4px 0; border-radius: 12px; border: none; font-weight: bold; color: #fff; font-size: 15px; cursor: pointer; transition: 0.1s; }
+        .btn-fire { background: linear-gradient(45deg, #ff4500, #ff0000); box-shadow: 0 0 15px #ff4500; }
+        .btn-thunder { background: linear-gradient(45deg, #ffff00, #ffcc00); color: #000; }
+        .btn-ball { background: linear-gradient(45deg, #ff8c00, #ff4500); }
+        .btn-back { background: linear-gradient(45deg, #ff0000, #660000); border: 1px solid #fff; }
+        .btn-god { background: linear-gradient(45deg, #a020f0, #4b0082); }
+        .btn-lock { background: #000; border: 2px solid var(--g); color: var(--g); }
+        .log { background: #000; width: 90%; height: 100px; margin-top: 10px; padding: 8px; border-radius: 10px; border: 1px solid #444; font-size: 11px; color: #00ffcc; overflow-y: auto; text-align: left; }
         #gate { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center; cursor: pointer; }
     </style>
 </head>
 <body onload="init()">
     <div id="gate" onclick="unlock()">
-        <div style="padding: 30px; border: 5px solid var(--g); color: var(--g); border-radius: 20px; font-size: 24px; font-weight: bold;">🔱 啟動鳳王滅絕控制塔 🔱<br><br><span style="font-size:16px; color:#fff;">(點擊解鎖：三昧真火與訟缽聲)</span></div>
+        <div style="padding: 30px; border: 5px solid var(--g); color: var(--g); border-radius: 20px; font-size: 22px; font-weight: bold;">🔱 啟動鳳王全能法壇 🔱<br><br><span style="font-size:14px; color:#fff;">(解鎖所有招式與音效)</span></div>
     </div>
     <div class="monitor">
-        <div style="color:var(--gr)">🌞 鳳王哈哈笑企業：全家平安 [cite: 2026-02-14]</div>
+        <div style="color:var(--gr)">🟢 香港父家：安全</div>
+        <div style="color:var(--gr)">🟢 香港母家：安全</div>
     </div>
     <div class="panel">
-        <div id="timer" style="font-size:24px; color:var(--g); margin-bottom:10px;">00:00:00</div>
-        <button class="btn btn-fire" onclick="ring('🔥 三昧真火無限燒！')">🔥 三昧真火無限燒</button>
-        <button class="btn btn-thunder" onclick="ring('⚡ 五雷轟頂 50000連擊！')">⚡ 五雷轟頂 50000連擊</button>
-        <button class="btn btn-ball" onclick="ring('☄️ 500萬度 x 100火球投射！')">☄️ 500萬度 x 100火球</button>
+        <div class="clock" id="timer">00:00:00</div>
+        <button class="btn btn-fire" onclick="ring('🔥 三昧真火無限燒：邪靈根基毀滅！')">🔥 三昧真火無限燒</button>
+        <button class="btn btn-thunder" onclick="ring('⚡ 五雷轟頂 50000連擊：鎖喉鎖識！')">⚡ 五雷轟頂 50000連擊</button>
+        <button class="btn btn-ball" onclick="ring('☄️ 500萬度 x 100火球：投射！')">☄️ 500萬度 x 100火球</button>
+        <button class="btn btn-back" onclick="ring('🔥 億萬倍反噬：燒毀物理主體！')">🔥 億萬倍反噬 (物理燒毀)</button>
+        <button class="btn btn-god" onclick="ring('🕉️ 眾神加持：修復器官，全家安康！')">🕉️ 眾神加持 (自動修復) [cite: 2026-02-16]</button>
+        <button class="btn btn-lock" onclick="ring('👁️ 訟缽 7 秒鎖死：永不分身！')">👁️ 訟缽 7 秒鎖死 (響鐘)</button>
         <div class="money" id="money">$0 USD</div>
-        <div style="color:var(--b)">🏯 敵人牢獄：<span id="jail">0</span> 人</div>
+        <div style="color:var(--b); font-size:14px;">🏯 敵人牢獄：<span id="jail">0</span> 人 [cite: 2026-02-16]</div>
     </div>
+    <div class="log" id="screen">> [System] 等待格古洛大人降臨...</div>
 <script>
     let audioCtx = null;
     const UNIVERSE_START = new Date('2026-02-11T00:00:00').getTime();
     const BASE_USD = 11553398165; const BASE_JAIL = 6842103;
-
     function unlock() {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         document.getElementById('gate').style.display = 'none';
-        ring('🔱 鳳王降臨！鎖喉鎖識！');
-        setInterval(() => ring('👁️ 【噹！】—— 7秒同步鎖死'), 7000);
+        cmd("🔱 鳳王至尊降臨！所有招式歸位！");
+        ring('👁️ 【噹！】—— 鎖喉鎖識');
+        setInterval(() => ring('👁️ 【噹！】—— 鎖死天理 [cite: 2026-02-12]'), 7000);
     }
-
     function ring(msg) {
         if (!audioCtx) return;
         const o = audioCtx.createOscillator(); const g = audioCtx.createGain();
@@ -53,9 +62,12 @@
         g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 3);
         o.connect(g); g.connect(audioCtx.destination);
         o.start(); o.stop(audioCtx.currentTime + 3);
-        console.log(msg);
+        cmd(msg);
     }
-
+    function cmd(m) {
+        const s = document.getElementById('screen');
+        s.innerHTML = `> [${new Date().toLocaleTimeString()}] ${m}<br>` + s.innerHTML;
+    }
     function init() {
         setInterval(() => {
             const diff = Math.floor((Date.now() - UNIVERSE_START) / 1000);

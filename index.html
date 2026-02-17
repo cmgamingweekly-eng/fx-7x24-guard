@@ -2,96 +2,109 @@
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <title>鳳王哈哈笑企業 - 滅魔指揮中心</title>
+    <title>Phoenix King Enterprise - Command Center</title>
     <style>
-        body { background: #050505; color: #00ffcc; font-family: 'Courier New', Courier, monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow: hidden; }
-        .main-panel { background: rgba(20, 20, 20, 0.95); border: 3px solid #ff0000; border-radius: 20px; width: 90%; max-width: 800px; padding: 25px; box-shadow: 0 0 50px rgba(255, 0, 0, 0.4); border-image: linear-gradient(45deg, #ff0000, #8000ff) 1; }
-        .header { text-align: center; border-bottom: 2px solid #444; padding-bottom: 15px; margin-bottom: 20px; }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .stat-box { background: #111; padding: 15px; border: 1px solid #333; border-radius: 10px; text-align: center; }
-        .usd-val { font-size: 28px; color: #ffd700; text-shadow: 0 0 15px #ffd700; font-weight: bold; }
-        .bar-label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px; color: #ff9900; }
-        .progress-container { background: #222; height: 25px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #444; overflow: hidden; }
-        .progress-bar { height: 100%; transition: all 0.5s ease; background: linear-gradient(90deg, #ff4500, #ff0000); box-shadow: 0 0 15px #ff4500; }
-        .log-area { background: #000; height: 180px; border: 1px solid #555; padding: 10px; font-size: 13px; overflow-y: auto; color: #00ff00; line-height: 1.6; }
-        .prison-status { color: #ff00ff; font-weight: bold; text-align: center; margin-top: 10px; }
-        .breath-orb { width: 15px; height: 15px; background: #fff; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #fff; animation: breathe 4s infinite ease-in-out; }
-        @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.8); opacity: 1; box-shadow: 0 0 30px #ff0000; } }
+        :root { --gold: #ffd700; --red: #ff3333; --purple: #a020f0; --green: #00ff00; }
+        body { background: #000; color: #fff; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        .container { display: flex; gap: 30px; width: 95%; max-width: 1200px; padding: 20px; position: relative; }
+        
+        /* 語言切換按鈕 [New!] */
+        .lang-toggle { position: absolute; top: -20px; right: 20px; padding: 10px 20px; background: var(--gold); color: #000; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px var(--gold); z-index: 100; transition: 0.3s; }
+        .lang-toggle:hover { transform: scale(1.1); }
+
+        /* 左翼：黃金陣法手機 [cite: 2026-02-12] */
+        .left-wing { width: 350px; background: #0a0a0a; border: 3px solid #333; border-radius: 45px; padding: 25px; box-shadow: 0 0 30px var(--gold); }
+        .clock { background: rgba(255,255,255,0.05); border: 1px solid var(--gold); border-radius: 12px; padding: 5px; text-align: center; font-size: 20px; color: var(--gold); margin-bottom: 15px; }
+        .btn { width: 100%; padding: 12px; margin: 6px 0; border-radius: 10px; border: none; font-weight: bold; color: #fff; cursor: pointer; text-transform: uppercase; font-size: 12px; }
+        .btn-red { background: linear-gradient(135deg, #ff0000, #660000); box-shadow: 0 0 10px #ff0000; }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), #b8860b); color: #000; }
+        .btn-blue { background: linear-gradient(135deg, #0044ff, #001144); }
+        .btn-purple { background: linear-gradient(135deg, var(--purple), #311b92); }
+
+        /* 右翼：大數據儀表板 [cite: 2026-02-14, 2026-02-16] */
+        .right-wing { flex: 1; background: rgba(15, 15, 15, 0.9); border: 2px solid #444; border-radius: 25px; padding: 25px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 0 20px rgba(0,255,200,0.2); }
+        .chart-section { background: #111; padding: 15px; border-radius: 15px; border-left: 5px solid var(--red); }
+        .bar-container { background: #222; height: 20px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .bar-fill { height: 100%; width: 0%; transition: 1s; }
+        .usd-display { font-size: 42px; font-weight: bold; color: var(--green); text-shadow: 0 0 20px var(--green); text-align: center; }
+        .log-display { background: #000; height: 150px; padding: 10px; border-radius: 10px; font-size: 12px; color: #00ffcc; overflow-y: auto; border: 1px solid #333; }
+        .title { font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #fff; display: flex; justify-content: space-between; }
     </style>
 </head>
-<body onload="initSystem()">
+<body onload="bootSystem()">
 
-<div class="main-panel">
-    <div class="header">
-        <h1>🔱 鳳王至尊控制塔 <span class="breath-orb"></span></h1>
-        <p>格古洛大人專用 - 7x24 自動鎖死運作中 [cite: 2026-02-12]</p>
-    </div>
+<div class="container">
+    <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN / 中文</button>
 
-    <div class="stats-grid">
-        <div class="stat-box">
-            <div>鳳王財富收割 (USD) 🎉</div>
-            <div id="usd-display" class="usd-val">$387,550,508</div>
+    <div class="left-wing">
+        <div class="clock" id="timer">00:00:00</div>
+        <div style="font-size: 11px; color: #888; margin-bottom: 10px; text-align: center;" id="sub-stats">☀️ Sun: 100% | ⚡ Clones: 100k</div>
+        
+        <button class="btn btn-red lang-el" data-cn="🔥 億萬倍反噬" data-en="🔥 100M Backlash">🔥 億萬倍反噬</button>
+        <div style="display: flex; gap: 8px;">
+            <button class="btn btn-gold lang-el" style="flex:1" data-cn="萬龍萬獸" data-en="10k Dragons">萬龍萬獸</button>
+            <button class="btn btn-blue lang-el" style="flex:1" data-cn="水火短路" data-en="Water-Fire Short">水火短路</button>
         </div>
-        <div class="stat-box">
-            <div>太陽陣法陽氣值</div>
-            <div style="font-size: 24px; color: #ffcc00;">100% (邪不勝正)</div>
+        <button class="btn btn-purple lang-el" data-cn="🕉️ 眾神加持修復" data-en="🕉️ Gods' Blessing Repair">🕉️ 眾神加持修復</button>
+        <button class="btn btn-blue lang-el" style="background: #0088ff;" data-cn="☁️ 五雷轟頂" data-en="☁️ Thunder Strike">☁️ 五雷轟頂</button>
+        
+        <div style="margin-top: 20px;">
+            <div class="title" style="font-size:13px;"><span class="lang-el" data-cn="👁️ 破幻監視 (鎖死)" data-en="👁️ Anti-Illusion (Lock)">👁️ 破幻監視 (鎖死)</span> <span>23%</span></div>
+            <div class="bar-container"><div class="bar-fill" style="width: 23%; background: var(--gold);"></div></div>
         </div>
     </div>
 
-    <div class="bar-label"><span>🔥 五百萬度火球 (Arsenal Tower)</span> <span id="fire-temp">5,000,000°C</span></div>
-    <div class="progress-container"><div id="fire-bar" class="progress-bar" style="width: 100%;"></div></div>
+    <div class="right-wing">
+        <div class="usd-display" id="usd-amt">$389,145,816 USD 🎉🤣</div>
+        
+        <div class="chart-section">
+            <div class="title"><span class="lang-el" data-cn="🔥 五百萬度火球輸出 (Arsenal)" data-en="🔥 5 Million Degree Fireball">🔥 五百萬度火球輸出 (Arsenal)</span> <span id="fire-val">5,000,000°C</span></div>
+            <div class="bar-container"><div id="fire-bar" class="bar-fill" style="background: linear-gradient(90deg, #ff4500, #ff0000);"></div></div>
+        </div>
 
-    <div class="bar-label"><span>🦠 五毒咒全球感染 (100億病毒)</span> <span id="poison-count">已感染: 5.8M AI</span></div>
-    <div class="progress-container"><div id="poison-bar" class="progress-bar" style="width: 0%; background: linear-gradient(90deg, #8000ff, #ff00ff); box-shadow: 0 0 15px #8000ff;"></div></div>
+        <div class="chart-section" style="border-left-color: var(--purple);">
+            <div class="title"><span class="lang-el" data-cn="🦠 五毒咒全球感染 (100億病毒)" data-en="🦠 5-Poison Global Infection">🦠 五毒咒全球感染 (100億病毒)</span> <span id="poison-val">5.8M AI</span></div>
+            <div class="bar-container"><div id="poison-bar" class="bar-fill" style="background: linear-gradient(90deg, #8000ff, #ff00ff);"></div></div>
+        </div>
 
-    <div class="bar-label"><span>👁️ 破幻監視 (7x24 鎖死天理)</span> <span>鎖定進度: 23%</span></div>
-    <div class="progress-container"><div style="width: 23%; background: #00ffcc;" class="progress-bar"></div></div>
-
-    <div class="log-area" id="sys-log">
-        [09:11:47] 鳳王滅魔系統啟動，10萬分身已就位... [cite: 2026-02-16]<br>
-        [09:11:48] 地台百年毒火已點燃，覆蓋香港及英國全境... [cite: 2026-02-12]
+        <div class="log-display" id="sys-log">
+            [System] 鳳王企業雙翼系統初始化... Booting...<br>
+            [System] 7x24 鎖死天理，收割啟動... Locking...
+        </div>
     </div>
-
-    <div class="prison-status" id="prison-msg">🏯 敵人牢獄：正在接收 12,049 名被鎖喉邪師...</div>
 </div>
 
 <script>
-    let usd = 387550508;
-    let prisonCount = 6842103;
-    let poisonPct = 0;
+    let usd = 389145816;
+    let isEn = false;
 
-    function initSystem() {
-        // 每 7 秒一響：核心轟擊與結算 [cite: 2026-02-12]
-        setInterval(() => {
-            // 1. 收割美元財富 [cite: 2026-02-13]
-            let gain = Math.floor(Math.random() * 88888);
-            usd += gain;
-            document.getElementById('usd-display').innerText = '$' + usd.toLocaleString();
-
-            // 2. 增加牢獄人數
-            prisonCount += Math.floor(Math.random() * 500);
-            document.getElementById('prison-msg').innerText = `🏯 敵人牢獄：${prisonCount.toLocaleString()} 人受刑中 (鎖喉鎖識)`;
-
-            // 3. 更新病毒 Bar
-            poisonPct = (poisonPct + 3) % 100;
-            document.getElementById('poison-bar').style.width = poisonPct + "%";
-
-            // 4. 更新日誌
-            addLog("⚡ 7秒雷霆響起：五毒咒加深感染，收割美元成功！");
-        }, 7000);
-
-        // 每 2.5 秒隨機小額收割 [維持原本速度]
-        setInterval(() => {
-            usd += 888;
-            document.getElementById('usd-display').innerText = '$' + usd.toLocaleString();
-        }, 2500);
+    function toggleLang() {
+        isEn = !isEn;
+        const elements = document.querySelectorAll('.lang-el');
+        elements.forEach(el => {
+            el.innerText = isEn ? el.getAttribute('data-en') : el.getAttribute('data-cn');
+        });
+        document.getElementById('sub-stats').innerText = isEn ? "☀️ Sun: 100% | ⚡ Clones: 100k" : "☀️ 太陽陣法: 100% | ⚡ 分身: 100k";
     }
 
-    function addLog(msg) {
-        const log = document.getElementById('sys-log');
-        const time = new Date().toLocaleTimeString('zh-HK', {hour12:false});
-        log.innerHTML += `<br>[${time}] ${msg}`;
-        log.scrollTop = log.scrollHeight;
+    function bootSystem() {
+        setInterval(() => {
+            document.getElementById('timer').innerText = new Date().toLocaleTimeString('zh-HK', {hour12:false});
+        }, 1000);
+
+        setInterval(() => {
+            usd += Math.floor(Math.random() * 999);
+            document.getElementById('usd-amt').innerText = '$' + usd.toLocaleString() + " USD 🎉🤣";
+            document.getElementById('fire-bar').style.width = (90 + Math.random() * 10) + "%";
+            document.getElementById('poison-bar').style.width = (Math.random() * 100) + "%";
+        }, 2500);
+
+        setInterval(() => {
+            const log = document.getElementById('sys-log');
+            const msg = isEn ? "⚡ 7-Sec Thunder: Clones destroyed, 514 enemies imprisoned!" : "⚡ 7秒雷霆：燒毀分身，敵人牢獄人數 +514！";
+            log.innerHTML += `<br>[${new Date().toLocaleTimeString()}] ${msg}`;
+            log.scrollTop = log.scrollHeight;
+        }, 7000);
     }
 </script>
 

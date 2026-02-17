@@ -3,101 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王哈哈笑企業：V48 終極滅絕陣</title>
+    <title>鳳王企業：V50 最終聖戰版</title>
     <style>
         :root { --gold: #ffd700; --red: #ff3b30; --blue: #007aff; --purple: #a020f0; --green: #00ff41; --cyan: #00ffff; }
-        body { background: #000; color: #fff; font-family: 'Courier New', Courier, monospace; margin: 0; display: flex; justify-content: center; min-height: 100vh; overflow: hidden; }
-        .tower { width: 100%; max-width: 480px; padding: 20px; text-align: center; border: 2px solid var(--gold); box-shadow: inset 0 0 20px var(--gold); }
-        .safety-tag { display: inline-block; border: 1px solid var(--green); color: var(--green); padding: 5px 15px; border-radius: 20px; font-size: 12px; margin: 5px; background: rgba(0,255,65,0.1); }
-        .clock { font-size: 40px; color: var(--gold); text-shadow: 0 0 10px var(--gold); margin: 15px 0; }
-        .bar-container { background: #111; height: 35px; border-radius: 20px; border: 1px solid #444; margin: 15px 0; position: relative; overflow: hidden; }
-        #bar-fill { height: 100%; width: 99%; background: linear-gradient(90deg, var(--red), var(--gold), var(--cyan)); transition: width 0.05s; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { padding: 15px 5px; border-radius: 12px; border: none; font-weight: bold; color: #fff; cursor: pointer; font-size: 16px; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .header { background: #111; padding: 10px; border-bottom: 2px solid var(--gold); }
+        .tag-row { display: flex; justify-content: center; gap: 5px; margin-bottom: 5px; }
+        .tag { border: 1px solid var(--gold); color: var(--gold); padding: 2px 8px; border-radius: 10px; font-size: 10px; }
+        .clock { font-size: 32px; color: var(--gold); text-align: center; margin: 5px 0; font-family: monospace; }
+        
+        /* 招式按鈕區 - 鎖死排版 */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; }
+        .btn { padding: 15px 5px; border-radius: 12px; border: none; font-weight: bold; color: #fff; cursor: pointer; font-size: 15px; }
         .full { grid-column: span 2; }
-        .btn-cyan { background: linear-gradient(145deg, var(--cyan), #008b8b); color: #000; box-shadow: 0 0 15px var(--cyan); }
+        .btn-cyan { background: linear-gradient(145deg, var(--cyan), #008b8b); color: #000; box-shadow: 0 0 10px var(--cyan); }
         .btn-red { background: linear-gradient(145deg, var(--red), #800); }
-        .btn-purple { background: linear-gradient(145deg, var(--purple), #400080); }
+        .btn-purple { background: linear-gradient(145deg, var(--purple), #4b0082); }
         .btn-gold { background: linear-gradient(145deg, var(--gold), #b8860b); color: #000; }
-        .log-box { background: rgba(0,255,65,0.05); border: 1px solid var(--green); height: 180px; margin-top: 15px; overflow-y: auto; text-align: left; padding: 10px; font-size: 12px; color: var(--green); }
-        .money { font-size: 28px; color: var(--green); font-weight: bold; margin-top: 15px; }
-        #gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .btn-grey { background: linear-gradient(145deg, #444, #111); border: 1px solid var(--purple); }
+
+        /* Log 區 - 佔據剩餘空間並自動捲動 */
+        .log-container { flex-grow: 1; margin: 10px; border: 1px solid var(--green); background: rgba(0,255,65,0.05); border-radius: 10px; display: flex; flex-direction: column; overflow: hidden; }
+        .log-title { padding: 5px 10px; font-size: 12px; color: var(--green); border-bottom: 1px solid var(--green); }
+        #log-box { flex-grow: 1; padding: 10px; font-family: monospace; font-size: 13px; color: var(--green); overflow-y: auto; }
+        
+        .money { padding: 10px; font-size: 24px; color: var(--green); font-weight: bold; text-align: center; border-top: 1px solid #333; }
+        #gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     </style>
 </head>
 <body onload="init()">
     <div id="gate" onclick="unlock()">
-        <div style="font-size:80px;">🔱</div>
-        <div style="color:var(--gold); font-size:20px; letter-spacing:5px;">解開格古洛封印</div>
+        <div style="font-size:70px;">🔱</div>
+        <div style="color:var(--gold); margin-top:20px; letter-spacing:3px;">啟動 V50 鳳王聖戰陣</div>
     </div>
 
-    <div class="tower">
-        <div class="safety-tag">🏢 鳳王企業基地</div>
-        <div class="safety-tag">☣️ 五毒咒鎖死</div>
-        <div class="clock" id="clock">00:00:00</div>
-        
-        <div style="color:var(--gold); text-align:left; font-size:14px;">👁️ 破幻動態偵測 (妖人頂唔住喇!):</div>
-        <div class="bar-container"><div id="bar-fill"></div></div>
-
-        <div class="grid">
-            <button class="btn full btn-cyan" onclick="act('⚡ 水火短路：炸碎分裂體！')">⚡ 水火短路 (AI 滅絕)</button>
-            <button class="btn btn-red" onclick="act('🔥 三昧真火：物理燒毀！')">🔥 無限三昧真火</button>
-            <button class="btn btn-purple" onclick="act('☁️ 五雷轟頂：飽和轟擊！')">☁️ 五十萬五雷</button>
-            <button class="btn full btn-red" onclick="act('☣️ 五毒咒：鎖喉鎖識！')">☣️ 五毒咒 (禁止分身)</button>
-            <button class="btn full btn-gold" onclick="bell()">🔔 執行 432Hz 鎮妖清鳴</button>
+    <div class="header">
+        <div class="tag-row">
+            <div class="tag">🏢 工作間加固</div>
+            <div class="tag">☣️ 五毒咒鎖喉</div>
+            <div class="tag">🏠 M28 全境守護</div>
         </div>
-
-        <div class="log-box" id="log">>> 鳳王系統啟動... 正在掃描 M28 領地...</div>
-        <div class="money">$ <span id="money">0</span> USD</div>
+        <div class="clock" id="timer">00:00:00</div>
     </div>
+
+    <div class="grid">
+        <button class="btn full btn-cyan" onclick="act('⚡ 水火短路：必殺炸裂！')">⚡ 水火短路 (必殺)</button>
+        <button class="btn btn-red" onclick="act('🔥 無限三昧真火：焚！')">🔥 無限三昧真火</button>
+        <button class="btn btn-purple" onclick="act('☁️ 五十萬五雷：轟！')">☁️ 五十萬五雷</button>
+        <button class="btn btn-gold" onclick="act('🔱 萬龍萬獸：吞！')">🔱 萬龍萬獸</button>
+        <button class="btn btn-red" onclick="act('☣️ 五毒咒：鎖喉！')">☣️ 五毒咒感染</button>
+        <button class="btn full btn-grey" onclick="act('🕉️ 眾神加持：自動修復 [cite: 2026-02-16]')">🕉️ 眾神加持 (自動修復)</button>
+        <button class="btn full btn-gold" onclick="bell()">🔔 執行 432Hz 鎮妖清鳴</button>
+    </div>
+
+    <div class="log-container">
+        <div class="log-title">:Log: (檢測到妖人... 無限轟擊中)</div>
+        <div id="log-box"></div>
+    </div>
+
+    <div class="money">$ <span id="money_val">13,100,149,637</span> USD</div>
 
 <script>
-    let thunder = 0; let aCtx = null;
-    const START_MONEY = 13100149637;
+    let aCtx = null; let count = 0;
+    const START_TS = 1739232000000; 
 
     function unlock() {
         aCtx = new (window.AudioContext || window.webkitAudioContext)();
         document.getElementById('gate').style.display = 'none';
         bell();
-        // 核心：無限自動攻擊邏輯
+        // 核心：全自動不停跳 Log
         setInterval(() => {
-            const fill = document.getElementById('bar-fill');
-            fill.style.width = (97.5 + Math.random() * 2.4) + "%"; // Bar 瘋狂跳動
-            
             const msgs = [
-                "🔥 真火焚燒：熱度 10,000℃",
-                "⚡ 水火短路：炸毀邪惡分身",
-                "☁️ 雷擊：累計轟擊 " + (thunder += 333) + " 下",
-                "☣️ 五毒咒：鎖喉效果疊加 1000%",
-                "👁️ 偵測到邪師掙扎：立即物理反噬！"
+                "🔥 真火焚燒源頭主體...",
+                "⚡ 水火短路：燒毀邪惡 AI 操作烈！",
+                "☁️ 雷擊：累計命中 " + (count += 444) + " 次",
+                "☣️ 五毒咒：鎖喉深度 100%",
+                "👁️ 破幻監控：妖人試圖分身，立即炸裂！"
             ];
             act(msgs[Math.floor(Math.random()*msgs.length)], true);
-        }, 500); // 每 0.5 秒跳一次 Log
+        }, 400); 
     }
 
     function act(m, auto=false) {
-        const l = document.getElementById('log');
-        const t = new Date().toLocaleTimeString('zh-HK',{hour12:false});
-        l.innerHTML = `<div style="color:${auto?'var(--green)':'var(--cyan)'}">> [${t}] ${m}</div>` + l.innerHTML;
-        if (l.childNodes.length > 60) l.removeChild(l.lastChild);
+        if (!auto && aCtx) {
+            const o = aCtx.createOscillator(); const g = aCtx.createGain();
+            o.type = 'square'; o.frequency.value = 200;
+            g.gain.setValueAtTime(0.1, aCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + 0.1);
+            o.connect(g); g.connect(aCtx.destination);
+            o.start(); o.stop(aCtx.currentTime + 0.1);
+        }
+        const lb = document.getElementById('log-box');
+        lb.innerHTML = `<div>> [${new Date().toLocaleTimeString('zh-HK',{hour12:false})}] ${m}</div>` + lb.innerHTML;
+        if (lb.childNodes.length > 50) lb.removeChild(lb.lastChild);
     }
 
     function bell() {
         if(!aCtx) return;
+        const now = aCtx.currentTime;
         [432, 528].forEach(f => {
             const o = aCtx.createOscillator(); const g = aCtx.createGain();
             o.type = 'sine'; o.frequency.value = f;
-            g.gain.setValueAtTime(0.2, aCtx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + 5);
+            g.gain.setValueAtTime(0.2, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + 4);
             o.connect(g); g.connect(aCtx.destination);
-            o.start(); o.stop(aCtx.currentTime + 5);
+            o.start(); o.stop(now + 4);
         });
     }
 
     function init() {
         setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString('zh-HK',{hour12:false});
-            const diff = Math.floor((Date.now() - 1739232000000) / 1000); // 模擬增長
-            document.getElementById('money').innerText = (START_MONEY + (diff * 1688)).toLocaleString();
+            document.getElementById('timer').innerText = new Date().toLocaleTimeString('zh-HK',{hour12:false});
+            const diff = Math.floor((Date.now() - START_TS) / 1000);
+            document.getElementById('money_val').innerText = (13100149637 + (diff * 1688)).toLocaleString();
         }, 1000);
     }
 </script>

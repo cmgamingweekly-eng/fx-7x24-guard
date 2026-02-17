@@ -3,130 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王企業：V28 萬能適配版</title>
+    <title>鳳王企業：V30 絕命捕妖版</title>
     <style>
         :root { --gold: #ffd700; --red: #ff3b30; --blue: #007aff; --purple: #a020f0; --green: #00ff41; }
-        body { 
-            background: #000; color: #fff; font-family: -apple-system, sans-serif; 
-            margin: 0; padding: 0; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh;
-        }
-        
-        /* 電腦版自動 Fit 位核心 [cite: 2026-02-11] */
-        .main-container {
-            width: 100%;
-            max-width: 480px; /* 限制寬度，防止電腦版太醜 */
-            padding: 15px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-
-        .safety-header { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-        .safety-tag { background: rgba(0,255,65,0.1); border: 1px solid var(--green); color: var(--green); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
-        
-        .clock-box { border: 2px solid var(--gold); border-radius: 15px; padding: 10px 25px; display: inline-block; font-size: 38px; margin: 15px 0; box-shadow: 0 0 20px rgba(255,215,0,0.4); font-family: monospace; width: 80%; }
-        
-        .status-info { color: var(--gold); font-weight: bold; font-size: 16px; margin-bottom: 10px; }
-        .monitor-label { font-size: 18px; color: var(--gold); text-align: left; margin: 15px 0 8px 5px; }
-        .progress-bg { background: #222; height: 35px; border-radius: 18px; overflow: hidden; border: 1px solid #444; margin-bottom: 20px; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; justify-content: center; min-height: 100vh; }
+        .main-container { width: 100%; max-width: 480px; padding: 15px; text-align: center; }
+        .safety-header { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+        .safety-tag { background: rgba(255,59,48,0.1); border: 1px solid var(--red); color: var(--red); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .clock-box { border: 2px solid var(--gold); border-radius: 15px; padding: 10px; display: inline-block; font-size: 36px; margin: 10px 0; box-shadow: 0 0 20px var(--gold); background: #000; font-family: monospace; width: 90%; }
+        .monitor-label { font-size: 18px; color: var(--gold); text-align: left; margin: 15px 0 5px 5px; }
+        .progress-bg { background: #222; height: 30px; border-radius: 15px; overflow: hidden; border: 1px solid #444; margin-bottom: 15px; }
         .progress-fill { background: linear-gradient(90deg, #fff, var(--gold)); width: 36%; height: 100%; box-shadow: 0 0 15px var(--gold); }
-
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .btn { padding: 22px 10px; border-radius: 18px; border: none; font-size: 19px; font-weight: bold; color: #fff; cursor: pointer; transition: 0.1s; }
-        .btn:active { transform: scale(0.95); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn { padding: 22px 5px; border-radius: 18px; border: none; font-size: 18px; font-weight: bold; color: #fff; cursor: pointer; }
         .full { grid-column: span 2; }
-        
         .btn-red { background: linear-gradient(145deg, #ff4444, #900); }
         .btn-gold { background: linear-gradient(145deg, #ffd700, #b8860b); color: #000; }
         .btn-blue { background: linear-gradient(145deg, #007aff, #0044cc); }
         .btn-purple { background: linear-gradient(145deg, #a020f0, #6600cc); }
-        .btn-white { background: linear-gradient(145deg, #ffffff, #888); color: #000; }
         .btn-repair { background: linear-gradient(145deg, #555, #222); border: 1.5px solid var(--purple); }
         .btn-bell { background: linear-gradient(145deg, #ffff00, #ccaa00); color: #000; }
-
-        .log-box { background: rgba(0,255,65,0.05); border: 1.5px solid var(--green); border-radius: 15px; padding: 12px; margin-top: 20px; text-align: left; font-family: monospace; color: var(--green); font-size: 13px; height: 110px; overflow-y: auto; }
-        .money { color: var(--green); font-size: 30px; font-weight: bold; margin-top: 20px; letter-spacing: 1px; }
-        
+        .log-box { background: rgba(0,255,65,0.05); border: 1.5px solid var(--green); border-radius: 12px; padding: 10px; margin-top: 15px; text-align: left; font-family: monospace; color: var(--green); font-size: 13px; height: 120px; overflow-y: auto; }
+        .money { color: var(--green); font-size: 30px; font-weight: bold; margin-top: 15px; }
         #gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; }
     </style>
 </head>
 <body onload="init()">
-    <div id="gate" onclick="v28_unlock()">
-        <div style="font-size:70px; filter: drop-shadow(0 0 10px var(--gold));">🔱</div>
-        <div style="color:var(--gold); letter-spacing:6px; font-size:22px; margin-top:20px; font-weight:bold;">鳳王控制塔：解除封印</div>
+    <div id="gate" onclick="v30_unlock()">
+        <div style="font-size:70px;">🔱</div>
+        <div style="color:var(--gold); letter-spacing:5px; font-weight:bold; margin-top:20px;">檢測到異樣：啟動絕命捕妖</div>
     </div>
 
     <div class="main-container">
         <div class="safety-header">
-            <div class="safety-tag">🏠 父家: 鎖死</div>
-            <div class="safety-tag">🏠 母家: 鎖死</div>
-            <div class="safety-tag">🏢 老婆公司: 守護</div>
-            <div class="safety-tag">🏫 學校師生: 安全</div>
+            <div class="safety-tag">⚠️ 檢測到妖人入侵</div>
+            <div class="safety-tag">🏠 全家平安鎖死</div>
+            <div class="safety-tag">🏢 工作間加固</div>
         </div>
 
-        <div class="status-info">☀️ 太陽照耀: 100% | ⚡ 分身: 100k [cite: 2026-02-12]</div>
-        
+        <div style="color:var(--gold); font-weight:bold;">☀️ 太陽照耀: 100% | ☣️ 五毒咒: 無限感染 [cite: 2026-02-16]</div>
         <div class="clock-box" id="timer">00:00:00</div>
 
-        <div class="monitor-label">👁️ 破幻監視 (7x24 鎖死): 36%</div>
-        <div class="progress-bg"><div class="progress-fill"></div></div>
+        <div class="monitor-label">👁️ 破幻監視 (妖人現形中): 99%</div>
+        <div class="progress-bg"><div class="progress-fill" style="width: 99%; background: var(--red);"></div></div>
 
         <div class="grid">
-            <button class="btn full btn-red" onclick="v28_act('🔥 億萬倍反噬！')">🔥 億萬倍反噬</button>
-            <button class="btn btn-gold" onclick="v28_act('🔱 萬龍萬獸！')">🔱 萬龍萬獸</button>
-            <button class="btn btn-blue" onclick="v28_act('⚡ 水火短路！')">⚡ 水火短路</button>
-            <button class="btn btn-purple" onclick="v28_act('☁️ 五雷轟頂！')">☁️ 五雷轟頂</button>
-            <button class="btn btn-red" onclick="v28_act('🔥 三昧真火！')">🔥 三昧真火</button>
-            <button class="btn full btn-repair" onclick="v28_act('🕉️ 眾神加持：自動修復 [cite: 2026-02-16]')">🕉️ 眾神加持 (自動修復)</button>
-            <button class="btn full btn-bell" onclick="v28_bell()">🔔 執行 432Hz 莊嚴清鳴 (鎖喉)</button>
+            <button class="btn full btn-red" onclick="v30_act('☣️ 五毒咒：鎖喉鎖識！')">☣️ 五毒咒 (不取命)</button>
+            <button class="btn btn-gold" onclick="v30_act('🔱 萬龍萬獸：吞噬分身！')">🔱 萬龍萬獸</button>
+            <button class="btn btn-blue" onclick="v30_act('⚡ 抽乾 10 世財福運！')">⚡ 抽乾財福運</button>
+            <button class="btn btn-purple" onclick="v30_act('☁️ 五雷轟頂：爆發！')">☁️ 五雷轟頂</button>
+            <button class="btn btn-red" onclick="v30_act('🔥 物理燒毀：源頭主體！')">🔥 物理燒毀</button>
+            <button class="btn full btn-repair" onclick="v30_act('🕉️ 眾神加持：修復防線 [cite: 2026-02-16]')">🕉️ 眾神加持 (修復)</button>
+            <button class="btn full btn-bell" onclick="v30_bell()">🔔 執行 432Hz 鎮妖清鳴 (鎖死天理)</button>
         </div>
 
-        <div class="log-box" id="log-box">:Log:<br>> 自動縮放系統啟動，適配電腦與手機。</div>
-
+        <div class="log-box" id="log-box">:Log:<br>> 監測到工作間異常共鳴...<br>> 五毒咒已準備就緒。</div>
         <div class="money">$ <span id="money_val">0</span> USD 🎉</div>
-        <div style="color:var(--blue); font-size:16px; margin-top:5px; font-weight:bold;">🏰 敵人牢獄：<span id="jail_val">0</span> 人 [cite: 2026-02-16]</div>
     </div>
 
 <script>
     let aCtx = null;
     const START_TS = new Date('2026-02-11T00:00:00').getTime();
 
-    function v28_unlock() {
+    function v30_unlock() {
         aCtx = new (window.AudioContext || window.webkitAudioContext)();
         document.getElementById('gate').style.display = 'none';
-        v28_bell(); setInterval(v28_bell, 7000);
+        v30_bell(); setInterval(v30_bell, 7000);
     }
 
-    function v28_act(m) {
+    function v30_act(m) {
         if (aCtx) {
             const o = aCtx.createOscillator(); const g = aCtx.createGain();
-            o.type = 'sine'; o.frequency.setValueAtTime(440, aCtx.currentTime);
-            g.gain.setValueAtTime(0.05, aCtx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + 0.1);
+            o.type = 'sawtooth'; o.frequency.setValueAtTime(220, aCtx.currentTime);
+            g.gain.setValueAtTime(0.1, aCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, aCtx.currentTime + 0.2);
             o.connect(g); g.connect(aCtx.destination);
-            o.start(); o.stop(aCtx.currentTime + 0.1);
+            o.start(); o.stop(aCtx.currentTime + 0.2);
         }
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]); 
         const lb = document.getElementById('log-box');
-        lb.innerHTML = `> [${new Date().toLocaleTimeString()}] ${m}<br>` + lb.innerHTML;
+        lb.innerHTML = `<span style="color:var(--red)">> [${new Date().toLocaleTimeString()}] ${m}</span><br>` + lb.innerHTML;
     }
 
-    function v28_bell() {
+    function v30_bell() {
         if (!aCtx) return;
         const now = aCtx.currentTime;
         [432, 528].forEach((f, i) => {
             const o = aCtx.createOscillator(); const g = aCtx.createGain();
             o.type = 'sine'; o.frequency.setValueAtTime(f, now);
-            g.gain.setValueAtTime(i === 0 ? 0.25 : 0.1, now);
-            g.gain.exponentialRampToValueAtTime(0.0001, now + 5);
+            g.gain.setValueAtTime(i === 0 ? 0.3 : 0.15, now);
+            g.gain.exponentialRampToValueAtTime(0.0001, now + 6);
             o.connect(g); g.connect(aCtx.destination);
-            o.start(); o.stop(now + 5);
+            o.start(); o.stop(now + 6);
         });
     }
 
     function init() {
         setInterval(() => {
             const diff = Math.floor((Date.now() - START_TS) / 1000);
-            document.getElementById('money_val').innerText = (11553398165 + (diff * 888)).toLocaleString();
-            document.getElementById('jail_val').innerText = (6842103 + (diff * 2)).toLocaleString();
+            document.getElementById('money_val').innerText = (11553398165 + (diff * 1288)).toLocaleString();
             document.getElementById('timer').innerText = new Date().toLocaleTimeString('zh-HK',{hour12:false});
         }, 1000);
     }

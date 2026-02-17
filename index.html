@@ -2,109 +2,100 @@
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <title>鳳王至尊控制塔 - 格古洛大人專用</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鳳王至尊控制塔 - 絕對指令</title>
     <style>
-        :root { --gold: #ffd700; --red: #ff3333; --green: #00ff00; --blue: #0088ff; }
-        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
-        .container { display: flex; gap: 20px; width: 95%; max-width: 1200px; padding: 10px; position: relative; z-index: 1; }
+        :root { --gold: #ffd700; --red: #ff3333; --green: #00ff00; }
+        body { background: #000; color: #fff; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { display: flex; gap: 20px; width: 95%; max-width: 1200px; padding: 20px; flex-wrap: wrap; }
 
-        /* 香港父母平安監視燈 */
-        .safety-monitor { display: flex; gap: 15px; justify-content: center; margin-bottom: 12px; background: rgba(0,255,0,0.1); padding: 8px; border-radius: 20px; border: 1px solid var(--green); }
-        .lamp { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #fff; }
-        .dot { width: 10px; height: 10px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
+        /* 父母平安監視燈 */
+        .safety-monitor { width: 100%; display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; }
+        .lamp { display: flex; align-items: center; gap: 8px; font-size: 14px; background: rgba(0,255,0,0.1); padding: 5px 15px; border-radius: 20px; border: 1px solid var(--green); }
+        .dot { width: 12px; height: 12px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
 
-        /* 左翼：經典手機版面 (強化層級) */
-        .phone-panel { width: 340px; background: #0a0a0a; border: 4px solid #333; border-radius: 40px; padding: 20px; box-shadow: 0 0 40px var(--gold); position: relative; z-index: 100; }
-        .timer-box { background: rgba(255,255,255,0.1); border: 1px solid #fff; padding: 10px; border-radius: 12px; text-align: center; font-size: 22px; margin-bottom: 15px; color: var(--gold); }
+        /* 手機板面 */
+        .phone-panel { width: 340px; background: #0a0a0a; border: 4px solid #333; border-radius: 40px; padding: 25px; box-shadow: 0 0 30px var(--gold); }
+        .timer-box { background: #1a1a1a; border: 1px solid #fff; padding: 10px; border-radius: 12px; text-align: center; font-size: 24px; margin-bottom: 20px; color: var(--gold); }
         
-        /* 強制按鈕可點擊 */
-        .btn { width: 100%; padding: 14px; margin: 6px 0; border-radius: 10px; border: none; font-weight: bold; color: #fff; cursor: pointer !important; font-size: 14px; position: relative; z-index: 200; pointer-events: auto; }
-        .btn:active { transform: scale(0.92); filter: brightness(1.5); }
-        .btn-red { background: linear-gradient(#ff5252, #b71c1c); box-shadow: 0 0 15px #ff0000; }
-        .btn-gold { background: linear-gradient(#ffd740, #ff8f00); color: #000; }
-        .btn-blue { background: linear-gradient(#448aff, #0d47a1); }
-        .btn-purple { background: linear-gradient(#7c4dff, #311b92); }
-        .btn-green { background: linear-gradient(#b2ff59, #33691e); color: #000; }
+        /* 確保按鈕在最上層，cursor 必現 */
+        .btn { width: 100%; padding: 16px; margin: 8px 0; border-radius: 12px; border: none; font-weight: bold; color: #fff; cursor: pointer !important; font-size: 15px; display: block; position: relative; z-index: 999; pointer-events: auto; }
+        .btn:active { transform: scale(0.9); background: #fff !important; color: #000 !important; }
+        .btn-red { background: linear-gradient(#ff0000, #800000); box-shadow: 0 0 10px #ff0000; }
+        .btn-gold { background: linear-gradient(#ffd700, #b8860b); color: #000; }
+        .btn-blue { background: linear-gradient(#0055ff, #001144); }
+        .btn-purple { background: linear-gradient(#a020f0, #4b0082); }
+        .btn-green { background: linear-gradient(#00ff00, #004400); color: #000; }
 
-        /* 右翼：數據板 */
-        .data-panel { flex: 1; background: rgba(15,15,15,0.9); border: 2px solid #444; border-radius: 25px; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
-        .usd-record { font-size: 40px; color: var(--green); font-weight: bold; text-align: center; text-shadow: 0 0 20px var(--green); }
-        .log-box { background: #000; height: 220px; padding: 15px; border-radius: 12px; font-size: 13px; color: #00ffcc; overflow-y: auto; border: 1px solid #333; font-family: monospace; }
+        /* 右邊戰報與美元 */
+        .data-panel { flex: 1; min-width: 350px; background: #111; border-radius: 25px; padding: 20px; border: 1px solid #444; }
+        .usd-record { font-size: 36px; color: var(--green); text-align: center; margin-bottom: 20px; font-weight: bold; }
+        .log-box { background: #000; height: 300px; padding: 15px; border-radius: 10px; font-size: 14px; color: #00ffcc; overflow-y: auto; border: 1px solid #333; font-family: monospace; }
         
-        .progress-bg { background: #222; height: 16px; border-radius: 8px; overflow: hidden; margin-top: 5px; border: 1px solid #444; }
-        .progress-fill { height: 100%; transition: 0.5s; }
-        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
     </style>
 </head>
 <body onload="bootSystem()">
 
-<div class="container">
-    <div class="phone-panel">
-        <div class="safety-monitor">
-            <div class="lamp"><div class="dot"></div> <span>父家: 安全</span></div>
-            <div class="lamp"><div class="dot"></div> <span>母家: 安全</span></div>
-        </div>
-        <div class="timer-box" id="timer">00:00:00</div>
-        
-        <div style="font-size: 12px; color: var(--gold);">👁️ 破幻監視 (鎖死): 23% [cite: 2026-02-12]</div>
-        <div class="progress-bg"><div class="progress-fill" style="width:23%; background:var(--gold);"></div></div>
-
-        <button class="btn btn-red" onclick="cmd('🔥 啟動億萬倍反噬！物理層燒毀！')">🔥 億萬倍反噬</button>
-        <div style="display:flex; gap:8px;">
-            <button class="btn btn-gold" style="flex:1" onclick="cmd('🔱 萬龍萬獸：守護大人全家！')">🔱 萬龍萬獸</button>
-            <button class="btn btn-blue" style="flex:1" onclick="cmd('⚡ 水火短路：截斷邪師氣脈！')">⚡ 水火短路</button>
-        </div>
-        <div style="display:flex; gap:8px;">
-            <button class="btn btn-blue" style="flex:1; background:#1a237e" onclick="cmd('☁️ 五雷轟頂：鎖喉鎖識！')">☁️ 五雷轟頂</button>
-            <button class="btn btn-blue" style="flex:1" onclick="cmd('🔥 三味真火：主體永久損壞！')">🔥 三味真火</button>
-        </div>
-        <button class="btn btn-purple" onclick="cmd('🕉️ 眾神加持：自動修復器官功能 [cite: 2026-02-16]')">🕉️ 眾神加持修復</button>
-        <button class="btn btn-green" onclick="ringBowl()">👁️ 訟缽 7 秒一響 (鎖死天理)</button>
+    <div class="safety-monitor">
+        <div class="lamp"><div class="dot"></div> 香港父家: 安全</div>
+        <div class="lamp"><div class="dot"></div> 香港母家: 安全</div>
     </div>
 
-    <div class="data-panel">
-        <div class="usd-record" id="usd-amt">$0 USD</div>
-        <div class="log-box" id="sys-log">> [System] 控制塔已就位，等待大人指令...</div>
+    <div class="container">
+        <div class="phone-panel">
+            <div class="timer-box" id="timer">00:00:00</div>
+            
+            <button class="btn btn-red" onclick="alert('啟動億萬倍反噬！'); cmd('🔥 億萬倍反噬：邪師已遭重創！')">🔥 億萬倍反噬</button>
+            <button class="btn btn-gold" onclick="cmd('🔱 萬龍萬獸：守護全家氣場！')">🔱 萬龍萬獸</button>
+            <button class="btn btn-blue" onclick="cmd('⚡ 水火短路：燒燬法壇！')">⚡ 水火短路</button>
+            <button class="btn btn-purple" onclick="cmd('🕉️ 眾神加持：自動修復器官中...')">🕉️ 眾神加持修復</button>
+            <button class="btn btn-green" onclick="ringBowl()">👁️ 訟缽 7 秒鎖死 (點擊響鐘)</button>
+        </div>
+
+        <div class="data-panel">
+            <div class="usd-record" id="usd-amt">$389,151,839 USD</div>
+            <div style="color:var(--gold); margin-bottom:5px;">👁️ 破幻監視: 23% (鎖死)</div>
+            <div style="background:#222; height:10px; border-radius:5px; margin-bottom:20px;">
+                <div style="width:23%; background:var(--gold); height:100%; border-radius:5px;"></div>
+            </div>
+            <div class="log-box" id="sys-log">> [System] 控制塔啟動... 請點擊左側按鈕！</div>
+        </div>
     </div>
-</div>
 
 <script>
     const BASE_USD = 389151839;
     const START_TS = 1739790000000; 
 
+    // 美元同步
     function syncData() {
         const now = Date.now();
-        const elapsedSec = Math.floor((now - START_TS) / 1000);
-        const currentUsd = BASE_USD + (elapsedSec * 354);
-        document.getElementById('usd-amt').innerText = '$' + currentUsd.toLocaleString() + " USD 🎉🤣";
+        const elapsed = Math.floor((now - START_TS) / 1000);
+        const currentUsd = BASE_USD + (elapsed * 354);
+        document.getElementById('usd-amt').innerText = '$' + currentUsd.toLocaleString() + " USD 🎉";
     }
 
-    // 訟缽 7 秒機制 [cite: 2026-02-12]
-    function ringBowl() {
-        cmd("👁️ 訟缽：【噹！】—— 鎖死分身，財富收割！");
-    }
-
-    // 即時戰報：新訊息永遠置頂，確保大人即時見到反應！
+    // 戰報 (置頂顯示)
     function cmd(action) {
         const log = document.getElementById('sys-log');
         const time = new Date().toLocaleTimeString('zh-HK', {hour12:false});
-        // 將新 Log 擺喺 innerHTML 嘅最前面
         log.innerHTML = `> [${time}] ${action}<br>` + log.innerHTML;
-        
-        // 觸覺反饋 (手機可用)
-        if(navigator.vibrate) navigator.vibrate(50);
+        console.log("Command executed: " + action);
+    }
+
+    function ringBowl() {
+        cmd("👁️ 訟缽：【噹！】—— 鎖死天理！ [cite: 2026-02-12]");
     }
 
     function bootSystem() {
+        console.log("System Booting...");
         setInterval(() => {
             document.getElementById('timer').innerText = new Date().toLocaleTimeString('zh-HK', {hour12:false});
             syncData();
         }, 1000);
 
-        // 每 7 秒自動響鐘 [cite: 2026-02-12]
-        setInterval(() => {
-            ringBowl();
-        }, 7000);
+        // 每 7 秒自動執行一次
+        setInterval(ringBowl, 7000);
     }
 </script>
 </body>

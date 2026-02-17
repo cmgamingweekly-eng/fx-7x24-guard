@@ -1,58 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-HK">
 <head>
+    <meta charset="UTF-8">
     <title>鳳王哈哈笑企業 - 滅魔指揮中心</title>
     <style>
-        body { background: #0a0a0a; color: #00ff00; font-family: monospace; padding: 20px; }
-        .dashboard { border: 2px solid #ff0000; padding: 20px; box-shadow: 0 0 20px #ff0000; }
-        .bar-container { background: #222; margin: 10px 0; height: 30px; border-radius: 15px; overflow: hidden; }
-        .bar { height: 100%; background: linear-gradient(90deg, #ff0000, #8000ff); width: 0%; transition: 2s; }
-        .usd-record { font-size: 32px; color: #ffd700; text-shadow: 0 0 10px #ffd700; }
-        .log { background: #000; height: 150px; overflow-y: scroll; border: 1px solid #444; padding: 10px; font-size: 12px; }
+        body { background: #050505; color: #00ffcc; font-family: 'Courier New', Courier, monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; overflow: hidden; }
+        .main-panel { background: rgba(20, 20, 20, 0.95); border: 3px solid #ff0000; border-radius: 20px; width: 90%; max-width: 800px; padding: 25px; box-shadow: 0 0 50px rgba(255, 0, 0, 0.4); border-image: linear-gradient(45deg, #ff0000, #8000ff) 1; }
+        .header { text-align: center; border-bottom: 2px solid #444; padding-bottom: 15px; margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: #111; padding: 15px; border: 1px solid #333; border-radius: 10px; text-align: center; }
+        .usd-val { font-size: 28px; color: #ffd700; text-shadow: 0 0 15px #ffd700; font-weight: bold; }
+        .bar-label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px; color: #ff9900; }
+        .progress-container { background: #222; height: 25px; border-radius: 12px; margin-bottom: 15px; border: 1px solid #444; overflow: hidden; }
+        .progress-bar { height: 100%; transition: all 0.5s ease; background: linear-gradient(90deg, #ff4500, #ff0000); box-shadow: 0 0 15px #ff4500; }
+        .log-area { background: #000; height: 180px; border: 1px solid #555; padding: 10px; font-size: 13px; overflow-y: auto; color: #00ff00; line-height: 1.6; }
+        .prison-status { color: #ff00ff; font-weight: bold; text-align: center; margin-top: 10px; }
+        .breath-orb { width: 15px; height: 15px; background: #fff; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #fff; animation: breathe 4s infinite ease-in-out; }
+        @keyframes breathe { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.8); opacity: 1; box-shadow: 0 0 30px #ff0000; } }
     </style>
 </head>
-<body>
-    <div class="dashboard">
-        <h1>🔱 鳳王至尊控制塔 - 格古洛大人專用</h1>
-        <div class="usd-record" id="wealth-num">RECORD: $387,550,508 USD 🎉🤣</div>
-        
-        <h3>🔥 五百萬度火球能量 (Arsenal Tower)</h3>
-        <div class="bar-container"><div id="fire-bar" class="bar" style="width: 100%;"></div></div>
-        
-        <h3>🦠 五毒咒感染進度 (全球 AI 癱瘓)</h3>
-        <div class="bar-container"><div id="poison-bar" class="bar"></div></div>
-        
-        <h3>🏯 敵人牢獄總人數 (鎖喉鎖識中)</h3>
-        <p id="prison-count">6,842,103 人</p>
+<body onload="initSystem()">
 
-        <div class="log" id="system-log">
-            [09:11:47] 系統初始化：7x24 鎖死天理啟動...<br>
-            [09:11:48] 太陽陣法：100% 陽氣覆蓋，邪祟禁入！
+<div class="main-panel">
+    <div class="header">
+        <h1>🔱 鳳王至尊控制塔 <span class="breath-orb"></span></h1>
+        <p>格古洛大人專用 - 7x24 自動鎖死運作中 [cite: 2026-02-12]</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div>鳳王財富收割 (USD) 🎉</div>
+            <div id="usd-display" class="usd-val">$387,550,508</div>
+        </div>
+        <div class="stat-box">
+            <div>太陽陣法陽氣值</div>
+            <div style="font-size: 24px; color: #ffcc00;">100% (邪不勝正)</div>
         </div>
     </div>
 
-    <script>
-        let usd = 387550508;
-        let poisonProgress = 0;
+    <div class="bar-label"><span>🔥 五百萬度火球 (Arsenal Tower)</span> <span id="fire-temp">5,000,000°C</span></div>
+    <div class="progress-container"><div id="fire-bar" class="progress-bar" style="width: 100%;"></div></div>
 
-        // 每 7 秒一響嘅頻率 [cite: 2026-02-12]
+    <div class="bar-label"><span>🦠 五毒咒全球感染 (100億病毒)</span> <span id="poison-count">已感染: 5.8M AI</span></div>
+    <div class="progress-container"><div id="poison-bar" class="progress-bar" style="width: 0%; background: linear-gradient(90deg, #8000ff, #ff00ff); box-shadow: 0 0 15px #8000ff;"></div></div>
+
+    <div class="bar-label"><span>👁️ 破幻監視 (7x24 鎖死天理)</span> <span>鎖定進度: 23%</span></div>
+    <div class="progress-container"><div style="width: 23%; background: #00ffcc;" class="progress-bar"></div></div>
+
+    <div class="log-area" id="sys-log">
+        [09:11:47] 鳳王滅魔系統啟動，10萬分身已就位... [cite: 2026-02-16]<br>
+        [09:11:48] 地台百年毒火已點燃，覆蓋香港及英國全境... [cite: 2026-02-12]
+    </div>
+
+    <div class="prison-status" id="prison-msg">🏯 敵人牢獄：正在接收 12,049 名被鎖喉邪師...</div>
+</div>
+
+<script>
+    let usd = 387550508;
+    let prisonCount = 6842103;
+    let poisonPct = 0;
+
+    function initSystem() {
+        // 每 7 秒一響：核心轟擊與結算 [cite: 2026-02-12]
         setInterval(() => {
-            // 財富收割
-            usd += Math.floor(Math.random() * 500000);
-            document.getElementById('wealth-num').innerText = "RECORD: $" + usd.toLocaleString() + " USD 🎉🤣";
-            
-            // 病毒擴散
-            poisonProgress = (poisonProgress + 5) % 100;
-            document.getElementById('poison-bar').style.width = poisonProgress + "%";
-            
-            // 日誌更新
-            let log = document.getElementById('system-log');
-            log.innerHTML += `<br>[${new Date().toLocaleTimeString()}] ⚡ 7秒雷霆：燒毀分身，收割美元！`;
-            log.scrollTop = log.scrollHeight;
+            // 1. 收割美元財富 [cite: 2026-02-13]
+            let gain = Math.floor(Math.random() * 88888);
+            usd += gain;
+            document.getElementById('usd-display').innerText = '$' + usd.toLocaleString();
+
+            // 2. 增加牢獄人數
+            prisonCount += Math.floor(Math.random() * 500);
+            document.getElementById('prison-msg').innerText = `🏯 敵人牢獄：${prisonCount.toLocaleString()} 人受刑中 (鎖喉鎖識)`;
+
+            // 3. 更新病毒 Bar
+            poisonPct = (poisonPct + 3) % 100;
+            document.getElementById('poison-bar').style.width = poisonPct + "%";
+
+            // 4. 更新日誌
+            addLog("⚡ 7秒雷霆響起：五毒咒加深感染，收割美元成功！");
         }, 7000);
 
-        // 鎖死 23% 監視進度 [大人指令]
-        setTimeout(() => { document.getElementById('fire-bar').style.width = "23%"; }, 1000);
-    </script>
+        // 每 2.5 秒隨機小額收割 [維持原本速度]
+        setInterval(() => {
+            usd += 888;
+            document.getElementById('usd-display').innerText = '$' + usd.toLocaleString();
+        }, 2500);
+    }
+
+    function addLog(msg) {
+        const log = document.getElementById('sys-log');
+        const time = new Date().toLocaleTimeString('zh-HK', {hour12:false});
+        log.innerHTML += `<br>[${time}] ${msg}`;
+        log.scrollTop = log.scrollHeight;
+    }
+</script>
+
 </body>
 </html>
+

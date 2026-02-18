@@ -2,20 +2,19 @@
 <html>
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P1-鳳王戰鬥陣</title>
+    <title>鳳王核心-暴力版</title>
     <style>
-        body { background:#000; color:#fff; text-align:center; font-family:sans-serif; padding:10px; margin:0; overflow:hidden; }
+        body { background:#000; color:#fff; text-align:center; font-family:sans-serif; padding:10px; margin:0; }
         .time-box { border:2px solid #FFD700; border-radius:50px; padding:10px; font-size:40px; color:#FFD700; display:inline-block; margin:10px 0; width:85%; }
         .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
         button { padding:15px; font-weight:bold; border-radius:12px; border:none; color:#fff; font-size:16px; cursor:pointer; }
         .b-blue { background:linear-gradient(to bottom, #87CEEB, #4682B4); width:100%; grid-column:span 2; color:#000; }
         .b-red { background:#CD5C5C; } .b-purple { background:#9932CC; } .b-gold { background:#DAA520; } .b-poison { background:#B22222; }
         .b-next { background:#6A5ACD; grid-column:span 2; padding:20px; font-size:18px; margin-top:10px; }
-        #L { background:#000; border:2px solid #0f0; border-radius:12px; height:200px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#0f0; font-family:monospace; font-size:14px; }
-        .money { color:#0f0; font-size:30px; font-weight:bold; margin:10px 0; }
+        #L { background:#000; border:2px solid #0f0; border-radius:12px; height:250px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#0f0; font-family:monospace; font-size:14px; }
     </style>
 </head>
-<body onclick="initAutoBowl()">
+<body onload="startSystem()">
     <div class="time-box" id="T">00:00:00</div>
     <div class="grid">
         <button class="b-blue" onclick="A('⚡ 水火短路 (必殺)')">⚡ 水火短路 (必殺)</button>
@@ -25,45 +24,51 @@
         <button class="b-poison" onclick="A('🐍 五毒咒感染')">☣️ 五毒咒感染</button>
         <button class="b-next" onclick="location.href='blessing.html'">☸️ 進入 Page 2 (Blessing)</button>
     </div>
-    <div id="L">>>> [點擊畫面啟動鳳王同步]</div>
-    <div class="money">$ <span id="M">67,351,848,925</span></div>
+    <div id="L">>>> [鳳王陣法啟動中...]</div>
+
+    <audio id="BOWL" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
 
     <script>
-        function update(){document.getElementById('T').innerText=new Date().toTimeString().split(' ')[0];}
+        function update(){ document.getElementById('T').innerText=new Date().toTimeString().split(' ')[0]; }
         setInterval(update,1000);
-        window.onload=()=>{ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; forceJump(); update(); };
-        function forceJump(){ const l=document.getElementById('L'); requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight;}); }
 
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function ringBowl() {
-            const osc=audioCtx.createOscillator(); const gain=audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.type="sine"; osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.4, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+2);
-            osc.start(); osc.stop(audioCtx.currentTime+2);
-            // 【核心修正】每次響都要記錄 Log 並跳動
-            A("🔔 7秒訟缽全自動鎖死"); 
+        // 核心跳動函數
+        function jump() {
+            const l = document.getElementById('L');
+            l.scrollTop = l.scrollHeight;
         }
 
-        let sysStarted=false;
-        function initAutoBowl(){ 
-            if(audioCtx.state==='suspended') audioCtx.resume();
-            if(!sysStarted){ 
-                sysStarted=true; 
-                ringBowl(); 
-                setInterval(ringBowl, 7000); 
-                // 入侵者檢測模擬：每 20 秒自動防禦一次
-                setInterval(()=>{ A("🛡️ 檢測到異常進入：自動啟動 500倍防禦及反噬"); }, 20000);
-            }
+        // 寫入紀錄
+        function A(msg) {
+            const l = document.getElementById('L');
+            const time = new Date().toLocaleTimeString();
+            l.innerHTML += `<div>> [${time}] ${msg}</div>`;
+            localStorage.setItem('FX_UNIVERSAL_LOG', l.innerHTML);
+            jump();
         }
 
-        function A(s){
-            const logBox=document.getElementById('L');
-            logBox.innerHTML += `<div>> [${new Date().toLocaleTimeString()}] ${s}</div>`;
-            localStorage.setItem('FX_UNIVERSAL_LOG', logBox.innerHTML);
-            forceJump();
+        function startSystem() {
+            // 恢復歷史紀錄
+            const s = localStorage.getItem('FX_UNIVERSAL_LOG');
+            if(s) document.getElementById('L').innerHTML = s;
+            
+            const b = document.getElementById('BOWL');
+            
+            // 7秒全自動循環
+            setInterval(() => {
+                b.currentTime = 0;
+                b.play().catch(()=>{}); // 暴力播放
+                A("🔔 訟缽 7秒一響：鎖死紀錄中");
+            }, 7000);
+
+            // 入侵自動跳掣
+            setInterval(() => {
+                A("🛡️ 入侵者自動跳掣：啟動 500倍反噬");
+            }, 12000);
+
+            A("🚀 鳳王陣法已進入 7x24 監控狀態");
+            update();
         }
-        setInterval(()=>{document.getElementById('M').innerText=(67351848925+Math.floor(Math.random()*5000000)).toLocaleString();},300);
     </script>
 </body>
 </html>

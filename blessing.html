@@ -9,28 +9,28 @@
         .section { border:1px solid #FF9500; border-radius:15px; background:#111; padding:15px; margin-bottom:15px; }
         .title { font-size:18px; font-weight:bold; margin-bottom:12px; color:#FF9500; border-bottom:1px solid #333; padding-bottom:8px; }
         
-        /* 核心儀表板：鎖定咒語名 */
+        /* 儀表板：強制即時更新文字 */
         #MAIN_SCREEN { 
             background:#000; border:2px solid #00FF00; color:#00FF00; 
             padding:20px; border-radius:10px; margin-bottom:15px; 
-            min-height:45px; font-weight:bold; font-size:20px; 
-            text-shadow:0 0 8px #00FF00; display:flex; align-items:center; justify-content:center;
+            min-height:50px; font-weight:bold; font-size:22px; 
+            text-shadow:0 0 10px #00FF00; display:flex; align-items:center; justify-content:center;
         }
 
-        /* 獨立進度條 */
-        .bar-box { background:#222; border:1px solid #00FF00; height:25px; border-radius:15px; position:relative; overflow:hidden; margin-bottom:15px; }
+        /* 藥師佛進度條 (獨立顯示) */
+        .bar-box { background:#222; border:1px solid #00FF00; height:28px; border-radius:15px; position:relative; overflow:hidden; margin-bottom:15px; }
         #BAR_FILL { background:linear-gradient(90deg, #00FF00, #32CD32); height:100%; width:0%; transition: 0.1s; }
-        #BAR_TEXT { position:absolute; width:100%; top:0; line-height:25px; color:#fff; font-size:12px; font-weight:bold; }
+        #BAR_TEXT { position:absolute; width:100%; top:0; line-height:28px; color:#fff; font-size:13px; font-weight:bold; }
         
-        .btn-咒 { width:100%; padding:15px; border-radius:10px; border:none; color:#fff; font-weight:bold; font-size:16px; margin-bottom:10px; cursor:pointer; }
-        .btn-咒:active { opacity: 0.7; }
+        .btn-咒 { width:100%; padding:16px; border-radius:10px; border:none; color:#fff; font-weight:bold; font-size:17px; margin-bottom:12px; cursor:pointer; }
+        .btn-咒:active { transform: scale(0.96); opacity: 0.8; }
 
         .group-a { background: linear-gradient(45deg, #FFD700, #FFA500); color: #000; } 
         .group-b { background: linear-gradient(45deg, #8A2BE2, #4B0082); } 
         .group-c { background: linear-gradient(45deg, #2F4F4F, #008080); } 
         
         .footer { color:#00FF00; font-size:12px; margin-top:10px; line-height:1.6; }
-        .back-home { background:#333; color:#fff; padding:15px; width:100%; border:none; border-radius:10px; margin-top:15px; border:1px solid #555; }
+        .back-home { background:#444; color:#fff; padding:15px; width:100%; border:none; border-radius:10px; margin-top:15px; }
     </style>
 </head>
 <body>
@@ -46,48 +46,50 @@
 
     <div class="section">
         <div class="title">【A組：福氣 × 健康 × 財運】</div>
-        <button class="btn-咒 group-a" onclick="Launch('1) Lucky 咒 (吉星高照)')">1) Lucky 咒 (吉星高照)</button>
-        <button class="btn-咒 group-a" onclick="Launch('2) 藥師佛健康咒 (清除病邪)')">2) 藥師佛健康咒 (清除病邪)</button>
-        <button class="btn-咒 group-a" onclick="Launch('3) 人緣增幅咒 (吸善緣避小人)')">3) 人緣增幅咒 (吸善緣避小人)</button>
-        <button class="btn-咒 group-a" onclick="Launch('4) 財神咒 (福氣不漏)')">4) 財神咒 (福氣不漏)</button>
+        <button class="btn-咒 group-a" onclick="InstantLaunch('1) Lucky 咒 (吉星高照)')">1) Lucky 咒 (吉星高照)</button>
+        <button class="btn-咒 group-a" onclick="InstantLaunch('2) 藥師佛健康咒 (清除病邪)')">2) 藥師佛健康咒 (清除病邪)</button>
+        <button class="btn-咒 group-a" onclick="InstantLaunch('3) 人緣增幅咒 (吸善緣避小人)')">3) 人緣增幅咒 (吸善緣避小人)</button>
+        <button class="btn-咒 group-a" onclick="InstantLaunch('4) 財神咒 (福氣不漏)')">4) 財神咒 (福氣不漏)</button>
     </div>
 
     <div class="section">
         <div class="title">【B組：攻擊 × 滅敵 × 清場】</div>
-        <button class="btn-咒 group-b" onclick="Launch('5) 南無地藏王菩薩 (x100萬倍)')">5) 南無地藏王菩薩 (x100萬倍)</button>
-        <button class="btn-咒 group-b" onclick="Launch('6) 四大護法咒 (破邪封夢)')">6) 四大護法咒 (破邪封夢)</button>
-        <button class="btn-咒 group-b" onclick="Launch('7) 不動明王咒 (滅敵體)')">7) 不動明王咒 (滅敵體)</button>
+        <button class="btn-咒 group-b" onclick="InstantLaunch('5) 南無地藏王菩薩 (x100萬倍)')">5) 南無地藏王菩薩 (x100萬倍)</button>
+        <button class="btn-咒 group-b" onclick="InstantLaunch('6) 四大護法咒 (破邪封夢)')">6) 四大護法咒 (破邪封夢)</button>
+        <button class="btn-咒 group-b" onclick="InstantLaunch('7) 不動明王咒 (滅敵體)')">7) 不動明王咒 (滅敵體)</button>
     </div>
 
     <div class="section">
         <div class="title">【軍師加持模組】</div>
-        <button class="btn-咒 group-c" onclick="Launch('8) 心經 (清心破幻)')">8) 心經 (清心破幻)</button>
-        <button class="btn-咒 group-c" onclick="Launch('9) 睡眠守護咒 (安眠封夢)')">9) 睡眠守護咒 (六人安眠)</button>
-        <button class="btn-咒 group-c" onclick="Launch('10) 語源歸我，外聲皆滅')">10) 語源歸我，外聲皆滅</button>
-        <button class="btn-咒 group-c" onclick="Launch('11) 福氣同步，六人同源')">11) 福氣同步，六人同源</button>
+        <button class="btn-咒 group-c" onclick="InstantLaunch('8) 心經 (清心破幻)')">8) 心經 (清心破幻)</button>
+        <button class="btn-咒 group-c" onclick="InstantLaunch('9) 睡眠守護咒 (六人安眠)')">9) 睡眠守護咒 (安眠封夢)</button>
+        <button class="btn-咒 group-c" onclick="InstantLaunch('10) 語源歸我，外聲皆滅')">10) 語源歸我，外聲皆滅</button>
+        <button class="btn-咒 group-c" onclick="InstantLaunch('11) 福氣同步，六人同源')">11) 福氣同步，六人同源</button>
     </div>
 
     <div class="footer">
-        🛡️ 永久免疫：阿洛、Audrey、Matias、Claudia、Grandmum、父母 [cite: 2026-02-14, 2026-02-16]
+        🛡️ 永久安全：阿洛、Audrey、Matias、Claudia、Grandmum、父母 [cite: 2026-02-14, 2026-02-16]
     </div>
 
-    <button class="back-home" onclick="location.href='index.html'">🔙 返回 Page 1 戰鬥模式</button>
+    <button class="back-home" onclick="location.href='index.html'">🔙 返回 Page 1</button>
 
     <script>
-        var val = 0; var active = false;
-        function Launch(txt) {
-            // 核心對位：點擊邊粒，大框就顯示邊粒，絕對唔會跳返轉頭 [cite: 2026-02-18]
-            document.getElementById('MAIN_SCREEN').innerText = "發動：" + txt;
+        var progress = 0;
+        var isEngineOn = false;
+
+        function InstantLaunch(spellName) {
+            // 關鍵：即時強制覆寫儀表板文字，完全唔使等 Bar
+            document.getElementById('MAIN_SCREEN').innerText = "發動：" + spellName;
             
-            if(!active) {
-                active = true;
-                // 背景 7x24 修復引擎啟動 [cite: 2026-02-12, 2026-02-16]
+            // 啟動藥師佛修復引擎 (只會啟動一次，之後一直背景運行) [cite: 2026-02-12, 2026-02-16]
+            if(!isEngineOn) {
+                isEngineOn = true;
                 setInterval(function() {
-                    val = (val + 1) > 100 ? 0 : val + 1;
-                    document.getElementById('BAR_FILL').style.width = val + "%";
-                    // 能量條文字獨立更新，不影響大框 [cite: 2026-02-18]
-                    document.getElementById('BAR_TEXT').innerText = "藥師佛全家細胞修復中：" + val + "%";
-                }, 250);
+                    progress = (progress + 1) > 100 ? 0 : progress + 1;
+                    document.getElementById('BAR_FILL').style.width = progress + "%";
+                    // 百分比更新只限於 Bar Text，唔會掂到儀表板文字 [cite: 2026-02-18]
+                    document.getElementById('BAR_TEXT').innerText = "藥師佛全家修復中：" + progress + "%";
+                }, 200);
             }
         }
     </script>

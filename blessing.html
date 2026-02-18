@@ -3,48 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王淨土 - 11咒全回歸</title>
+    <title>鳳王淨土 - 強制啟動版</title>
     <style>
         body { background:#000; color:#FFD700; font-family:sans-serif; text-align:center; padding:10px; margin:0; }
         #REAL_DASH { background:#000; border:4px solid #00FF00; color:#00FF00; padding:25px; border-radius:15px; margin:10px 0; font-weight:bold; font-size:24px; box-shadow:0 0 10px #00FF00; }
         .box { border:1px solid #FF9500; border-radius:12px; padding:10px; margin-bottom:10px; background:#111; }
-        .b-btn { width:100%; padding:14px; border-radius:8px; border:none; color:#fff; font-weight:bold; margin-bottom:6px; font-size:15px; }
+        .b-btn { width:100%; padding:14px; border-radius:8px; border:none; color:#fff; font-weight:bold; margin-bottom:6px; font-size:16px; cursor:pointer; }
         .c1 { background:linear-gradient(45deg, #FFD700, #FFA500); color:#000; }
         .c2 { background:linear-gradient(45deg, #8A2BE2, #4B0082); }
         .c3 { background:linear-gradient(45deg, #2F4F4F, #008080); }
         .log-box { background:#080808; border:1px solid #FFD700; border-radius:8px; padding:10px; text-align:left; }
-        #BL { font-family:monospace; font-size:11px; height:100px; overflow-y:auto; color:#FFD700; }
+        #BL { font-family:monospace; font-size:11px; height:120px; overflow-y:auto; color:#FFD700; }
+        .start-btn { background:#FF1493; color:#fff; padding:20px; width:100%; border-radius:15px; font-size:20px; font-weight:bold; margin-bottom:10px; border:3px solid #fff; box-shadow:0 0 15px #FF1493; }
     </style>
 </head>
-<body>
-    <div id="REAL_DASH">✨ 淨土待命...</div>
+<body onclick="initBlessing()">
+    <div id="REAL_DASH">✨ 淨土待命 (請點擊)</div>
+    
+    <button id="ST" class="start-btn" onclick="initBlessing()">🔥 點擊：啟動祝福術式</button>
+
     <div class="box">
         <button class="b-btn c1" onclick="S('1) Lucky 咒')">1) Lucky 咒</button>
         <button class="b-btn c1" onclick="S('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
         <button class="b-btn c1" onclick="S('3) 人緣增幅咒')">3) 人緣增幅咒</button>
         <button class="b-btn c1" onclick="S('4) 財神咒')">4) 財神咒</button>
     </div>
+
     <div class="box">
         <button class="b-btn c2" onclick="S('5) 南無地藏王菩薩')">5) 南無地藏王菩薩</button>
         <button class="b-btn c2" onclick="S('6) 四大護法咒')">6) 四大護法咒</button>
         <button class="b-btn c2" onclick="S('7) 不動明王咒')">7) 不動明王咒</button>
     </div>
+
     <div class="box">
         <button class="b-btn c3" onclick="S('8) 心經')">8) 心經</button>
         <button class="b-btn c3" onclick="S('9) 睡眠守護咒')">9) 睡眠守護咒</button>
         <button class="b-btn c3" onclick="S('10) 語源歸我')">10) 語源歸我</button>
         <button class="b-btn c3" onclick="S('11) 福氣同步')">11) 福氣同步</button>
     </div>
-    <div class="log-box"><div id="BL">>>> [System] 祝福 Log 啟動</div></div>
+
+    <div class="log-box">
+        <div id="BL">>>> [System] 淨土 Log 已就緒...</div>
+    </div>
+
     <button style="width:100%; padding:15px; border-radius:10px; background:#333; color:#fff; border:none; margin-top:10px;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
+
     <script>
+        let isInit = false;
+        function initBlessing() {
+            if(isInit) return;
+            isInit = true;
+            document.getElementById('ST').style.display = 'none';
+            document.getElementById('REAL_DASH').innerText = "✨ 淨土已激活";
+            document.getElementById('BL').innerHTML = `[${new Date().toLocaleTimeString()}] 🚀 祝福術式全面啟動！<br>` + document.getElementById('BL').innerHTML;
+        }
+
         function S(v){
-            document.getElementById('REAL_DASH').innerText="發動："+v; [cite: 2026-02-18]
-            let log=document.getElementById('BL');
-            let time=`[${new Date().toLocaleTimeString()}] `;
-            log.innerHTML=time+"執行："+v+" - 術式加強！<br>"+log.innerHTML;
+            if(!isInit) initBlessing();
+            document.getElementById('REAL_DASH').innerText = "發動：" + v; [cite: 2026-02-18]
+            let log = document.getElementById('BL');
+            let now = new Date().toLocaleTimeString();
+            log.innerHTML = `[${now}] 執行：${v} - 術式加強！<br>` + log.innerHTML;
             if(v.includes("藥師佛")){
-                log.innerHTML=`<span style="color:#00FF00;">${time}☸️ 器官修復引擎運作中...</span><br>`+log.innerHTML; [cite: 2026-02-16]
+                log.innerHTML = `<span style="color:#00FF00;">[${now}] ☸️ 器官自動掃描修復中...</span><br>` + log.innerHTML; [cite: 2026-02-16]
             }
         }
     </script>

@@ -3,66 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王咒法 7x24 淨土</title>
+    <title>鳳王淨土 - 絕對定格</title>
     <style>
         body { background:#000; color:#FFD700; font-family:sans-serif; text-align:center; padding:10px; margin:0; }
-        /* 核心大框：保證只聽按鈕指令 */
-        #CORE_DASHBOARD { 
-            background:#000; border:3px solid #00FF00; color:#00FF00; 
-            padding:25px; border-radius:15px; margin:15px 0; 
-            min-height:60px; font-weight:bold; font-size:24px; 
-            text-shadow:0 0 10px #00FF00; display:flex; align-items:center; justify-content:center;
-        }
-        /* 進度條：藥師佛只准喺呢度跳 */
-        .bar-wrap { background:#222; border:1px solid #00FF00; height:35px; border-radius:18px; position:relative; overflow:hidden; margin-bottom:15px; }
-        #BAR_FILL_GREEN { background:linear-gradient(90deg, #00FF00, #32CD32); height:100%; width:0%; }
-        #PERCENT_LABEL { position:absolute; width:100%; top:0; line-height:35px; color:#fff; font-size:14px; font-weight:bold; }
-        
-        .section { border:1px solid #FF9500; border-radius:15px; background:#111; padding:12px; margin-bottom:15px; }
-        .btn-bless { width:100%; padding:18px; border-radius:12px; border:none; color:#fff; font-weight:bold; font-size:17px; margin-bottom:10px; cursor:pointer; }
-        .btn-bless:active { background:#fff !important; color:#000 !important; transform: scale(0.95); }
+        /* 呢個係大框，我改咗 ID 叫 REAL_DASH */
+        #REAL_DASH { background:#000; border:4px solid #00FF00; color:#00FF00; padding:25px; border-radius:15px; margin:15px 0; min-height:60px; font-weight:bold; font-size:24px; text-shadow:0 0 10px #00FF00; }
+        .bar-box { background:#222; border:1px solid #00FF00; height:35px; border-radius:18px; position:relative; overflow:hidden; margin-bottom:15px; }
+        #BAR_P { background:#00FF00; height:100%; width:0%; }
+        #PERCENT_TXT { position:absolute; width:100%; top:0; line-height:35px; color:#fff; font-size:14px; font-weight:bold; }
+        .box { border:1px solid #FF9500; border-radius:15px; padding:12px; margin-bottom:10px; }
+        .b-btn { width:100%; padding:15px; border-radius:10px; border:none; color:#fff; font-weight:bold; margin-bottom:8px; }
         .c1 { background: linear-gradient(45deg, #FFD700, #FFA500); color:#000; }
-        .c2 { background: linear-gradient(45deg, #8A2BE2, #4B0082); }
-        .c3 { background: linear-gradient(45deg, #2F4F4F, #008080); }
     </style>
 </head>
 <body>
-    <h2 style="text-shadow: 0 0 10px #FFD700;">✨ 鳳王咒法 7x24 淨土 ✨</h2>
-    <div id="CORE_DASHBOARD">🛡️ 鳳王系統待命</div>
-    <div class="bar-wrap">
-        <div id="BAR_FILL_GREEN"></div>
-        <div id="PERCENT_LABEL">藥師佛全家修復中：0%</div>
-    </div>
-    <div class="section">
-        <button class="btn-bless c1" onclick="CastSpell('1) Lucky 咒 (吉星高照)')">1) Lucky 咒 (吉星高照)</button>
-        <button class="btn-bless c1" onclick="CastSpell('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
-        <button class="btn-bless c1" onclick="CastSpell('3) 人緣增幅咒')">3) 人緣增幅咒</button>
-        <button class="btn-bless c1" onclick="CastSpell('4) 財神咒')">4) 財神咒</button>
-    </div>
-    <div class="section">
-        <button class="btn-bless c2" onclick="CastSpell('5) 南無地藏王菩薩 (x100萬倍)')">5) 南無地藏王菩薩</button>
-        <button class="btn-bless c2" onclick="CastSpell('6) 四大護法咒')">6) 四大護法咒</button>
-        <button class="btn-bless c2" onclick="CastSpell('7) 不動明王咒')">7) 不動明王咒</button>
-    </div>
-    <div class="section">
-        <button class="btn-bless c3" onclick="CastSpell('8) 心經')">8) 心經</button>
-        <button class="btn-bless c3" onclick="CastSpell('9) 睡眠守護咒')">9) 睡眠守護咒</button>
-        <button class="btn-bless c3" onclick="CastSpell('10) 語源歸我')">10) 語源歸我</button>
-        <button class="btn-bless c3" onclick="CastSpell('11) 福氣同步')">11) 福氣同步</button>
+    <div id="REAL_DASH">🛡️ 鳳王系統待命</div>
+    <div class="bar-box"><div id="BAR_P"></div><div id="PERCENT_TXT">藥師佛修復中：0%</div></div>
+    <div class="box">
+        <button class="b-btn c1" onclick="S('Lucky 咒')">Lucky 咒</button>
+        <button class="b-btn c1" onclick="S('藥師佛健康咒')">藥師佛健康咒</button>
+        <button class="b-btn c1" onclick="S('人緣增幅咒')">人緣增幅咒</button>
+        <button class="b-btn c1" onclick="S('財神咒')">財神咒</button>
     </div>
     <button style="width:100%; padding:15px; border-radius:12px; background:#333; color:#fff; border:none;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
+
     <script>
-        // 絕對單向控制：按鈕只會改 CORE_DASHBOARD [cite: 2026-02-18]
-        function CastSpell(name) {
-            document.getElementById('CORE_DASHBOARD').innerText = "發動：" + name;
-        }
-        // 絕對單向控制：計時器只會改 PERCENT_LABEL [cite: 2026-02-18]
-        var p = 0;
-        setInterval(function() {
+        // 絕對控制：S 函數只改 REAL_DASH，其他嘢無權改 [cite: 2026-02-18]
+        function S(v) { document.getElementById('REAL_DASH').innerText = "發動：" + v; }
+        
+        let p = 0;
+        setInterval(() => {
             p = (p + 1) > 100 ? 0 : p + 1;
-            document.getElementById('BAR_FILL_GREEN').style.width = p + "%";
-            document.getElementById('PERCENT_LABEL').innerText = "藥師佛全家修復中：" + p + "%";
-        }, 200);
+            document.getElementById('BAR_P').style.width = p + "%";
+            // 關鍵：依家只改 PERCENT_TXT，絕對唔會摸到 REAL_DASH [cite: 2026-02-18]
+            document.getElementById('PERCENT_TXT').innerText = "藥師佛修復中：" + p + "%";
+        }, 150);
     </script>
 </body>
 </html>

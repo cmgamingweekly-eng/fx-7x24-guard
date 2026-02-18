@@ -2,76 +2,62 @@
 <html>
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鳳王戰鬥陣-終極版</title>
+    <title>P1-戰鬥核心</title>
     <style>
         body { background:#000; color:#fff; text-align:center; font-family:sans-serif; padding:10px; margin:0; overflow:hidden; }
         .time-box { border:2px solid #FFD700; border-radius:50px; padding:10px; font-size:40px; color:#FFD700; display:inline-block; margin:10px 0; width:85%; }
         .act-btn { background:#FF1493; color:#fff; width:100%; padding:20px; font-weight:bold; border-radius:12px; font-size:20px; margin-bottom:15px; border:none; box-shadow:0 0 20px #FF1493; }
         .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-        button { padding:15px; font-weight:bold; border-radius:12px; border:none; color:#fff; font-size:16px; }
+        button { padding:15px; font-weight:bold; border-radius:12px; border:none; color:#fff; font-size:16px; cursor:pointer; }
         .b-blue { background:linear-gradient(to bottom, #87CEEB, #4682B4); width:100%; grid-column:span 2; color:#000; }
         .b-red { background:#CD5C5C; } .b-purple { background:#9932CC; } .b-gold { background:#DAA520; } .b-poison { background:#B22222; }
         .b-next { background:#6A5ACD; grid-column:span 2; padding:20px; font-size:18px; margin-top:10px; }
-        /* 強化 Log 框：確保捲動流暢 */
         #L { background:#000; border:2px solid #0f0; border-radius:12px; height:180px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#0f0; font-family:monospace; font-size:14px; -webkit-overflow-scrolling:touch; }
+        .money { color:#0f0; font-size:30px; font-weight:bold; margin:10px 0; }
     </style>
 </head>
 <body onclick="initSystem()">
     <div class="time-box" id="T">00:00:00</div>
-    <button class="act-btn" onclick="initSystem()">🔥 點擊啟動：鳳王共鳴 & 紀錄鎖死</button>
+    <button class="act-btn" onclick="initSystem()">🔥 啟動鳳王鎖死同步</button>
     <div class="grid">
         <button class="b-blue" onclick="A('⚡ 水火短路 (必殺)')">⚡ 水火短路 (必殺)</button>
         <button class="b-red" onclick="A('🔥 三味真火')">🔥 三味真火</button>
         <button class="b-purple" onclick="A('☁️ 五十萬五雷')">☁️ 五十萬五雷</button>
         <button class="b-gold" onclick="A('🔱 萬龍萬獸')">🔱 萬龍萬獸</button>
-        <button class="b-poison" onclick="A('☣️ 五毒咒感染')">☣️ 五毒咒感染</button>
-        <button class="b-next" onclick="location.href='blessing.html'">☸️ 前往 P2 (Blessing)</button>
+        <button class="b-poison" onclick="A('🐍 五毒咒感染')">☣️ 五毒咒感染</button>
+        <button class="b-next" onclick="location.href='blessing.html'">☸️ 進入 Page 2 (Blessing)</button>
     </div>
-    <div id="L">>>> [等待鳳王啟動...]</div>
+    <div id="L">>>> [系統待命]</div>
+    <div class="money">$ <span id="M">67,351,848,925</span></div>
 
     <script>
         function update(){document.getElementById('T').innerText=new Date().toTimeString().split(' ')[0];}
         setInterval(update,1000);
-        window.onload=()=>{ const s=localStorage.getItem('FX_LOG'); if(s)document.getElementById('L').innerHTML=s; jumpToBottom(); update(); };
+        window.onload=()=>{ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; jumpToBottom(); update(); };
+        function jumpToBottom(){ const l=document.getElementById('L'); setTimeout(()=>{l.scrollTop=l.scrollHeight;},50); }
 
-        // 暴力跳動術：確保 Log 滾到最底
-        function jumpToBottom(){ 
-            const l = document.getElementById('L');
-            setTimeout(() => { l.scrollTop = l.scrollHeight; }, 50);
-        }
-
-        // 內置音頻術：自定義一個「叮」聲，唔使依賴外部網址
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function ringBowl() {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(440, audioCtx.currentTime); // 訟缽頻率
-            gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1.5);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 1.5);
+            const osc=audioCtx.createOscillator(); const gain=audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.type="sine"; osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+1.5);
+            osc.start(); osc.stop(audioCtx.currentTime+1.5);
         }
 
-        let sysStarted = false;
+        let sysStarted=false;
         function initSystem(){ 
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            ringBowl();
-            if(!sysStarted){
-                sysStarted = true;
-                setInterval(ringBowl, 7000); // 7秒一響
-                A("🔔 鳳王訟缽已鎖死 7x24");
-            }
+            if(audioCtx.state==='suspended') audioCtx.resume(); ringBowl();
+            if(!sysStarted){ sysStarted=true; setInterval(ringBowl, 7000); A("🔔 鳳王訟缽鎖死啟動"); }
         }
 
         function A(s){
-            const logBox = document.getElementById('L');
+            const logBox=document.getElementById('L');
             logBox.innerHTML += `<div>> [${new Date().toLocaleTimeString()}] ${s}</div>`;
-            localStorage.setItem('FX_LOG', logBox.innerHTML);
+            localStorage.setItem('FX_UNIVERSAL_LOG', logBox.innerHTML);
             jumpToBottom();
         }
+        setInterval(()=>{document.getElementById('M').innerText=(67351848925+Math.floor(Math.random()*5000000)).toLocaleString();},300);
     </script>
 </body>
 </html>

@@ -6,22 +6,15 @@
     <title>鳳王咒法 7x24 淨土</title>
     <style>
         body { background:#000; color:#FFD700; font-family:sans-serif; text-align:center; margin:0; padding:10px; }
-        /* 核心儀表板：只顯示咒語，唔准顯示百分比 */
-        #SPELL_DASHBOARD { 
-            background:#000; border:2px solid #00FF00; color:#00FF00; 
-            padding:20px; border-radius:12px; margin-bottom:15px; 
-            min-height:50px; font-weight:bold; font-size:22px; 
-            display:flex; align-items:center; justify-content:center;
-            text-shadow: 0 0 10px #00FF00;
-        }
-        /* 藥師佛進度條：只喺呢度跳百分比 */
-        .bar-container { background:#222; border:1px solid #00FF00; height:30px; border-radius:15px; position:relative; overflow:hidden; margin-bottom:15px; }
-        #BAR_FILL { background:#00FF00; height:100%; width:0%; }
-        #BAR_PERCENT { position:absolute; width:100%; top:0; line-height:30px; color:#fff; font-size:13px; font-weight:bold; }
-        
-        .section { border:1px solid #FF9500; border-radius:15px; padding:10px; margin-bottom:10px; background:#111; }
-        .btn-b { width:100%; padding:16px; border-radius:10px; border:none; color:#fff; font-weight:bold; margin-bottom:8px; font-size:16px; }
-        .btn-b:active { background:#fff !important; color:#000 !important; }
+        /* 核心大框：保證只顯示咒語 */
+        #SPELL_ZONE { background:#000; border:3px solid #00FF00; color:#00FF00; padding:25px; border-radius:15px; margin:15px 0; min-height:60px; font-weight:bold; font-size:24px; display:flex; align-items:center; justify-content:center; text-shadow:0 0 10px #00FF00; }
+        /* 進度條：藥師佛只准喺呢度跳 */
+        .bar-outer { background:#222; border:1px solid #00FF00; height:35px; border-radius:18px; position:relative; overflow:hidden; margin-bottom:15px; }
+        #BAR_GREEN { background:linear-gradient(90deg, #00FF00, #32CD32); height:100%; width:0%; }
+        #PERCENT_VAL { position:absolute; width:100%; top:0; line-height:35px; color:#fff; font-size:14px; font-weight:bold; }
+        .box { border:1px solid #FF9500; border-radius:15px; background:#111; padding:12px; margin-bottom:15px; }
+        .btn-b { width:100%; padding:18px; border-radius:12px; border:none; color:#fff; font-weight:bold; font-size:17px; margin-bottom:10px; cursor:pointer; }
+        .btn-b:active { background:#fff !important; color:#000 !important; transform: scale(0.95); }
         .c1 { background: linear-gradient(45deg, #FFD700, #FFA500); color:#000; }
         .c2 { background: linear-gradient(45deg, #8A2BE2, #4B0082); }
         .c3 { background: linear-gradient(45deg, #2F4F4F, #008080); }
@@ -29,51 +22,34 @@
 </head>
 <body>
     <h2 style="text-shadow: 0 0 10px #FFD700;">✨ 鳳王咒法 7x24 淨土 ✨</h2>
-    
-    <div id="SPELL_DASHBOARD">🛡️ 鳳王系統待命</div>
-
-    <div class="bar-container">
-        <div id="BAR_FILL"></div>
-        <div id="BAR_PERCENT">藥師佛全家細胞修復中：0%</div>
+    <div id="SPELL_ZONE">🛡️ 鳳王系統待命</div>
+    <div class="bar-outer"><div id="BAR_GREEN"></div><div id="PERCENT_VAL">藥師佛全家修復中：0%</div></div>
+    <div class="box">
+        <button class="btn-b c1" onclick="SetSpell('1) Lucky 咒 (吉星高照)')">1) Lucky 咒 (吉星高照)</button>
+        <button class="btn-b c1" onclick="SetSpell('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
+        <button class="btn-b c1" onclick="SetSpell('3) 人緣增幅咒')">3) 人緣增幅咒</button>
+        <button class="btn-b c1" onclick="SetSpell('4) 財神咒')">4) 財神咒</button>
     </div>
-
-    <div class="section">
-        <button class="btn-b c1" onclick="Cast('1) Lucky 咒 (吉星高照)')">1) Lucky 咒 (吉星高照)</button>
-        <button class="btn-b c1" onclick="Cast('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
-        <button class="btn-b c1" onclick="Cast('3) 人緣增幅咒')">3) 人緣增幅咒</button>
-        <button class="btn-b c1" onclick="Cast('4) 財神咒 (福氣不漏)')">4) 財神咒 (福氣不漏)</button>
+    <div class="box">
+        <button class="btn-b c2" onclick="SetSpell('5) 南無地藏王菩薩 (x100萬倍)')">5) 南無地藏王菩薩</button>
+        <button class="btn-b c2" onclick="SetSpell('6) 四大護法咒')">6) 四大護法咒</button>
+        <button class="btn-b c2" onclick="SetSpell('7) 不動明王咒')">7) 不動明王咒</button>
     </div>
-    <div class="section">
-        <button class="btn-b c2" onclick="Cast('5) 南無地藏王菩薩 (x100萬倍)')">5) 南無地藏王菩薩</button>
-        <button class="btn-b c2" onclick="Cast('6) 四大護法咒 (破邪封夢)')">6) 四大護法咒</button>
-        <button class="btn-b c2" onclick="Cast('7) 不動明王咒 (滅敵體)')">7) 不動明王咒</button>
+    <div class="box">
+        <button class="btn-b c3" onclick="SetSpell('8) 心經')">8) 心經</button>
+        <button class="btn-b c3" onclick="SetSpell('9) 睡眠守護咒')">9) 睡眠守護咒</button>
+        <button class="btn-b c3" onclick="SetSpell('10) 語源歸我')">10) 語源歸我</button>
+        <button class="btn-b c3" onclick="SetSpell('11) 福氣同步')">11) 福氣同步</button>
     </div>
-    <div class="section">
-        <button class="btn-b c3" onclick="Cast('8) 心經 (清心破幻)')">8) 心經</button>
-        <button class="btn-b c3" onclick="Cast('9) 睡眠守護咒 (六人安眠)')">9) 睡眠守護咒</button>
-        <button class="btn-b c3" onclick="Cast('10) 語源歸我，外聲皆滅')">10) 語源歸我</button>
-        <button class="btn-b c3" onclick="Cast('11) 福氣同步，六人同源')">11) 福氣同步</button>
-    </div>
-
-    <button style="width:100%; padding:15px; border-radius:10px; background:#333; color:#fff; border:none;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
-
+    <button style="width:100%; padding:15px; border-radius:12px; background:#333; color:#fff; border:none;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
     <script>
-        var p = 0; var running = false;
-        function Cast(name) {
-            // 第一步：即時更新大框，且「永遠唔會」被計時器覆寫 [cite: 2026-02-18]
-            document.getElementById('SPELL_DASHBOARD').innerText = "發動：" + name;
-            
-            // 第二步：如果背景修復未開，就開咗佢
-            if(!running) {
-                running = true;
-                setInterval(function() {
-                    p = (p + 1) > 100 ? 0 : p + 1;
-                    document.getElementById('BAR_FILL').style.width = p + "%";
-                    // 關鍵：百分比只可以喺 BAR_PERCENT 度出現 [cite: 2026-02-18]
-                    document.getElementById('BAR_PERCENT').innerText = "藥師佛全家修復中：" + p + "%";
-                }, 250);
-            }
-        }
+        function SetSpell(name) { document.getElementById('SPELL_ZONE').innerText = "發動：" + name; }
+        var p = 0;
+        setInterval(function() {
+            p = (p + 1) > 100 ? 0 : p + 1;
+            document.getElementById('BAR_GREEN').style.width = p + "%";
+            document.getElementById('PERCENT_VAL').innerText = "藥師佛全家修復中：" + p + "%";
+        }, 200);
     </script>
 </body>
 </html>

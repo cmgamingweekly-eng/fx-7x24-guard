@@ -1,69 +1,27 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王淨土 - Log 流暢版</title>
-    <style>
-        body { background:#000; color:#FFD700; font-family:sans-serif; text-align:center; padding:10px; margin:0; }
-        #REAL_DASH { background:#000; border:4px solid #00FF00; color:#00FF00; padding:25px; border-radius:15px; margin:10px 0; font-weight:bold; font-size:24px; box-shadow:0 0 15px rgba(0,255,0,0.3); }
-        .box { border:1px solid #FF9500; border-radius:12px; padding:10px; margin-bottom:10px; background:#111; }
-        .b-btn { width:100%; padding:14px; border-radius:8px; border:none; color:#fff; font-weight:bold; margin-bottom:6px; font-size:16px; cursor:pointer; transition: 0.2s; }
-        .b-btn:active { transform: scale(0.95); opacity: 0.8; }
-        .c1 { background:linear-gradient(45deg, #FFD700, #FFA500); color:#000; }
-        .c2 { background:linear-gradient(45deg, #8A2BE2, #4B0082); }
-        .c3 { background:linear-gradient(45deg, #2F4F4F, #008080); }
-        .log-box { background:#080808; border:1px solid #FFD700; border-radius:8px; padding:10px; text-align:left; margin-top:10px; }
-        #BL { font-family:monospace; font-size:12px; height:150px; overflow-y:auto; color:#FFD700; line-height:1.6; }
-    </style>
-</head>
-<body>
-    <div id="REAL_DASH">✨ 鳳王淨土待命</div>
-    
-    <div class="box">
-        <button class="b-btn c1" onclick="S('1) Lucky 咒')">1) Lucky 咒</button>
-        <button class="b-btn c1" onclick="S('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
-        <button class="b-btn c1" onclick="S('3) 人緣增幅咒')">3) 人緣增幅咒</button>
-        <button class="b-btn c1" onclick="S('4) 財神咒')">4) 財神咒</button>
-    </div>
+<audio id="DI_ZANG_AUDIO" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
-    <div class="box">
-        <button class="b-btn c2" onclick="S('5) 南無地藏王菩薩')">5) 南無地藏王菩薩</button>
-        <button class="b-btn c2" onclick="S('6) 四大護法咒')">6) 四大護法咒</button>
-        <button class="b-btn c2" onclick="S('7) 不動明王咒')">7) 不動明王咒</button>
-    </div>
+<script>
+    window.onload = () => {
+        const savedLog = localStorage.getItem('FX_LOG_P2');
+        if (savedLog) document.getElementById('BL').innerHTML = savedLog;
+    };
 
-    <div class="box">
-        <button class="b-btn c3" onclick="S('8) 心經')">8) 心經</button>
-        <button class="b-btn c3" onclick="S('9) 睡眠守護咒')">9) 睡眠守護咒</button>
-        <button class="b-btn c3" onclick="S('10) 語源歸我')">10) 語源歸我</button>
-        <button class="b-btn c3" onclick="S('11) 福氣同步')">11) 福氣同步</button>
-    </div>
-
-    <div class="log-box">
-        <div style="font-size:10px; color:#888; border-bottom:1px solid #333; margin-bottom:5px;">祝福術式執行紀錄:</div>
-        <div id="BL">>>> [System] 祝福引擎已就緒...</div>
-    </div>
-
-    <button style="width:100%; padding:15px; border-radius:10px; background:#333; color:#fff; border:none; margin-top:15px; font-weight:bold;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
-
-    <script>
-        function S(v){
-            // 1. 即時更新大框名 [cite: 2026-02-18]
-            document.getElementById('REAL_DASH').innerText = "發動：" + v;
-            
-            // 2. 即時寫入 Log [cite: 2026-02-12]
-            let log = document.getElementById('BL');
-            let now = new Date().toLocaleTimeString();
-            let msg = `[${now}] 執行：${v} - 成功增幅！<br>`;
-            
-            // 3. 藥師佛特別加強訊息 [cite: 2026-02-16]
-            if(v.includes("藥師佛")){
-                msg += `<span style="color:#00FF00;">[${now}] ☸️ 藥師金光灌頂，器官持續修復...</span><br>`;
-            }
-            
-            log.innerHTML = msg + log.innerHTML;
+    function S(v){
+        document.getElementById('REAL_DASH').innerText = "發動：" + v;
+        
+        // 地藏王專屬觸發 [cite: 2026-02-18]
+        if(v.includes("地藏王")){
+            document.getElementById('DI_ZANG_AUDIO').play();
         }
-    </script>
-</body>
-</html>
+
+        let log = document.getElementById('BL');
+        let now = new Date().toLocaleTimeString();
+        let msg = `[${now}] 執行：${v} - 成功增幅！<br>`;
+        let newLog = msg + log.innerHTML;
+        newLog = newLog.split('<br>').slice(0, 50).join('<br>');
+        log.innerHTML = newLog;
+        localStorage.setItem('FX_LOG_P2', newLog);
+    }
+</script>

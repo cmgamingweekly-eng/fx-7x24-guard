@@ -9,39 +9,37 @@
         .section { border:1px solid #FF9500; border-radius:15px; background:#111; padding:15px; margin-bottom:15px; }
         .title { font-size:18px; font-weight:bold; margin-bottom:12px; color:#FF9500; border-bottom:1px solid #333; padding-bottom:8px; }
         
-        /* 儀表板：只顯示咒語發動狀態 */
-        #display-board { 
+        /* 儀表板：只准顯示咒語名 */
+        #CURRENT_SPELL { 
             background:#000; border:2px solid #00FF00; color:#00FF00; 
             padding:20px; border-radius:10px; margin-bottom:15px; 
             min-height:45px; font-weight:bold; font-size:22px; 
-            text-shadow:0 0 8px #00FF00; display:flex; align-items:center; justify-content:center;
+            text-shadow:0 0 8px #00FF00;
         }
 
-        /* 藥師佛修復條 (獨立) */
+        /* 修復進度條 */
         .bar-box { background:#222; border:1px solid #00FF00; height:25px; border-radius:15px; position:relative; overflow:hidden; margin-bottom:15px; }
-        #hp-bar { background:linear-gradient(90deg, #00FF00, #32CD32); height:100%; width:0%; transition: 0.1s; }
-        #hp-percent { position:absolute; width:100%; top:0; line-height:25px; color:#fff; font-size:12px; font-weight:bold; }
+        #HP_BAR_FILL { background:linear-gradient(90deg, #00FF00, #32CD32); height:100%; width:0%; transition: 0.1s; }
+        #HEALING_STATUS { position:absolute; width:100%; top:0; line-height:25px; color:#fff; font-size:12px; font-weight:bold; }
         
         .btn-咒 { width:100%; padding:15px; border-radius:10px; border:none; color:#fff; font-weight:bold; font-size:16px; margin-bottom:10px; cursor:pointer; }
-        .btn-咒:active { opacity: 0.7; transform: scale(0.98); }
-
         .group-a { background: linear-gradient(45deg, #FFD700, #FFA500); color: #000; } 
         .group-b { background: linear-gradient(45deg, #8A2BE2, #4B0082); } 
         .group-c { background: linear-gradient(45deg, #2F4F4F, #008080); } 
         
         .footer { color:#00FF00; font-size:12px; margin-top:10px; line-height:1.6; }
-        .back-home { background:#333; color:#fff; padding:15px; width:100%; border:none; border-radius:10px; margin-top:15px; border:1px solid #555; }
+        .back-home { background:#333; color:#fff; padding:15px; width:100%; border:none; border-radius:10px; margin-top:15px; }
     </style>
 </head>
 <body>
 
     <h2 style="text-shadow: 0 0 10px #FFD700;">✨ 鳳王咒法 7x24 淨土 ✨</h2>
 
-    <div id="display-board">🛡️ 鳳王系統待命</div>
+    <div id="CURRENT_SPELL">🛡️ 鳳王系統待命</div>
 
     <div class="bar-box">
-        <div id="hp-bar"></div>
-        <div id="hp-percent">細胞修復能量：0%</div>
+        <div id="HP_BAR_FILL"></div>
+        <div id="HEALING_STATUS">細胞修復能量：0%</div>
     </div>
 
     <div class="section">
@@ -68,28 +66,28 @@
     </div>
 
     <div class="footer">
-        [span_0](start_span)🛡️ 永久免疫：阿洛、Audrey、Matias、Claudia、Grandmum、父母[span_0](end_span)
+        🛡️ 永久免疫：阿洛、Audrey、Matias、Claudia、Grandmum、父母 [cite: 2026-02-15]
     </div>
 
     <button class="back-home" onclick="location.href='index.html'">🔙 返回 Page 1 戰鬥模式</button>
 
     <script>
         var progress = 0;
-        var running = false;
+        var engineActive = false;
 
-        function Cast(spellName) {
-            // 1. 更新儀表板，只顯示咒語，唔俾藥師佛引擎洗底
-            document.getElementById('display-board').innerText = "發動：" + spellName;
-
-            // 2. 啟動後台引擎，只更新百分比文字
-            if(!running) {
-                running = true;
+        function Cast(name) {
+            // 第一步：暴力覆蓋儀表板，絕不手軟
+            document.getElementById('CURRENT_SPELL').innerHTML = "發動：" + name;
+            
+            // 第二步：如果引擎未開，啟動背景進度條
+            if(!engineActive) {
+                engineActive = true;
                 setInterval(function() {
                     progress = (progress + 1) > 100 ? 0 : progress + 1;
-                    document.getElementById('hp-bar').style.width = progress + "%";
-                    // 重點：只更新進度條內部文字，唔更新 display-board
-                    document.getElementById('hp-percent').innerText = "藥師佛全家細胞修復中：" + progress + "%";
-                }, 250);
+                    document.getElementById('HP_BAR_FILL').style.width = progress + "%";
+                    // 重點：呢度只準改進度條文字，絕對唔可以掂 CURRENT_SPELL
+                    document.getElementById('HEALING_STATUS').innerText = "藥師佛全家細胞修復中：" + progress + "%";
+                }, 300); // 稍微減慢更新頻率，減輕手機負荷
             }
         }
     </script>

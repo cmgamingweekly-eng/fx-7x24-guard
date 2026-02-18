@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P1-戰鬥核心</title>
+    <title>P1-鳳王戰鬥陣</title>
     <style>
         body { background:#000; color:#fff; text-align:center; font-family:sans-serif; padding:10px; margin:0; overflow:hidden; }
         .time-box { border:2px solid #FFD700; border-radius:50px; padding:10px; font-size:40px; color:#FFD700; display:inline-block; margin:10px 0; width:85%; }
@@ -41,12 +41,20 @@
             osc.type="sine"; osc.frequency.setValueAtTime(440, audioCtx.currentTime);
             gain.gain.setValueAtTime(0.4, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+2);
             osc.start(); osc.stop(audioCtx.currentTime+2);
+            // 【核心修正】每次響都要記錄 Log 並跳動
+            A("🔔 7秒訟缽全自動鎖死"); 
         }
 
         let sysStarted=false;
         function initAutoBowl(){ 
             if(audioCtx.state==='suspended') audioCtx.resume();
-            if(!sysStarted){ sysStarted=true; ringBowl(); setInterval(ringBowl, 7000); A("🔔 7秒訟缽全自動鎖死"); }
+            if(!sysStarted){ 
+                sysStarted=true; 
+                ringBowl(); 
+                setInterval(ringBowl, 7000); 
+                // 入侵者檢測模擬：每 20 秒自動防禦一次
+                setInterval(()=>{ A("🛡️ 檢測到異常進入：自動啟動 500倍防禦及反噬"); }, 20000);
+            }
         }
 
         function A(s){

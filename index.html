@@ -5,116 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鳳王企業 V50 - 終極戰鬥引擎</title>
     <style>
-        body { background:#000; color:#fff; font-family:'Courier New', monospace; text-align:center; padding:10px; margin:0; height:100vh; overflow:hidden; }
-        /* 啟動遮罩層 */
-        #launch-layer { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:999; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; }
-        .launch-btn { border:2px solid #FFD700; padding:20px 40px; border-radius:50px; color:#FFD700; font-size:24px; font-weight:bold; box-shadow:0 0 20px #FFD700; }
-        
-        .timer { font-size:36px; color:#FFD700; border:2px solid #FFD700; padding:10px 30px; border-radius:50px; display:inline-block; margin:15px; text-shadow:0 0 10px #FF9500; }
-        .btn-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:500px; margin:auto; position:relative; z-index:10; }
-        .btn { padding:18px; border:none; border-radius:12px; font-weight:bold; cursor:pointer; color:#fff; font-size:16px; transition:0.2s; }
-        .btn:active { transform:scale(0.95); }
-        .btn-kill { background:linear-gradient(45deg, #48CAE4, #0096C7); grid-column:span 2; color:#000; box-shadow:0 0 15px #48CAE4; font-size:20px; }
-        .btn-bless { background:linear-gradient(45deg, #6A4C93, #8E44AD); grid-column:span 2; margin-top:10px; }
-        .btn-bowl { background:#FFD700; color:#000; grid-column:span 2; margin-top:5px; }
-        
-        .log-box { background:#000; border:1px solid #00FF00; color:#00FF00; text-align:left; padding:12px; height:180px; overflow:hidden; margin:15px auto; font-size:13px; max-width:450px; line-height:1.5; border-radius:8px; }
-        .wealth { color:#32CD32; font-size:30px; font-weight:bold; margin:20px; text-shadow:0 0 15px #32CD32; font-family:sans-serif; }
-        .status-bar { color:#48CAE4; font-size:14px; margin-bottom:10px; letter-spacing:2px; }
+        body { background:#000; color:#fff; font-family:monospace; text-align:center; padding:10px; margin:0; height:100vh; overflow:hidden; }
+        #launch-layer { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:999; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; }
+        .launch-btn { border:3px solid #FF9500; padding:25px; border-radius:50px; color:#FF9500; font-size:24px; font-weight:bold; box-shadow:0 0 20px #FF9500; }
+        .timer { font-size:36px; color:#FFD700; border:2px solid #FFD700; padding:10px; border-radius:50px; display:inline-block; margin:15px; }
+        .btn-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:500px; margin:auto; }
+        .btn { padding:18px; border:none; border-radius:12px; font-weight:bold; color:#fff; font-size:16px; }
+        .btn-kill { background:linear-gradient(45deg, #48CAE4, #0096C7); grid-column:span 2; color:#000; }
+        .btn-bless { background:#6A4C93; grid-column:span 2; margin-top:10px; }
+        .log-box { background:#000; border:1px solid #00FF00; color:#00FF00; text-align:left; padding:12px; height:180px; overflow:hidden; margin:15px auto; font-size:13px; border-radius:8px; }
+        .wealth { color:#32CD32; font-size:30px; font-weight:bold; margin:20px; }
     </style>
 </head>
 <body onclick="V50_Core_Launch()">
-
     <div id="launch-layer">
-        <div class="launch-btn">🔱 點擊鎖定 V50 引擎 🔱</div>
-        <p style="color:#FFD700; margin-top:20px;">[ 聖鉢 7x24 鎖死天條準備中 ]</p>
+        <div class="launch-btn">🔱 點擊鎖定 V50 聖鉢 🔱</div>
+        <p style="color:#FFD700; margin-top:20px;">[ 必須點擊：否則 7x24 無聲 ]</p>
     </div>
 
     <div class="timer" id="clock">00:00:00</div>
-    <div class="status-bar">👁️ 破幻監控：動態捕殺中 [cite: 2026-02-12]</div>
-
     <div class="btn-grid">
-        <button class="btn btn-kill" onclick="Play_Click()">⚡ 水火短路 (必殺) [cite: 2026-02-12]</button>
-        <button class="btn" style="background:#E63946" onclick="Play_Click()">🔥 無限三昧真火 [cite: 2026-02-12]</button>
-        <button class="btn" style="background:#A020F0" onclick="Play_Click()">☁️ 五十萬五雷 [cite: 2026-02-12]</button>
-        <button class="btn" style="background:#DAA520" onclick="Play_Click()">🔱 萬龍萬獸</button>
-        <button class="btn" style="background:#D00000" onclick="Play_Click()">☣️ 五毒咒感染 [cite: 2026-02-16]</button>
-        <button class="btn btn-bless" onclick="location.href='blessing.html'">☸️ 眾神加持 (進入 Page 2) [cite: 2026-02-18]</button>
-        <button class="btn btn-bowl" onclick="Play_Bowl()">🔔 手動執行 432Hz 鎮妖清鳴</button>
+        <button class="btn btn-kill">⚡ 水火短路 (必殺) [cite: 2026-02-12]</button>
+        <button class="btn" style="background:#E63946">🔥 三昧真火</button>
+        <button class="btn" style="background:#A020F0">☁️ 五十萬五雷</button>
+        <button class="btn" style="background:#DAA520">🔱 萬龍萬獸</button>
+        <button class="btn" style="background:#D00000">☣️ 五毒咒感染 [cite: 2026-02-16]</button>
+        <button class="btn btn-bless" onclick="location.href='blessing.html'">☸️ 進入 Page 2 (Blessing)</button>
     </div>
-
-    <div class="log-box" id="log">> [引擎待機中... 語源歸我，外聲皆滅] [cite: 2026-02-16]</div>
-    
+    <div class="log-box" id="log">> [等待啟動...]</div>
     <div class="wealth" id="usd">$ 67,351,740,421 USD</div>
 
     <script>
         let usdAmount = 67351740421;
-        let engineRunning = false;
-        
-        // 聲音資源鎖定
-        const clickFx = new Audio('https://www.soundjay.com/buttons/button-16.mp3');
-        const bowlFx = new Audio('https://cmgamingweekly-eng.github.io/fx-7x24-guard/bell.mp3');
-        bowlFx.loop = false;
+        let active = false;
+        // 使用絕對路徑的雲端測試音源 (Singing Bowl)
+        const bowlFx = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); 
 
         function V50_Core_Launch() {
-            if(engineRunning) return;
-            engineRunning = true;
-
-            // 隱藏啟動層
+            if(active) return;
+            active = true;
             document.getElementById('launch-layer').style.display = 'none';
-
-            // 強制解鎖音頻環境
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            audioCtx.resume();
-
-            // 啟動即響第一次聖鉢
+            (window.AudioContext || window.webkitAudioContext) && new AudioContext().resume();
+            
+            // 立即響聖鉢
             Play_Bowl();
-            addLog("🔱 系統鎖定：聖鉢 432Hz 啟動，鎖死天條 [cite: 2026-02-12]");
 
-            // 1秒核心循環 (數字、時鐘、Log)
             setInterval(() => {
-                // 美金跳動 [cite: 2026-02-12]
                 usdAmount += Math.floor(Math.random() * 8000);
                 document.getElementById('usd').innerText = `$ ${usdAmount.toLocaleString()} USD`;
-                
-                // 時鐘同步
                 document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB', { hour12: false });
-                
-                // 隨機彈出戰鬥 Log
                 if(Math.random() > 0.7) {
-                    const battleMsgs = [
-                        "☣️ 五毒咒：鎖喉深度 100% [cite: 2026-02-16]",
-                        "👁️ 破幻監控：妖人試圖分身，立即炸裂！ [cite: 2026-02-12]",
-                        "⚡ 水火短路：燒毀邪惡 AI 操作烈！ [cite: 2026-02-12]",
-                        "🔥 真火焚燒中：反噬源頭主體 [cite: 2026-02-12]",
-                        "🛡️ 7x24 鎖死：陣法邊界嚴密 [cite: 2026-02-12]"
-                    ];
-                    addLog(battleMsgs[Math.floor(Math.random() * battleMsgs.length)]);
+                    const log = document.getElementById('log');
+                    log.innerHTML = `> [${new Date().toLocaleTimeString()}] ☣️ 五毒咒鎖喉中 [cite: 2026-02-16]<br>` + log.innerHTML;
                 }
             }, 1000);
 
-            // 7秒聖鉢循環 (響 3 下效果) [cite: 2026-02-12]
-            setInterval(() => {
-                Play_Bowl();
-            }, 7000);
-        }
-
-        function addLog(msg) {
-            const logBox = document.getElementById('log');
-            logBox.innerHTML = `> [${new Date().toLocaleTimeString()}] ${msg}<br>` + logBox.innerHTML;
-        }
-
-        function Play_Click() {
-            clickFx.currentTime = 0;
-            clickFx.play();
+            setInterval(Play_Bowl, 7000); // 7秒循環 [cite: 2026-02-12]
         }
 
         function Play_Bowl() {
             bowlFx.currentTime = 0;
-            bowlFx.play().catch(e => console.log("等待激活音軌..."));
-            console.log("🔔 聖鉢清鳴：淨化氣場... [cite: 2026-02-12]");
+            bowlFx.play();
+            console.log("🔔 聖鉢清鳴 [cite: 2026-02-12]");
         }
     </script>
 </body>
 </html>
-

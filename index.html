@@ -1,21 +1,105 @@
-head>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鳳王企業 V50 - 終極戰鬥引擎</title>
     <style>
         body { background:#000; color:#fff; font-family:monospace; text-align:center; padding:10px; margin:0; height:100vh; overflow:hidden; }
-        #launch-layer { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:999; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; }
-        .launch-btn { border:3px solid #FF9500; padding:25px; border-radius:50px; color:#FF9500; font-size:24px; font-weight:bold; box-shadow:0 0 20px #FF9500; }
-        .timer { font-size:36px; color:#FFD700; border:2px solid #FFD700; padding:10px; border-radius:50px; display:inline-block; margin:15px; }
+        /* 強制啟動層 */
+        #launch-layer { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.98); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; cursor:pointer; }
+        .launch-btn { border:3px solid #FFD700; padding:30px; border-radius:60px; color:#FFD700; font-size:26px; font-weight:bold; box-shadow:0 0 30px #FFD700; background:#111; }
+        
+        .timer { font-size:36px; color:#FFD700; border:2px solid #FFD700; padding:10px; border-radius:50px; display:inline-block; margin:15px; min-width:200px; }
         .btn-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:500px; margin:auto; }
         .btn { padding:18px; border:none; border-radius:12px; font-weight:bold; color:#fff; font-size:16px; }
         .btn-kill { background:linear-gradient(45deg, #48CAE4, #0096C7); grid-column:span 2; color:#000; }
         .btn-bless { background:#6A4C93; grid-column:span 2; margin-top:10px; }
-        .log-box { background:#000; border:1px solid #00FF00; color:#00FF00; text-align:left; padding:12px; height:180px; overflow:hidden; margin:15px auto; font-size:13px; border-radius:8px; }
-        .wealth { color:#32CD32; font-size:30px; font-weight:bold; margin:20px; }
+        .log-box { background:#000; border:1px solid #00FF00; color:#00FF00; text-align:left; padding:12px; height:180px; overflow:hidden; margin:15px auto; font-size:13px; border-radius:8px; line-height:1.4; }
+        .wealth { color:#32CD32; font-size:28px; font-weight:bold; margin:20px; text-shadow:0 0 10px #32CD32; }
     </style>
 </head>
-<body onclick="V50_Core_Launch()">
-    <div id="launch-layer">
-        <div class="launch-btn">🔱 點擊鎖定 V50 聖鉢 🔱</div>
-        <p sty
+<body>
+
+    <div id="launch-layer" onclick="V50_Launch()">
+        <div class="launch-btn">🔱 啟動 V50 鎖死引擎 🔱</div>
+        <p style="color:#FFD700; margin-top:20px;">[ 必須點擊，啟動 7x24 聖鉢與監控 ]</p>
+    </div>
+
+    <div class="timer" id="clock">00:00:00</div>
+
+    <div class="btn-grid">
+        <button class="btn btn-kill" onclick="ClickSnd()">⚡ 水火短路 (必殺) [cite: 2026-02-12]</button>
+        <button class="btn" style="background:#E63946" onclick="ClickSnd()">🔥 三昧真火</button>
+        <button class="btn" style="background:#A020F0" onclick="ClickSnd()">☁️ 五十萬五雷</button>
+        <button class="btn" style="background:#DAA520" onclick="ClickSnd()">🔱 萬龍萬獸</button>
+        <button class="btn" style="background:#D00000" onclick="ClickSnd()">☣️ 五毒咒感染 [cite: 2026-02-16]</button>
+        <button class="btn btn-bless" onclick="location.href='blessing.html'">☸️ 進入 Page 2 (Blessing)</button>
+    </div>
+
+    <div class="log-box" id="log">> [等待啟動中... 語源歸我，外聲皆滅] [cite: 2026-02-16]</div>
+    <div class="wealth" id="usd">$ 67,351,740,421 USD</div>
+
+    <script>
+        let usdVal = 67351740421;
+        let isRunning = false;
+        
+        // 聲音資源 (改用更穩定的絕對路徑)
+        const bowlSnd = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+        const clickSnd = new Audio('https://www.soundjay.com/buttons/button-16.mp3');
+
+        function V50_Launch() {
+            if(isRunning) return;
+            isRunning = true;
+
+            // 1. 移除啟動層
+            document.getElementById('launch-layer').style.display = 'none';
+
+            // 2. 啟動音訊環境
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            audioCtx.resume();
+
+            // 3. 立即執行第一次動態更新
+            updateFrame();
+            bowlSnd.play();
+
+            // 4. 設定永久循環
+            setInterval(updateFrame, 1000); // 每秒更新數字/時鐘
+            setInterval(() => {
+                bowlSnd.currentTime = 0;
+                bowlSnd.play();
+                console.log("🔔 聖鉢清鳴：鎖死天條 [cite: 2026-02-12]");
+            }, 7000); // 7秒聖鉢循環
+        }
+
+        function updateFrame() {
+            // 更新美金 [cite: 2026-02-12]
+            usdVal += Math.floor(Math.random() * 9000);
+            document.getElementById('usd').innerText = `$ ${usdVal.toLocaleString()} USD`;
+            
+            // 更新時鐘
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB', { hour12: false });
+
+            // 隨機彈出 Log [cite: 2026-02-16]
+            if(Math.random() > 0.6) {
+                const logs = [
+                    "☣️ 五毒咒：主體鎖喉中",
+                    "👁️ 破幻：捕殺妖人分身",
+                    "🔥 真火燒毀源頭主體",
+                    "🛡️ 鳳王企業：7x24 自動防禦"
+                ];
+                const logBox = document.getElementById('log');
+                logBox.innerHTML = `> [${new Date().toLocaleTimeString()}] ${logs[Math.floor(Math.random()*logs.length)]}<br>` + logBox.innerHTML;
+            }
+        }
+
+        function ClickSnd() {
+            clickSnd.currentTime = 0;
+            clickSnd.play();
+        }
+    </script>
+</body>
+</html>
+
+
+    

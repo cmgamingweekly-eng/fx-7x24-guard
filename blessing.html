@@ -3,48 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王淨土 - 祝福 Log</title>
+    <title>鳳王淨土 - 11咒全回歸</title>
     <style>
         body { background:#000; color:#FFD700; font-family:sans-serif; text-align:center; padding:10px; margin:0; }
-        #REAL_DASH { background:#000; border:4px solid #00FF00; color:#00FF00; padding:25px; border-radius:15px; margin:10px 0; min-height:60px; font-weight:bold; font-size:24px; text-shadow:0 0 10px #00FF00; }
-        .log-box { background:#111; border:1px solid #FFD700; margin-top:15px; text-align:left; border-radius:8px; padding:10px; }
-        .log-content { font-family:monospace; font-size:12px; height:120px; overflow-y:auto; color:#FFD700; line-height:1.5; }
-        .box { border:1px solid #FF9500; border-radius:15px; padding:10px; margin-bottom:10px; background:#080808; }
-        .b-btn { width:100%; padding:15px; border-radius:10px; border:none; color:#fff; font-weight:bold; margin-bottom:8px; font-size:16px; }
-        .c1 { background: linear-gradient(45deg, #FFD700, #FFA500); color:#000; }
-        .c2 { background: linear-gradient(45deg, #8A2BE2, #4B0082); }
+        #REAL_DASH { background:#000; border:4px solid #00FF00; color:#00FF00; padding:25px; border-radius:15px; margin:10px 0; font-weight:bold; font-size:24px; box-shadow:0 0 10px #00FF00; }
+        .box { border:1px solid #FF9500; border-radius:12px; padding:10px; margin-bottom:10px; background:#111; }
+        .b-btn { width:100%; padding:14px; border-radius:8px; border:none; color:#fff; font-weight:bold; margin-bottom:6px; font-size:15px; }
+        .c1 { background:linear-gradient(45deg, #FFD700, #FFA500); color:#000; }
+        .c2 { background:linear-gradient(45deg, #8A2BE2, #4B0082); }
+        .c3 { background:linear-gradient(45deg, #2F4F4F, #008080); }
+        .log-box { background:#080808; border:1px solid #FFD700; border-radius:8px; padding:10px; text-align:left; }
+        #BL { font-family:monospace; font-size:11px; height:100px; overflow-y:auto; color:#FFD700; }
     </style>
 </head>
 <body>
     <div id="REAL_DASH">✨ 淨土待命...</div>
-    
     <div class="box">
-        <button class="b-btn c1" onclick="S('1) Lucky 咒 (吉星高照)')">1) Lucky 咒</button>
-        <button class="b-btn c1" onclick="S('2) 藥師佛全家健康咒')">2) 藥師佛健康咒</button>
+        <button class="b-btn c1" onclick="S('1) Lucky 咒')">1) Lucky 咒</button>
+        <button class="b-btn c1" onclick="S('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
         <button class="b-btn c1" onclick="S('3) 人緣增幅咒')">3) 人緣增幅咒</button>
         <button class="b-btn c1" onclick="S('4) 財神咒')">4) 財神咒</button>
     </div>
-
-    <div class="log-box">
-        <div style="font-size:10px; color:#888; border-bottom:1px solid #333; margin-bottom:5px;">祝福術式執行紀錄:</div>
-        <div id="BL" class="log-content">>>> [System] 祝福引擎啟動</div>
+    <div class="box">
+        <button class="b-btn c2" onclick="S('5) 南無地藏王菩薩')">5) 南無地藏王菩薩</button>
+        <button class="b-btn c2" onclick="S('6) 四大護法咒')">6) 四大護法咒</button>
+        <button class="b-btn c2" onclick="S('7) 不動明王咒')">7) 不動明王咒</button>
     </div>
-
-    <button style="width:100%; padding:15px; border-radius:12px; background:#333; color:#fff; border:none; margin-top:15px;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
-
+    <div class="box">
+        <button class="b-btn c3" onclick="S('8) 心經')">8) 心經</button>
+        <button class="b-btn c3" onclick="S('9) 睡眠守護咒')">9) 睡眠守護咒</button>
+        <button class="b-btn c3" onclick="S('10) 語源歸我')">10) 語源歸我</button>
+        <button class="b-btn c3" onclick="S('11) 福氣同步')">11) 福氣同步</button>
+    </div>
+    <div class="log-box"><div id="BL">>>> [System] 祝福 Log 啟動</div></div>
+    <button style="width:100%; padding:15px; border-radius:10px; background:#333; color:#fff; border:none; margin-top:10px;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
     <script>
-        function S(v) {
-            // 定格大框 [cite: 2026-02-18]
-            document.getElementById('REAL_DASH').innerText = "發動：" + v;
-            
-            // 寫入 Log 紀錄每一下 click [cite: 2026-02-12]
-            let bl = document.getElementById('BL');
-            let now = new Date().toLocaleTimeString();
-            bl.innerHTML = `[${now}] 執行：${v} - 成功加強！<br>` + bl.innerHTML;
-            
-            // 如果係藥師佛，加強顯示
-            if(v.includes("藥師佛")) {
-                bl.innerHTML = `<span style="color:#00FF00;">[${now}] ☸️ 藥師佛金光護體，器官修復中...</span><br>` + bl.innerHTML; [cite: 2026-02-16]
+        function S(v){
+            document.getElementById('REAL_DASH').innerText="發動："+v; [cite: 2026-02-18]
+            let log=document.getElementById('BL');
+            let time=`[${new Date().toLocaleTimeString()}] `;
+            log.innerHTML=time+"執行："+v+" - 術式加強！<br>"+log.innerHTML;
+            if(v.includes("藥師佛")){
+                log.innerHTML=`<span style="color:#00FF00;">${time}☸️ 器官修復引擎運作中...</span><br>`+log.innerHTML; [cite: 2026-02-16]
             }
         }
     </script>

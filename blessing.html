@@ -6,7 +6,7 @@
     <style>
         body { background:#000; color:#FFD700; text-align:center; font-family:sans-serif; padding:10px; margin:0; overflow:hidden; }
         .grid { display:grid; grid-template-columns:1fr; gap:8px; margin-top:10px; }
-        .b-btn { width:100%; padding:15px; background:#222; color:#FFD700; border:1px solid #FF9500; font-weight:bold; border-radius:10px; cursor:pointer; }
+        .b-btn { width:100%; padding:15px; background:#222; color:#FFD700; border:1px solid #FF9500; font-weight:bold; border-radius:10px; }
         #L { background:#000; border:2px solid #FFD700; border-radius:12px; height:220px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#FFD700; font-family:monospace; font-size:14px; }
     </style>
 </head>
@@ -19,15 +19,14 @@
         <button class="b-btn" style="background:#4B0082; color:#fff;" onclick="A('5) 南無地藏王菩薩')">🙏 5) 南無地藏王菩薩</button>
         <button class="b-btn" onclick="A('6) 四大護法咒')">🛡️ 6) 四大護法咒</button>
     </div>
-    <div id="L">>>> [等待點擊啟動全自動共鳴]</div>
+    <div id="L">>>> [點擊畫面續行自動共鳴]</div>
     <div style="display:flex; gap:10px; margin-top:15px;">
         <button style="flex:1; padding:15px; border-radius:10px; background:#333; color:#fff; border:none;" onclick="location.href='index.html'">🔙 返回 P1</button>
         <button style="flex:1; padding:15px; background:#4B0082; color:#fff; border-radius:10px; border:none;" onclick="location.href='log.html'">➡️ 前往 P3</button>
     </div>
-
     <script>
-        window.onload=()=>{ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; jumpToBottom(); };
-        function jumpToBottom(){ const l=document.getElementById('L'); setTimeout(()=>{l.scrollTop=l.scrollHeight;},50); }
+        window.onload=()=>{ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; forceJump(); };
+        function forceJump(){ const l=document.getElementById('L'); requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight;}); }
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function ringBowl() {
             const osc=audioCtx.createOscillator(); const gain=audioCtx.createGain();
@@ -39,13 +38,13 @@
         let sysStarted=false;
         function initAutoBowl(){ 
             if(audioCtx.state==='suspended') audioCtx.resume();
-            if(!sysStarted){ sysStarted=true; ringBowl(); setInterval(ringBowl, 7000); A("🔔 P2 自動訟缽加持中"); }
+            if(!sysStarted){ sysStarted=true; ringBowl(); setInterval(ringBowl, 7000); A("🔔 P2 自動訟缽鎖死中"); }
         }
         function A(s){
             const logBox=document.getElementById('L');
             logBox.innerHTML += `<div>✨ [${new Date().toLocaleTimeString()}] ${s}</div>`;
             localStorage.setItem('FX_UNIVERSAL_LOG', logBox.innerHTML);
-            jumpToBottom();
+            forceJump();
         }
     </script>
 </body>

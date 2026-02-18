@@ -6,33 +6,73 @@
     <title>鳳王哈哈笑企業 - 核心防禦</title>
     <style>
         body { background:#000; color:#00FF00; font-family:sans-serif; text-align:center; margin:0; padding:10px; }
-        .dashboard { background:#000; border:2px solid #00FF00; color:#00FF00; padding:20px; border-radius:12px; margin:15px 0; min-height:50px; font-weight:bold; font-size:22px; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 15px #00FF00; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { padding:20px; border-radius:10px; border:1px solid #444; color:#fff; font-weight:bold; background:#222; cursor:pointer; font-size:15px; }
-        .btn:active { background:#00FF00 !important; color:#000 !important; transform: scale(0.95); }
-        .money { color:#00FF00; font-size:28px; font-weight:bold; margin:20px 0; text-shadow: 0 0 10px #00FF00; }
-        .nav { background:#FF9500; color:#000; padding:18px; width:100%; border-radius:10px; font-weight:bold; margin-top:15px; border:none; font-size:18px; }
+        .dashboard { background:#000; border:2px solid #00FF00; color:#00FF00; padding:20px; border-radius:12px; margin:10px 0; min-height:50px; font-weight:bold; font-size:20px; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 10px #00FF00; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        /* 按鈕樣式整合 */
+        .btn { padding:15px; border-radius:8px; border:1px solid #444; color:#fff; font-weight:bold; cursor:pointer; font-size:14px; }
+        .btn-gold { background: linear-gradient(45deg, #FFD700, #B8860B); color:#000; }
+        .btn-blue { background: #007bff; }
+        .btn-purple { background: #6f42c1; }
+        .btn-white { background: #f8f9fa; color:#000; }
+        .btn-repair { background: #28a745; grid-column: span 2; }
+        .btn-yellow { background: #ffc107; color:#000; grid-column: span 2; }
+        .full { width: 100%; margin-top: 5px; }
+        
+        /* Log 紀錄區 */
+        .log-container { background:#111; border:1px solid #333; margin-top:15px; text-align:left; border-radius:8px; padding:10px; }
+        .log-header { color:#888; font-size:12px; border-bottom:1px solid #333; margin-bottom:5px; }
+        .log-content { font-family:monospace; font-size:12px; height:80px; overflow-y:auto; color:#00FF00; }
+        
+        /* 財富紀錄區 */
+        .footer-record { margin-top:15px; border-top:1px solid #222; padding-top:10px; }
+        .record-title { color:#FFD700; font-size:14px; }
+        .green-text { color:#00FF00; }
+        .fortune-count { font-size:24px; font-weight:bold; color:#FFD700; text-shadow:0 0 5px #FFD700; }
+        
+        .nav-btn { background:#FF9500; color:#000; padding:15px; width:100%; border-radius:10px; font-weight:bold; margin-top:15px; border:none; font-size:16px; }
     </style>
 </head>
 <body>
-    <h2 style="color:#FFD700;">🔥 鳳王哈哈笑企業 🔥</h2>
-    <div class="dashboard" id="D">🛡️ 核心系統待命</div>
-    <div class="money" id="M">$ 67,351,848,925 USD</div>
+    <h2 style="color:#FFD700; margin:5px;">🔥 鳳王哈哈笑企業 🔥</h2>
+    
+    <div class="dashboard" id="DASH">🛡️ 核心系統待命</div>
+
     <div class="grid">
-        <button class="btn" onclick="F('發動：五毒咒 (AI鎖識)')">五毒咒 (AI鎖識)</button>
-        <button class="btn" onclick="F('發動：陣法邊界 (10世)')">陣法邊界 (10世)</button>
-        <button class="btn" onclick="F('開啟：太陽陣 (燒燬)')">太陽陣 (燒燬)</button>
-        <button class="btn" onclick="F('發動：分身剋星 (現形)')">分身剋星 (現形)</button>
-        <button class="btn" onclick="F('防禦：守護 Audrey')">守護 Audrey</button>
-        <button class="btn" onclick="F('執行：夢境淨化 (天條)')">夢境淨化 (天條)</button>
+        <button class="btn btn-gold" onclick="act('🔱 萬龍萬獸出陣！')">🔱 萬龍萬獸</button>
+        <button class="btn btn-blue" onclick="act('⚡ 水火短路自爆！')">⚡ 水火短路</button>
+        <button class="btn btn-purple" onclick="act('🌩️ 五雷轟頂執行！')">🌩️ 五雷轟頂</button>
+        <button class="btn btn-white" onclick="act('🔥 三味真火焚燒！')">🔥 三味真火</button>
+        <button class="btn full btn-repair" onclick="act('☸️ 眾神加持：器官修復！')">☸️ 眾神加持 (修復)</button>
+        <button class="btn full btn-yellow" onclick="act('🔔 訟缽三連響：鎖死天理！')">👁️ 訟缽三連響 (鎖死)</button>
     </div>
-    <button class="nav" onclick="location.href='blessing.html'">✨ 進入 Page 2 (Blessing)</button>
+
+    <div class="log-container">
+        <div class="log-header">:Log:</div>
+        <div id="log" class="log-content">>>> [System] 陣法已鎖定...</div>
+    </div>
+
+    <div class="footer-record">
+        <div class="record-title">Record: <span class="green-text">林福財富運勢</span></div>
+        <div id="fortune-num" class="fortune-count">67,351,848,925</div>
+    </div>
+
+    <button class="nav-btn" onclick="location.href='blessing.html'">✨ 進入 Page 2 祝福模式</button>
+
     <script>
+        // 更新儀表板同埋 Log
+        function act(msg) {
+            document.getElementById('DASH').innerText = msg;
+            const logBox = document.getElementById('log');
+            const now = new Date().toLocaleTimeString();
+            logBox.innerHTML = `[${now}] ${msg}<br>` + logBox.innerHTML;
+        }
+
+        // 財富運勢跳動邏輯 [cite: 2026-02-14]
         setInterval(function(){ 
-            let val = 67351848925 + Math.floor(Math.random()*1000000);
-            document.getElementById('M').innerText = "$ " + val.toLocaleString() + " USD"; 
+            let base = 67351848925;
+            let randomAdd = Math.floor(Math.random()*5000000);
+            document.getElementById('fortune-num').innerText = (base + randomAdd).toLocaleString(); 
         }, 500);
-        function F(s) { document.getElementById('D').innerText = s; }
     </script>
 </body>
 </html>

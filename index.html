@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鳳王核心-豪華戰鬥版</title>
+    <title>P1-核心戰鬥</title>
     <style>
         body { background:#000; color:#fff; text-align:center; font-family:sans-serif; padding:10px; margin:0; }
         .time-box { border:2px solid #FFD700; border-radius:50px; padding:10px; font-size:40px; color:#FFD700; display:inline-block; margin:10px 0; width:80%; }
@@ -16,33 +16,29 @@
         .money { color:#0f0; font-size:32px; font-weight:bold; margin:15px 0; }
     </style>
 </head>
-<body>
+<body onclick="startBowl()">
     <div class="time-box" id="T">00:00:00</div>
     <div class="grid">
         <button class="b-blue" onclick="A('⚡ 水火短路 (必殺)')">⚡ 水火短路 (必殺)</button>
-        <button class="b-red" onclick="A('🔥 三昧真火')">🔥 三昧真火</button>
+        <button class="b-red" onclick="A('🔥 三味真火')">🔥 三味真火</button>
         <button class="b-purple" onclick="A('☁️ 五十萬五雷')">☁️ 五十萬五雷</button>
         <button class="b-gold" onclick="A('🔱 萬龍萬獸')">🔱 萬龍萬獸</button>
         <button class="b-poison" onclick="A('🐍 五毒咒感染')">☣️ 五毒咒感染</button>
-        <button class="b-next" onclick="location.href='blessing.html'">☸️ 進入 Page 2 (Blessing)</button>
+        <button class="b-next" onclick="location.href='blessing.html'">☸️ 進入 Page 2</button>
     </div>
-    <div id="L">>>> [等待啟動...]</div>
+    <div id="L">>>> [點擊畫面啟動訟缽]</div>
     <div class="money">$ <span id="M">67,351,848,925</span> USD</div>
+    <audio id="BOWL" src="https://actions.google.com/sounds/v1/ambiences/temple_bell.ogg"></audio>
 
     <script>
-        function update() {
-            let now = new Date();
-            document.getElementById('T').innerText = now.toTimeString().split(' ')[0];
-        }
-        setInterval(update, 1000);
-        window.onload=()=>{ const s=localStorage.getItem('FX_P1_FULL'); if(s)document.getElementById('L').innerHTML=s; update(); };
+        function update(){document.getElementById('T').innerText=new Date().toTimeString().split(' ')[0];}
+        setInterval(update,1000);
+        window.onload=()=>{const s=localStorage.getItem('FX_P1_FULL'); if(s)document.getElementById('L').innerHTML=s; update();};
+        function startBowl(){document.getElementById('BOWL').play(); setInterval(()=>{document.getElementById('BOWL').play();},7000); document.getElementById('L').innerHTML="🔔 訟缽術式已啟動 (7s)<br>"+document.getElementById('L').innerHTML;}
         function A(s){
-            let now = new Date().toTimeString().split(' ')[0];
-            let icon = s.includes('五毒') ? '☣️' : '>';
-            let logMsg = `<div style="color:${s.includes('五毒')?'#FFA500':'#0f0'}">${icon} [${now}] ${s} 鎖喉中</div>`;
-            let logBox = document.getElementById('L');
-            logBox.innerHTML = logMsg + logBox.innerHTML;
-            localStorage.setItem('FX_P1_FULL', logBox.innerHTML);
+            let logMsg=`<div style="color:${s.includes('五毒')?'#FFA500':'#0f0'}">> [${new Date().toTimeString().split(' ')[0]}] ${s}</div>`;
+            document.getElementById('L').innerHTML=logMsg+document.getElementById('L').innerHTML;
+            localStorage.setItem('FX_P1_FULL',document.getElementById('L').innerHTML);
         }
         setInterval(()=>{document.getElementById('M').innerText=(67351848925+Math.floor(Math.random()*5000000)).toLocaleString();},300);
     </script>

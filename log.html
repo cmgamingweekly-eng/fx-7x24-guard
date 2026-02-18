@@ -5,11 +5,13 @@
     <title>P3-擴展陣</title>
     <style>
         body { background:#000; color:#fff; text-align:center; font-family:sans-serif; padding:10px; margin:0; overflow:hidden; }
-        .b-btn { width:100%; padding:15px; margin-bottom:8px; background:#111; color:#FFD700; border:1px solid #6f42c1; font-weight:bold; border-radius:10px; }
-        #L { background:#000; border:2px solid #6f42c1; border-radius:12px; height:280px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#E6E6FA; font-family:monospace; font-size:14px; }
+        #WAKE { position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; background:rgba(0,0,0,0.01); }
+        .b-btn { width:100%; padding:15px; margin-bottom:8px; background:#111; color:#FFD700; border:1px solid #6f42c1; font-weight:bold; border-radius:10px; position:relative; z-index:1; }
+        #L { background:#000; border:2px solid #6f42c1; border-radius:12px; height:280px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#E6E6FA; font-family:monospace; font-size:14px; position:relative; z-index:1; }
     </style>
 </head>
-<body onclick="initAutoBowl()">
+<body onload="restore()">
+    <div id="WAKE" onclick="initSystem()"></div>
     <div class="grid">
         <button class="b-btn" onclick="A('7) 不動明王咒')">7) 不動明王咒</button>
         <button class="b-btn" onclick="A('8) 心經')">8) 心經</button>
@@ -17,29 +19,28 @@
         <button class="b-btn" onclick="A('10) 語源歸我')">10) 語源歸我</button>
         <button class="b-btn" onclick="A('11) 福氣同步')">11) 福氣同步</button>
     </div>
-    <div id="L">>>> [等待全紀錄同步]</div>
-    <button style="width:100%; padding:15px; margin-top:15px; border-radius:10px; background:#333; color:#fff; border:none;" onclick="location.href='blessing.html'">🔙 返回 P2</button>
+    <div id="L">>>> [等待點擊啟動數據鎖死]</div>
+    <button style="width:100%; padding:15px; margin-top:15px; border-radius:10px; background:#333; color:#fff; border:none; position:relative; z-index:1;" onclick="location.href='blessing.html'">🔙 返回 P2</button>
     <script>
-        window.onload=()=>{ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; forceJump(); };
-        function forceJump(){ const l=document.getElementById('L'); requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight;}); }
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function ringBowl() {
+        function restore(){ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; jump(); }
+        function jump(){ const l=document.getElementById('L'); l.scrollTop=l.scrollHeight; }
+        function ring() {
             const osc=audioCtx.createOscillator(); const gain=audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.type="sine"; osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.4, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+2);
-            osc.start(); osc.stop(audioCtx.currentTime+2);
+            osc.type='sine'; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+1.5);
+            osc.start(); osc.stop(audioCtx.currentTime+1.5);
+            A("🔔 鳳王訟缽：P3 全紀錄鎖死同步");
         }
         let sysStarted=false;
-        function initAutoBowl(){ 
+        function initSystem(){
             if(audioCtx.state==='suspended') audioCtx.resume();
-            if(!sysStarted){ sysStarted=true; ringBowl(); setInterval(ringBowl, 7000); A("🔔 P3 全自動數據鎖死"); }
+            if(!sysStarted){ sysStarted=true; document.getElementById('WAKE').style.display='none'; ring(); setInterval(ring, 7000); setInterval(()=>{ A("🛡️ P3 自動防禦：入侵者反噬跳掣中"); }, 12000); }
         }
-        function A(s){
-            const logBox=document.getElementById('L');
-            logBox.innerHTML += `<div>💠 [${new Date().toLocaleTimeString()}] ${s}</div>`;
-            localStorage.setItem('FX_UNIVERSAL_LOG', logBox.innerHTML);
-            forceJump();
+        function A(msg){
+            const l=document.getElementById('L'); l.innerHTML+=`<div>💠 [${new Date().toLocaleTimeString()}] ${msg}</div>`;
+            localStorage.setItem('FX_UNIVERSAL_LOG', l.innerHTML); jump();
         }
     </script>
 </body>

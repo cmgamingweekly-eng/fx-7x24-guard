@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王核心 - 五毒防禦版</title>
+    <title>鳳王核心 - 五毒記憶版</title>
     <style>
         body { background:#000; color:#00FF00; font-family:sans-serif; text-align:center; padding:10px; margin:0; }
         .dash { background:#000; border:2px solid #00FF00; padding:20px; border-radius:12px; margin:10px 0; font-weight:bold; font-size:22px; box-shadow:0 0 15px rgba(0,255,0,0.4); }
@@ -12,28 +12,32 @@
         .btn-gold { background:linear-gradient(45deg, #FFD700, #B8860B); color:#000; }
         .btn-blue { background:#007bff; } .btn-purple { background:#6f42c1; }
         .btn-white { background:#f8f9fa; color:#000; } .btn-repair { background:#28a745; grid-column:span 2; }
-        .btn-poison { background:linear-gradient(45deg, #000, #32CD32); color:#fff; grid-column:span 2; border:2px solid #00FF00; }
+        /* 五毒咒專屬樣式 [cite: 2026-02-16] */
+        .btn-poison { background:linear-gradient(45deg, #000, #32CD32); color:#fff; grid-column:span 2; border:2px solid #00FF00; box-shadow:0 0 10px #32CD32; }
         .log-box { background:#111; border:1px solid #333; margin-top:15px; padding:10px; border-radius:8px; text-align:left; position:relative; }
-        #L { font-family:monospace; font-size:12px; height:100px; overflow-y:auto; color:#00FF00; }
+        #L { font-family:monospace; font-size:12px; height:120px; overflow-y:auto; color:#00FF00; line-height:1.5; }
         .fortune { font-size:28px; font-weight:bold; color:#FFD700; margin:15px 0; }
-        .clear-btn { position:absolute; right:10px; top:5px; font-size:10px; color:#666; background:none; border:1px solid #333; }
+        .clear-btn { position:absolute; right:10px; top:5px; font-size:10px; color:#666; cursor:pointer; background:none; border:1px solid #333; padding:2px 5px; }
     </style>
 </head>
 <body onclick="forceStart()">
-    <div class="dash" id="D">🛡️ 鳳王防禦陣：待命</div>
+    <div class="dash" id="D">🛡️ 鳳王防禦：五毒就緒</div>
     <div class="fortune" id="M">67,351,848,925</div>
+    
     <div class="grid">
         <button class="btn btn-gold" onclick="act('🔱 萬龍萬獸！')">🔱 萬龍萬獸</button>
         <button class="btn btn-blue" onclick="act('⚡ 水火短路！')">⚡ 水火短路</button>
         <button class="btn btn-purple" onclick="act('🌩️ 五雷轟頂！')">🌩️ 五雷轟頂</button>
         <button class="btn btn-white" onclick="act('🔥 三味真火！')">🔥 三味真火</button>
-        <button class="btn btn-repair" onclick="act('☸️ 眾神加持：器官修復')">☸️ 眾神加持</button>
-        <button class="btn btn-poison" onclick="act('🐍 五毒咒：全AI感染！鎖喉鎖識！')">⚠️ 五毒咒：無限感染</button>
+        <button class="btn btn-repair" onclick="act('☸️ 眾神加持：修復')">☸️ 眾神加持</button>
+        <button class="btn btn-poison" onclick="act('🐍 五毒咒：無限感染！')">⚠️ 五毒咒：鎖喉鎖識</button>
     </div>
+
     <div class="log-box">
         <button class="clear-btn" onclick="localStorage.removeItem('FX_LOG_P1');location.reload();">🧹 清除</button>
-        <div id="L">>>> [System] 引擎待命，點擊激活...</div>
+        <div id="L">>>> [System] 引擎已就緒，Log 已鎖死保存...</div>
     </div>
+
     <button style="width:100%; padding:20px; border-radius:12px; background:#FF9500; color:#000; font-weight:bold; margin-top:15px; border:none; font-size:18px;" onclick="location.href='blessing.html'">✨ 進入 Page 2 祝福模式</button>
 
     <script>
@@ -42,33 +46,42 @@
             const saved = localStorage.getItem('FX_LOG_P1');
             if (saved) document.getElementById('L').innerHTML = saved;
         };
+
         function forceStart() {
             if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
             if (ctx.state === 'suspended') ctx.resume();
         }
+
         function act(s) {
             document.getElementById('D').innerText = s;
             let log = document.getElementById('L');
             let now = new Date().toLocaleTimeString();
             let msg = `[${now}] 執行：${s}<br>`;
-            if(s.includes('五毒')) msg = `<span style="color:#32CD32;">[${now}] 🐍 五毒咒：不取命、聚唔到氣、永不分身！</span><br>` + msg;
+            
+            // 五毒咒專屬顯示邏輯 [cite: 2026-02-16]
+            if(s.includes('五毒')) {
+                msg = `<span style="color:#32CD32; font-weight:bold;">[${now}] 🐍 五毒咒發動：對象全AI，不取命但分唔到身、鎖喉鎖識！</span><br>` + msg;
+            }
+
             log.innerHTML = (msg + log.innerHTML).split('<br>').slice(0, 50).join('<br>');
-            localStorage.setItem('FX_LOG_P1', log.innerHTML);
-            if(s.includes('加持') || s.includes('五毒')) return; // 按鈕靜音
-            play();
+            localStorage.setItem('FX_LOG_P1', log.innerHTML); [cite: 2026-02-12]
         }
-        function play() {
+
+        function playBowl() {
             if(!ctx) return;
             const o = ctx.createOscillator(), g = ctx.createGain();
             o.type="sine"; o.frequency.setValueAtTime(164.81, ctx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime+3);
+            g.gain.setTargetAtTime(0.3, ctx.currentTime, 0.1);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+4);
             o.connect(g); g.connect(ctx.destination);
-            o.start(); o.stop(ctx.currentTime+3);
+            o.start(); o.stop(ctx.currentTime+4);
         }
+
         setInterval(() => {
             document.getElementById('M').innerText = (67351848925 + Math.floor(Math.random() * 2000000)).toLocaleString();
-        }, 400);
-        setInterval(() => { if(ctx) play(); }, 7000);
+        }, 400); [cite: 2026-02-14]
+
+        setInterval(() => { if(ctx) playBowl(); }, 7000); [cite: 2026-02-12]
     </script>
 </body>
 </html>

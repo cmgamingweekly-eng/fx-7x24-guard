@@ -3,52 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王核心 - 全自動版</title>
+    <title>鳳王核心 - 強制跳動</title>
     <style>
         body { background:#000; color:#00FF00; font-family:sans-serif; text-align:center; padding:10px; margin:0; }
         .dash { background:#000; border:2px solid #00FF00; padding:20px; border-radius:12px; margin:10px 0; font-weight:bold; font-size:20px; box-shadow:0 0 10px #00FF00; }
         .grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-        .btn { padding:15px; border-radius:8px; border:none; color:#fff; font-weight:bold; }
+        .btn { padding:15px; border-radius:8px; border:none; color:#fff; font-weight:bold; cursor:pointer; }
         .btn-gold { background:linear-gradient(45deg, #FFD700, #B8860B); color:#000; }
         .btn-blue { background:#007bff; } .btn-purple { background:#6f42c1; }
         .btn-white { background:#f8f9fa; color:#000; } .btn-repair { background:#28a745; grid-column:span 2; }
         .btn-yellow { background:#ffc107; color:#000; grid-column:span 2; }
         .log-box { background:#111; border:1px solid #333; margin-top:10px; padding:10px; border-radius:8px; text-align:left; }
         #L { font-family:monospace; font-size:11px; height:80px; overflow-y:auto; color:#00FF00; }
-        .fortune { font-size:26px; font-weight:bold; color:#FFD700; margin:10px 0; }
+        .fortune { font-size:26px; font-weight:bold; color:#FFD700; margin:15px 0; }
         .nav-btn { width:100%; padding:18px; border-radius:12px; background:#FF9500; color:#000; font-weight:bold; margin-top:10px; border:none; }
     </style>
 </head>
-<body onclick="if(ctx.state==='suspended')ctx.resume()">
-    <div class="dash" id="D">🛡️ 鳳王術式 7x24 鎖定</div>
+<body onclick="forceStart()">
+    <div class="dash" id="D">🛡️ 鳳王核心：強制跳動中</div>
     <div class="fortune" id="M">67,351,848,925</div>
     <div class="grid">
         <button class="btn btn-gold" onclick="act('🔱 萬龍萬獸！')">🔱 萬龍萬獸</button>
         <button class="btn btn-blue" onclick="act('⚡ 水火短路！')">⚡ 水火短路</button>
         <button class="btn btn-purple" onclick="act('🌩️ 五雷轟頂！')">🌩️ 五雷轟頂</button>
         <button class="btn btn-white" onclick="act('🔥 三味真火！')">🔥 三味真火</button>
-        <button class="btn btn-repair" onclick="act('☸️ 眾神加持：器官修復！')">☸️ 眾神加持</button>
+        <button class="btn btn-repair" onclick="act('☸️ 眾神加持：修復！')">☸️ 眾神加持</button>
         <button class="btn btn-yellow" onclick="act('🔔 訟缽：鎖死天理！')">🔔 訟缽三連響</button>
     </div>
-    <div class="log-box"><div id="L">>>> [System] 術式引擎已就緒...</div></div>
+    <div class="log-box"><div id="L">>>> [System] 引擎待命，請點擊畫面</div></div>
     <button class="nav-btn" onclick="location.href='blessing.html'">✨ 進入 Page 2 祝福模式</button>
+
     <script>
-        const ctx = new(window.AudioContext||window.webkitAudioContext)();
-        function play(){
-            const o=ctx.createOscillator(),g=ctx.createGain();
-            o.type="sine";o.frequency.setValueAtTime(164.81,ctx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+3);
-            o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+3);
+        let ctx;
+        // 強制啟動函數
+        function forceStart() {
+            if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+            if (ctx.state === 'suspended') ctx.resume();
+            act('✨ 術式全面激活！');
         }
-        function act(s){
-            document.getElementById('D').innerText=s;
-            document.getElementById('L').innerHTML=`[${new Date().toLocaleTimeString()}] ${s}<br>`+document.getElementById('L').innerHTML;
+
+        function play() {
+            if (!ctx) return;
+            const o = ctx.createOscillator(), g = ctx.createGain();
+            o.type = "sine"; o.frequency.setValueAtTime(164.81, ctx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 3);
+            o.connect(g); g.connect(ctx.destination);
+            o.start(); o.stop(ctx.currentTime + 3);
+        }
+
+        function act(s) {
+            document.getElementById('D').innerText = s;
+            document.getElementById('L').innerHTML = `[${new Date().toLocaleTimeString()}] ${s}<br>` + document.getElementById('L').innerHTML;
             play();
         }
-        setInterval(play, 7000); [cite: 2026-02-12]
-        setInterval(()=>{
-            document.getElementById('M').innerText=(67351848925+Math.floor(Math.random()*100000)).toLocaleString();
-        }, 500); [cite: 2026-02-14]
+
+        // 財富數字：無論有無點擊都強制跳動 [cite: 2026-02-14]
+        setInterval(() => {
+            let n = 67351848925 + Math.floor(Math.random() * 1000000);
+            document.getElementById('M').innerText = n.toLocaleString();
+        }, 300);
+
+        // 7 秒自動訟缽 [cite: 2026-02-12]
+        setInterval(() => { if(ctx) play(); }, 7000);
     </script>
 </body>
 </html>

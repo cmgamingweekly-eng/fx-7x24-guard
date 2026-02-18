@@ -21,22 +21,23 @@
         <button class="b-btn" style="background:#4B0082; color:#fff;" onclick="A('5) 南無地藏王菩薩')">🙏 5) 南無地藏王菩薩</button>
         <button class="b-btn" onclick="A('6) 四大護法咒')">🛡️ 6) 四大護法咒</button>
     </div>
-    <div id="L">>>> [等待點擊啟動全自動共鳴]</div>
+    <div id="L">>>> [P2 祝福待命]</div>
     <div style="display:flex; gap:10px; margin-top:15px; position:relative; z-index:1;">
         <button style="flex:1; padding:15px; border-radius:10px; background:#333; color:#fff; border:none;" onclick="location.href='index.html'">🔙 返回 P1</button>
         <button style="flex:1; padding:15px; background:#4B0082; color:#fff; border-radius:10px; border:none;" onclick="location.href='log.html'">➡️ 前往 P3</button>
     </div>
     <script>
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function restore(){ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; jump(); }
-        function jump(){ const l=document.getElementById('L'); l.scrollTop=l.scrollHeight; }
+        // 專屬 P2 記憶體
+        function restore(){ const s=localStorage.getItem('FX_LOG_P2'); if(s)document.getElementById('L').innerHTML=s; jump(); }
+        function jump(){ const l=document.getElementById('L'); requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight;}); }
         function ring() {
             const osc=audioCtx.createOscillator(); const gain=audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type='sine'; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
             gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+1.5);
             osc.start(); osc.stop(audioCtx.currentTime+1.5);
-            A("🔔 鳳王訟缽：P2 祝福共鳴中");
+            A("🔔 7秒全自動訟缽：P2 祝福共鳴中");
         }
         let sysStarted=false;
         function initSystem(){
@@ -45,7 +46,7 @@
         }
         function A(msg){
             const l=document.getElementById('L'); l.innerHTML+=`<div>✨ [${new Date().toLocaleTimeString()}] ${msg}</div>`;
-            localStorage.setItem('FX_UNIVERSAL_LOG', l.innerHTML); jump();
+            localStorage.setItem('FX_LOG_P2', l.innerHTML); jump();
         }
     </script>
 </body>

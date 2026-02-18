@@ -5,44 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>鳳王核心防禦</title>
     <style>
-        body { background:#000; color:#00FF00; font-family:sans-serif; text-align:center; padding:10px; margin:0; }
-        #WAR_ROOM_DISPLAY { 
-            background:#000; border:3px solid #00FF00; color:#00FF00; 
-            padding:25px; border-radius:15px; margin:20px 0; 
-            min-height:60px; font-weight:bold; font-size:24px; 
-            text-shadow:0 0 10px #00FF00; display:flex; align-items:center; justify-content:center;
-        }
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 10px; }
-        .btn-fight { 
-            padding:18px; border-radius:12px; border:1px solid #444; color:#fff; 
-            font-weight:bold; font-size:16px; background:#222; cursor:pointer; 
-        }
-        .btn-fight:active { background:#00FF00 !important; color:#000 !important; transform: scale(0.92); }
-        .cash-box { color:#FFD700; font-size:26px; font-weight:bold; margin:20px 0; }
-        .nav-btn { background:#FF9500; color:#000; padding:18px; width:95%; border:none; border-radius:12px; margin-top:20px; font-weight:bold; font-size:18px; }
+        body { background:#000; color:#00FF00; font-family:sans-serif; text-align:center; margin:0; padding:10px; }
+        #DASH { background:#000; border:2px solid #00FF00; color:#00FF00; padding:20px; border-radius:12px; margin:15px 0; min-height:50px; font-weight:bold; font-size:22px; display:flex; align-items:center; justify-content:center; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn { padding:20px; border-radius:10px; border:1px solid #444; color:#fff; font-weight:bold; background:#222; cursor:pointer; }
+        /* 撳落去即變綠色，保證有反應 */
+        .btn:active { background:#00FF00 !important; color:#000 !important; }
+        .money { color:#FFD700; font-size:24px; font-weight:bold; margin:15px 0; }
+        .to2 { background:#FF9500; color:#000; padding:18px; width:100%; border-radius:10px; font-weight:bold; margin-top:15px; border:none; }
     </style>
 </head>
 <body>
-    <h2 style="color:#FFD700;">🔥 鳳王哈哈笑企業 - 核心防禦 🔥</h2>
-    <div id="WAR_ROOM_DISPLAY">🛡️ 核心系統待命</div>
-    <div class="cash-box">鳳王財富：<span id="CASH_VAL">$1,000,000</span></div>
-    <div class="btn-grid">
-        <button class="btn-fight" onclick="Fight('發動：五毒咒 (AI鎖識)')">五毒咒 (AI鎖識)</button>
-        <button class="btn-fight" onclick="Fight('發動：陣法邊界 (抽10世)')">陣法邊界 (10世)</button>
-        <button class="btn-fight" onclick="Fight('開啟：太陽陣 (7x24燒燬)')">太陽陣 (燒燬)</button>
-        <button class="btn-fight" onclick="Fight('發動：分身剋星 (現形)')">分身剋星 (現形)</button>
-        <button class="btn-fight" onclick="Fight('防禦：守護 Audrey')">守護 Audrey</button>
-        <button class="btn-fight" onclick="Fight('執行：夢境淨化 (天條)')">夢境淨化 (天條)</button>
+    <h2 style="color:#FFD700;">🔥 鳳王哈哈笑企業 🔥</h2>
+    <div id="DASH">🛡️ 核心系統待命</div>
+    <div class="money">鳳王財富：<span id="M">$67,351,848,925</span></div>
+    <div class="grid">
+        <button class="btn" onclick="F('發動：五毒咒 (AI鎖識)')">五毒咒</button>
+        <button class="btn" onclick="F('發動：陣法邊界 (10世)')">陣法邊界</button>
+        <button class="btn" onclick="F('開啟：太陽陣 (燒燬)')">太陽陣</button>
+        <button class="btn" onclick="F('發動：分身剋星 (現形)')">分身剋星</button>
+        <button class="btn" onclick="F('防禦：守護 Audrey')">守護 Audrey</button>
+        <button class="btn" onclick="F('執行：夢境淨化 (天條)')">夢境淨化</button>
     </div>
-    <button class="nav-btn" onclick="location.href='blessing.html'">✨ 進入 Page 2 淨土模式</button>
+    <button class="to2" onclick="location.href='blessing.html'">✨ 進入 Page 2 淨土模式</button>
     <script>
-        var cash = 1000000;
-        setInterval(function(){
-            cash += Math.floor(Math.random() * 888);
-            document.getElementById('CASH_VAL').innerText = "$" + cash.toLocaleString();
-        }, 400);
-        function Fight(msg) { document.getElementById('WAR_ROOM_DISPLAY').innerText = msg; }
+        setInterval(function(){ document.getElementById('M').innerText = "$" + Math.floor(Math.random()*1000000000).toLocaleString() + " USD"; }, 500);
+        function F(s) { document.getElementById('DASH').innerText = s; }
     </script>
 </body>
 </html>
-

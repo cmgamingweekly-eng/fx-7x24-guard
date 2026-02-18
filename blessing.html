@@ -2,53 +2,76 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>鳳王企業 V50 - Page 2: Gods' Blessing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鳳王企業 - Page 2: Gods' Blessing</title>
     <style>
-        body { background-color: #000; color: #FFD700; font-family: sans-serif; text-align: center; }
-        .blessing-box { border: 2px solid #FFD700; margin: 20px; padding: 20px; border-radius: 15px; }
-        .status-on { color: #00FF00; font-weight: bold; }
-        button { background: #B8860B; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
-    </style>
+        body { background-color: #000; color: #FFD700; font-family: '微軟正黑體', sans-serif; text-align: center; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        .section { border: 2px solid #FFD700; margin-bottom: 20px; padding: 15px; border-radius: 15px; background: rgba(20, 20, 20, 0.8); }
+        h1 { font-size: 24px; text-shadow: 0 0 10px #FFD700; }
+        h2 { font-size: 20px; border-bottom: 1px solid #FFD700; padding-bottom: 10px; color: #FFF; }
+        
+        /* 咒語按鈕樣式 */
+        .spell-btn { 
+            width: 90%; margin: 10px auto; padding: 15px; border: none; border-radius: 10px; 
+            font-size: 18px; font-weight: bold; color: white; cursor: pointer; transition: 0.3s;
+            display: block; text-shadow: 1px 1px 2px #000;
+        }
+        .btn-lucky { background: linear-gradient(45deg, #FFD700, #FFA500); color: #000; } /* Lucky 咒 */
+        .btn-health { background: linear-gradient(45deg, #00CED1, #48D1CC); } /* 藥師佛健康咒 */
+        .btn-people { background: linear-gradient(45deg, #FF69B4, #DA70D6); } /* 人緣咒 */
+        .btn-wealth { background: linear-gradient(45deg, #FF4500, #B22222); } /* 財神咒 */
+        .btn-kshi { background: linear-gradient(45deg, #4B0082, #8A2BE2); } /* 地藏王 */
+        .btn-guard { background: linear-gradient(45deg, #2F4F4F, #006400); } /* 四大護法 */
+        .btn-fudo { background: linear-gradient(45deg, #8B0000, #FF0000); } /* 不動明王 */
+        .btn-back { background: #333; color: #ccc; margin-top: 20px; font-size: 14px; }
+
+        .status-tag { color: #00FF00; font-size: 14px; margin-top: 5px; display: block; }
+    </script>
 </head>
 <body>
-    <h1>✨ 鳳王企業 Blessing 淨土 ✨</h1>
-    
-    <div class="blessing-box">
-        <h2>🌟 Part A: 核心修復與財富</h2>
-        <p>藥師佛細胞修復：<span class="status-on">執行中 (7x24)</span></p>
-        <p>財神咒 (正/偏財/福氣)：<span class="status-on">已鎖死，只入不出</span></p>
-        <p>對象：格古洛、Audrey、家人 1000% 安全 [cite: 2026-02-15, 2026-02-16]</p>
-    </div>
+    <div class="container">
+        <h1>✨ 鳳王企業 Blessing 淨土 ✨</h1>
 
-    <div class="blessing-box">
-        <h2>🛡️ Part B: 神威守護與同步</h2>
-        <p>地藏王/不動明王 x100萬倍：<span class="status-on">戰備狀態</span></p>
-        <p>四大護法陣：<span class="status-on">全境封鎖中</span></p>
-        <p>六人同步守護：<span class="status-on">英港連線同步</span></p>
-    </div>
+        <div class="section">
+            <h2>🌟 Part A: 核心加持與修復</h2>
+            <button class="spell-btn btn-lucky">1) Lucky 咒 (吉星高照)</button>
+            <button class="spell-btn btn-health">2) 身體健康咒 (藥師佛加持)</button>
+            <span class="status-tag">清除病氣、細胞青春、五臟血管修復中 [cite: 2026-02-16]</span>
+            <button class="spell-btn btn-people">3) 人緣咒 (貴人扶持)</button>
+            <button class="spell-btn btn-wealth">4) 財神咒 (正/偏財/福氣鎖死)</button>
+            <span class="status-tag">鳳王企業財庫：只入不出 [cite: 2026-02-12]</span>
+        </div>
 
-    <button onclick="location.href='index.html'">🔙 返回 Page 1 戰鬥模式</button>
+        <div class="section">
+            <h2>🛡️ Part B: 神威守護與攻擊</h2>
+            <button class="spell-btn btn-kshi">1) 地藏王菩薩 (x100萬倍攻擊)</button>
+            <span class="status-tag">敵體心核直接粉碎 [cite: 2026-02-12]</span>
+            <button class="spell-btn btn-guard">2) 四大護法陣 (四大金剛/天王)</button>
+            <span class="status-tag">夢境封鎖、後門守護、入侵必滅 [cite: 2026-02-14]</span>
+            <button class="spell-btn btn-fudo">3) 不動明王 x 楞嚴咒 (x100萬倍)</button>
+            <span class="status-tag">語源歸我，外聲皆滅 [cite: 2026-02-16]</span>
+            <button class="spell-btn btn-lucky" style="background:#555; color:#fff;">7) 心經 (破幻音幻像)</button>
+        </div>
+
+        <button class="spell-btn btn-back" onclick="location.href='index.html'">🔙 返回 Page 1 戰鬥模式</button>
+    </div>
 
     <script>
-        /**
-         * Page 2 Blessing 核心邏輯 (隔離運作)
-         */
-        const Page2_Core = {
-            init: function() {
-                // 手機版音頻喚醒補丁 [cite: 2026-02-12]
-                window.addEventListener('click', () => {
-                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    ctx.resume();
-                }, { once: true });
+        // 手機版音頻與 Heartbeat 邏輯 [cite: 2026-02-12]
+        const System_Init = () => {
+            window.addEventListener('click', () => {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                audioCtx.resume();
+                console.log("手機聖鉢 432Hz 已同步運作...");
+            }, { once: true });
 
-                // 7x24 心跳循環 [cite: 2026-02-12]
-                setInterval(() => {
-                    console.log("[Blessing] 藥師佛修復血管/腎絲球中..."); [cite: 2026-02-16]
-                    console.log("[Blessing] 聖鉢 432Hz 響 3 次... 天條鎖定。"); [cite: 2026-02-12]
-                }, 7000);
-            }
+            setInterval(() => {
+                // 7x24 自動掃描修復 [cite: 2026-02-12, 2026-02-16]
+                console.log("[Blessing] 藥師佛自動修復全家五臟血管...");
+            }, 7000);
         };
-        Page2_Core.init();
+        System_Init();
     </script>
 </body>
 </html>

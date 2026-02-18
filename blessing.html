@@ -1,92 +1,36 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王淨土 - 聖號共鳴版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鳳王 Page 2</title>
     <style>
-        body { background:#000; color:#FFD700; font-family:sans-serif; text-align:center; padding:10px; margin:0; }
-        #DASH { background:#000; border:4px solid #00FF00; color:#00FF00; padding:20px; border-radius:15px; margin:10px 0; font-weight:bold; font-size:24px; }
-        .box { border:1px solid #FF9500; border-radius:12px; padding:10px; margin-bottom:10px; background:#111; }
-        .b-btn { width:100%; padding:14px; border-radius:8px; border:none; color:#fff; font-weight:bold; margin-bottom:6px; font-size:16px; cursor:pointer; }
-        .c1 { background:linear-gradient(45deg, #FFD700, #FFA500); color:#000; }
-        .c2 { background:linear-gradient(45deg, #8A2BE2, #4B0082); }
-        .c3 { background:linear-gradient(45deg, #2F4F4F, #008080); }
-        .log-box { background:#080808; border:1px solid #FFD700; border-radius:8px; padding:10px; text-align:left; position:relative; }
-        #BL { font-family:monospace; font-size:12px; height:150px; overflow-y:auto; color:#FFD700; line-height:1.6; }
-        .act-btn { background:#FF1493; color:#fff; padding:18px; width:100%; border-radius:12px; font-weight:bold; margin-bottom:15px; border:2px solid #fff; font-size:20px; box-shadow: 0 0 15px #FF1493; }
+        body { background:#000; color:#FFD700; text-align:center; font-family:sans-serif; }
+        .dash { border:2px solid #FFD700; padding:20px; margin:10px; font-size:24px; color:#00FF00; }
+        .grid { display:grid; grid-template-columns:1fr; gap:8px; padding:10px; }
+        button { padding:12px; font-weight:bold; background:#222; color:#FFD700; border:1px solid #FFD700; border-radius:8px; }
+        .log { background:#080808; height:200px; overflow:auto; text-align:left; padding:10px; border:1px solid #FFD700; margin:10px; font-size:12px; }
+        .pink-btn { background:#FF1493; color:#fff; padding:20px; width:90%; font-size:20px; }
     </style>
 </head>
-<body onclick="startLogic()">
-    <div id="DASH">✨ 淨土術式：待命</div>
-    
-    <button id="ACT" class="act-btn" onclick="startLogic()">🔥 點擊激活淨土 (解鎖 Log & 聖號)</button>
-    
-    <div class="box">
-        <button class="b-btn c1" onclick="S('1) Lucky 咒')">1) Lucky 咒</button>
-        <button class="b-btn c1" onclick="S('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
-        <button class="b-btn c1" onclick="S('3) 人緣增幅咒')">3) 人緣增幅咒</button>
-        <button class="b-btn c1" onclick="S('4) 財神咒')">4) 財神咒</button>
-    </div>
-    <div class="box">
-        <button class="b-btn c2" onclick="S('5) 南無地藏王菩薩')">5) 南無地藏王菩薩</button>
-        <button class="b-btn c2" onclick="S('6) 四大護法咒')">6) 四大護法咒</button>
-        <button class="b-btn c2" onclick="S('7) 不動明王咒')">7) 不動明王咒</button>
-    </div>
-    <div class="box">
-        <button class="b-btn c3" onclick="S('8) 心經')">8) 心經</button>
-        <button class="b-btn c3" onclick="S('9) 睡眠守護咒')">9) 睡眠守護咒</button>
-        <button class="b-btn c3" onclick="S('10) 語源歸我')">10) 語源歸我</button>
-        <button class="b-btn c3" onclick="S('11) 福氣同步')">11) 福氣同步</button>
-    </div>
-
-    <div class="log-box">
-        <div id="BL">>>> [System] 術式記憶已加載，等待激活...</div>
-    </div>
-
-    <audio id="DZ_AUDIO" loop><source src="https://www.buddha-dharma.org.hk/mp3/dzw.mp3" type="audio/mpeg"></audio>
-
-    <button style="width:100%; padding:15px; border-radius:10px; background:#333; color:#fff; border:none; margin-top:15px;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
+<body>
+    <div class="dash" id="D">✨ 淨土待命</div>
+    <button class="pink-btn" onclick="document.getElementById('D').innerText='✨ 術式啟動'; document.getElementById('A').play();">🔥 點擊：啟動祝福與聖號</button>
+    <div class="grid">
+        <button onclick="S('1) Lucky 咒')">1) Lucky 咒</button>
+        <button onclick="S('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
+        <button onclick="S('5) 南無地藏王菩薩')">5) 南無地藏王菩薩</button>
+        <button onclick="S('11) 福氣同步')">11) 福氣同步</button>
+        </div>
+    <div class="log" id="L">>>> 祝福 Log 待命...</div>
+    <audio id="A" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    <button style="width:90%; padding:15px; margin-top:10px;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
 
     <script>
-        let initialized = false;
-
-        // 頁面載入時讀取舊 Log [cite: 2026-02-12]
-        window.onload = () => {
-            const saved = localStorage.getItem('FX_LOG_P2');
-            if (saved) document.getElementById('BL').innerHTML = saved;
-        };
-
-        function startLogic() {
-            if (initialized) return;
-            initialized = true;
-            document.getElementById('ACT').style.display = 'none';
-            document.getElementById('DASH').innerText = "✨ 術式已全面激活";
-            addLog(">>> [System] 瀏覽器權限已解鎖，術式運作中...");
-        }
-
         function S(v) {
-            if (!initialized) startLogic();
-            document.getElementById('DASH').innerText = "發動：" + v; [cite: 2026-02-18]
-            
-            // 地藏王聖號觸發 [cite: 2026-02-18]
-            if (v.includes("地藏王")) {
-                const a = document.getElementById('DZ_AUDIO');
-                a.play().catch(e => addLog(">>> [Error] 音頻播放受阻，請再點擊畫面"));
-            }
-
-            let now = new Date().toLocaleTimeString();
-            let msg = `[${now}] 執行：${v} - 成功增幅！<br>`;
-            if (v.includes("藥師佛")) msg += `<span style="color:#00FF00;">[${now}] ☸️ 藥師金光灌頂，器官修復中...</span><br>`; [cite: 2026-02-16]
-            
-            addLog(msg);
-        }
-
-        function addLog(msg) {
-            let log = document.getElementById('BL');
-            log.innerHTML = msg + log.innerHTML;
-            // 轉成 String 保存到手機記憶體 [cite: 2026-02-12]
-            localStorage.setItem('FX_LOG_P2', log.innerHTML);
+            document.getElementById('D').innerText = "發動：" + v;
+            document.getElementById('L').innerHTML = `[${new Date().toLocaleTimeString()}] ${v} - 成功！<br>` + document.getElementById('L').innerHTML;
+            if(v.includes("地藏王")) document.getElementById('A').play();
         }
     </script>
 </body>

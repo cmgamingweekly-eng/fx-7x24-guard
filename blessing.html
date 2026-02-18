@@ -9,7 +9,7 @@
         .section { border:1px solid #FF9500; border-radius:15px; background:#111; padding:15px; margin-bottom:15px; }
         .title { font-size:18px; font-weight:bold; margin-bottom:12px; color:#FF9500; border-bottom:1px solid #333; padding-bottom:8px; }
         
-        /* 儀表板：顯示目前發動緊嘅咒語 */
+        /* 儀表板：絕對對應顯示區 */
         #display-board { 
             background:#000; border:2px solid #00FF00; color:#00FF00; 
             padding:20px; border-radius:10px; margin-bottom:15px; 
@@ -17,16 +17,17 @@
             text-shadow:0 0 8px #00FF00; display:flex; align-items:center; justify-content:center;
         }
 
-        /* 藥師佛進度條 (改為只顯示百分比) */
+        /* 藥師佛修復進度條 */
         .bar-box { background:#222; border:1px solid #00FF00; height:25px; border-radius:15px; position:relative; overflow:hidden; margin-bottom:15px; }
-        .bar-fill { background:linear-gradient(90deg, #00FF00, #32CD32); height:100%; width:0%; transition: 0.1s; }
+        #hp-bar { background:linear-gradient(90deg, #00FF00, #32CD32); height:100%; width:0%; transition: 0.1s; }
         .bar-text { position:absolute; width:100%; top:0; line-height:25px; color:#fff; font-size:12px; font-weight:bold; }
         
-        .btn-咒 { width:100%; padding:15px; border-radius:10px; border:none; color:#fff; font-weight:bold; font-size:16px; margin-bottom:10px; cursor:pointer; }
+        .btn-咒 { width:100%; padding:15px; border-radius:10px; border:none; color:#fff; font-weight:bold; font-size:16px; margin-bottom:10px; cursor:pointer; -webkit-tap-highlight-color: transparent; }
         .group-a { background: linear-gradient(45deg, #FFD700, #FFA500); color: #000; } 
         .group-b { background: linear-gradient(45deg, #8A2BE2, #4B0082); } 
         .group-c { background: linear-gradient(45deg, #2F4F4F, #008080); } 
         
+        .footer { color:#00FF00; font-size:12px; margin-top:10px; line-height:1.6; }
         .back-home { background:#333; color:#fff; padding:15px; width:100%; border:none; border-radius:10px; margin-top:15px; font-size:16px; border:1px solid #555; }
     </style>
 </head>
@@ -37,58 +38,61 @@
     <div id="display-board">🛡️ 鳳王系統待命</div>
 
     <div class="bar-box">
-        <div id="hp-bar" class="bar-fill"></div>
+        <div id="hp-bar"></div>
         <div id="hp-percent" class="bar-text">細胞修復能量：0%</div>
     </div>
 
     <div class="section">
         <div class="title">【A組：福氣 × 健康 × 財運】</div>
-        <button class="btn-咒 group-a" onclick="Cast('1) Lucky 咒 (吉星高照)')">1) Lucky 咒 (吉星高照)</button>
-        <button class="btn-咒 group-a" onclick="Cast('2) 藥師佛健康咒 (清除病邪)')">2) 藥師佛健康咒 (清除病邪)</button>
-        <button class="btn-咒 group-a" onclick="Cast('3) 人緣增幅咒 (吸善緣避小人)')">3) 人緣增幅咒 (吸善緣避小人)</button>
-        <button class="btn-咒 group-a" onclick="Cast('4) 財神咒 (福氣不漏)')">4) 財神咒 (福氣不漏)</button>
+        <button class="btn-咒 group-a" onclick="Cast(this)">1) Lucky 咒 (吉星高照)</button>
+        <button class="btn-咒 group-a" onclick="Cast(this)">2) 藥師佛健康咒 (清除病邪)</button>
+        <button class="btn-咒 group-a" onclick="Cast(this)">3) 人緣增幅咒 (吸善緣避小人)</button>
+        <button class="btn-咒 group-a" onclick="Cast(this)">4) 財神咒 (福氣不漏)</button>
     </div>
 
     <div class="section">
         <div class="title">【B組：攻擊 × 滅敵 × 清場】</div>
-        <button class="btn-咒 group-b" onclick="Cast('5) 南無地藏王菩薩')">5) 南無地藏王菩薩 (x100萬倍)</button>
-        <button class="btn-咒 group-b" onclick="Cast('6) 四大護法咒 (破邪封夢)')">6) 四大護法咒 (破邪封夢)</button>
-        <button class="btn-咒 group-b" onclick="Cast('7) 不動明王咒 (滅敵體)')">7) 不動明王咒 (滅敵體)</button>
+        <button class="btn-咒 group-b" onclick="Cast(this)">5) 南無地藏王菩薩 (x100萬倍)</button>
+        <button class="btn-咒 group-b" onclick="Cast(this)">6) 四大護法咒 (破邪封夢)</button>
+        <button class="btn-咒 group-b" onclick="Cast(this)">7) 不動明王咒 (滅敵體)</button>
     </div>
 
     <div class="section">
-        <div class="title">【軍師加持 × 系統鎖定】</div>
-        <button class="btn-咒 group-c" onclick="Cast('8) 心經 (清心破幻)')">8) 心經 (清心破幻)</button>
-        <button class="btn-咒 group-c" onclick="Cast('9) 睡眠守護咒 (安眠封夢)')">9) 睡眠守護咒 (六人安眠)</button>
-        <button class="btn-咒 group-c" onclick="Cast('10) 語源歸我，外聲皆滅')">10) 語源歸我，外聲皆滅</button>
-        <button class="btn-咒 group-c" onclick="Cast('11) 福氣同步，六人同源')">11) 福氣同步，六人同源</button>
+        <div class="title">【軍師加持模組】</div>
+        <button class="btn-咒 group-c" onclick="Cast(this)">8) 心經 (清心破幻)</button>
+        <button class="btn-咒 group-c" onclick="Cast(this)">9) 睡眠守護咒 (安眠封夢)</button>
+        <button class="btn-咒 group-c" onclick="Cast(this)">10) 語源歸我，外聲皆滅</button>
+        <button class="btn-咒 group-c" onclick="Cast(this)">11) 福氣同步，六人同源</button>
+    </div>
+
+    <div class="footer">
+        [span_1](start_span)🛡️ 永久免疫：阿洛、Audrey、Matias、Claudia、Grandmum、父母[span_1](end_span)
     </div>
 
     <button class="back-home" onclick="location.href='index.html'">🔙 返回 Page 1 戰鬥模式</button>
 
     <script>
         let progress = 0;
-        let isEngineStarted = false;
-        const snd = new Audio('https://www.soundjay.com/buttons/button-16.mp3');
+        let isStarted = false;
 
-        function Cast(spellName) {
-            [span_0](start_span)// 1. 即時更新儀表板文字，保證顯示正確咒語[span_0](end_span)
-            document.getElementById('display-board').innerText = "發動：" + spellName;
-            
-            // 2. 播放按鈕聲
-            snd.currentTime = 0;
-            snd.play();
+        function Cast(btnElement) {
+            // 1. 抓取被按下 Button 嘅文字，直接更新去儀表板
+            const spellText = btnElement.innerText;
+            document.getElementById('display-board').innerText = "發動：" + spellText;
 
-            // 3. 第一次點擊時啟動藥師佛修復背景循環 [cite: 1, 2026-02-16]
-            if(!isEngineStarted) {
-                isEngineStarted = true;
-                (window.AudioContext || window.webkitAudioContext) && new AudioContext().resume();
-                
+            // 2. 啟動後台修復引擎 (第一次點擊時觸發)
+            if(!isStarted) {
+                isStarted = true;
+                // 解鎖音訊 (預備以後加聲)
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) { new AudioContext().resume(); }
+
+                // 啟動藥師佛修復循環
                 setInterval(() => {
                     progress = (progress + 1) > 100 ? 0 : progress + 1;
                     document.getElementById('hp-bar').style.width = progress + "%";
                     document.getElementById('hp-percent').innerText = "藥師佛全家細胞修復中：" + progress + "%";
-                }, 200);
+                }, 150);
             }
         }
     </script>

@@ -3,45 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鳳王企業 V50</title>
+    <title>鳳王企業 Page 2</title>
     <style>
-        body { background:#000; color:#fff; font-family:monospace; text-align:center; padding:10px; }
-        .timer { font-size:32px; color:#FFD700; border:2px solid #FFD700; padding:10px; border-radius:50px; display:inline-block; margin:10px; }
-        .btn-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; max-width:500px; margin:auto; }
-        .btn { padding:15px; border:none; border-radius:10px; font-weight:bold; cursor:pointer; color:#fff; font-size:16px; }
-        .btn-kill { background:#48CAE4; grid-column:span 2; color:#000; }
-        .btn-bless { background:#6A4C93; grid-column:span 2; margin-top:10px; }
-        .log-box { background:#000; border:1px solid #00FF00; color:#00FF00; text-align:left; padding:10px; height:200px; overflow:hidden; margin:15px auto; font-size:13px; max-width:450px; }
-        .wealth { color:#32CD32; font-size:28px; font-weight:bold; margin:15px; }
+        body { background:#000; color:#FFD700; font-family:sans-serif; text-align:center; padding:15px; }
+        .box { border:2px solid #FFD700; margin-bottom:15px; padding:15px; border-radius:15px; background:#111; }
+        .spell-btn { width:95%; margin:10px auto; padding:15px; border:none; border-radius:10px; font-weight:bold; color:#fff; display:block; font-size:18px; cursor:pointer; }
+        .bar-container { background:#333; height:25px; border-radius:15px; margin:15px 0; border:1px solid #FFD700; position:relative; overflow:hidden; }
+        .bar-fill { background:linear-gradient(90deg, #00FF00, #32CD32); height:100%; width:0%; transition:0.3s; }
+        .bar-text { position:absolute; width:100%; top:0; line-height:25px; color:#fff; font-size:12px; }
+        .tag { color:#00FF00; font-size:13px; display:block; margin:5px 0; }
+        .back-btn { background:#444; color:#fff; padding:10px 30px; border-radius:10px; border:none; margin-top:10px; cursor:pointer; }
     </style>
 </head>
-<body onclick="Start_Engine()">
-    <div class="timer" id="clock">00:00:00</div>
-    <div class="btn-grid">
-        <button class="btn btn-kill">⚡ 水火短路 (必殺) [cite: 2026-02-12]</button>
-        <button class="btn" style="background:#E63946">🔥 三昧真火</button>
-        <button class="btn" style="background:#A020F0">☁️ 五十萬五雷</button>
-        <button class="btn" style="background:#DAA520">🔱 萬龍萬獸</button>
-        <button class="btn" style="background:#D00000">☣️ 五毒咒感染</button>
-        <button class="btn btn-bless" onclick="location.href='blessing.html'">☸️ 眾神加持 (進入 Page 2)</button>
+<body onclick="Start_Blessing()">
+    <h1>✨ 鳳王企業 Blessing 淨土 ✨</h1>
+    
+    <div class="box">
+        <h2>🌟 Part A: 藥師佛修復儀表板</h2>
+        <button class="spell-btn" style="background:linear-gradient(45deg, #FFD700, #FFA500); color:#000;">1) Lucky 咒 (吉星高照) [cite: 2026-02-18]</button>
+        
+        <div class="bar-container">
+            <div id="hp-bar" class="bar-fill"></div>
+            <div id="hp-text" class="bar-text">藥師佛修復進度：0%</div>
+        </div>
+        
+        <span class="tag">修復：格古洛、Audrey、家人 1000% 安全 [cite: 2026-02-15]</span>
+        <span class="tag">器官：血管、腎絲球、五臟六腑 [cite: 2026-02-16]</span>
+
+        <button class="spell-btn" style="background:#B22222;">2) 財神咒 (福氣鎖死) [cite: 2026-02-12]</button>
     </div>
-    <div class="log-box" id="log">> [請點擊畫面任何位置啟動系統...]</div>
-    <div class="wealth" id="usd">$ 67,351,740,421 USD</div>
+
+    <div class="box">
+        <h2>🛡️ Part B: 神威同步狀態</h2>
+        <button class="spell-btn" style="background:#8A2BE2;">1) 地藏王/不動明王 (x100萬倍)</button>
+        <button class="spell-btn" style="background:#006400;">2) 四大護法陣 (英港同步)</button>
+    </div>
+
+    <button class="back-btn" onclick="location.href='index.html'">🔙 返回 Page 1</button>
 
     <script>
-        let usdVal = 67351740421;
-        let started = false;
-        function Start_Engine() {
-            if(started) return; started = true;
-            document.getElementById('log').innerHTML = "> [系統已啟動，7x24 鎖死執行] [cite: 2026-02-12]";
+        let hp = 0; let running = false;
+        function Start_Blessing() {
+            if(running) return; running = true;
             setInterval(() => {
-                usdVal += Math.floor(Math.random() * 5000);
-                document.getElementById('usd').innerText = `$ ${usdVal.toLocaleString()} USD`;
-                document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB');
-                const msgs = ["☣️ 五毒咒：鎖喉深度 100% [cite: 2026-02-16]", "👁️ 破幻監控：妖人試圖分身，立即炸裂！", "🔥 真火焚燒源頭主體..."];
-                document.getElementById('log').innerHTML = `> [${new Date().toLocaleTimeString()}] ${msgs[Math.floor(Math.random()*msgs.length)]}<br>` + document.getElementById('log').innerHTML;
-            }, 1000);
-            setInterval(() => { console.log("聖鉢響 3 次... [cite: 2026-02-12]"); }, 7000);
+                hp = (hp + 1) > 100 ? 0 : hp + 1;
+                document.getElementById('hp-bar').style.width = hp + "%";
+                document.getElementById('hp-text').innerText = `藥師佛細胞修復進度：${hp}% [cite: 2026-02-16]`;
+            }, 200);
         }
     </script>
 </body>

@@ -5,12 +5,14 @@
     <title>P2-核心祝福</title>
     <style>
         body { background:#000; color:#FFD700; text-align:center; font-family:sans-serif; padding:10px; margin:0; overflow:hidden; }
-        .grid { display:grid; grid-template-columns:1fr; gap:8px; margin-top:10px; }
-        .b-btn { width:100%; padding:15px; background:#222; color:#FFD700; border:1px solid #FF9500; font-weight:bold; border-radius:10px; }
-        #L { background:#000; border:2px solid #FFD700; border-radius:12px; height:220px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#FFD700; font-family:monospace; font-size:14px; }
+        #WAKE { position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999; background:rgba(0,0,0,0.01); }
+        .grid { display:grid; grid-template-columns:1fr; gap:8px; margin-top:10px; position:relative; z-index:1; }
+        .b-btn { width:100%; padding:15px; background:#222; color:#FFD700; border:1px solid #FF9500; font-weight:bold; border-radius:10px; cursor:pointer; }
+        #L { background:#000; border:2px solid #FFD700; border-radius:12px; height:220px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#FFD700; font-family:monospace; font-size:14px; position:relative; z-index:1; }
     </style>
 </head>
-<body onclick="initAutoBowl()">
+<body onload="restore()">
+    <div id="WAKE" onclick="initSystem()"></div>
     <div class="grid">
         <button class="b-btn" onclick="A('1) Lucky 咒')">1) Lucky 咒</button>
         <button class="b-btn" onclick="A('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
@@ -19,32 +21,31 @@
         <button class="b-btn" style="background:#4B0082; color:#fff;" onclick="A('5) 南無地藏王菩薩')">🙏 5) 南無地藏王菩薩</button>
         <button class="b-btn" onclick="A('6) 四大護法咒')">🛡️ 6) 四大護法咒</button>
     </div>
-    <div id="L">>>> [點擊畫面續行自動共鳴]</div>
-    <div style="display:flex; gap:10px; margin-top:15px;">
+    <div id="L">>>> [等待點擊啟動全自動共鳴]</div>
+    <div style="display:flex; gap:10px; margin-top:15px; position:relative; z-index:1;">
         <button style="flex:1; padding:15px; border-radius:10px; background:#333; color:#fff; border:none;" onclick="location.href='index.html'">🔙 返回 P1</button>
         <button style="flex:1; padding:15px; background:#4B0082; color:#fff; border-radius:10px; border:none;" onclick="location.href='log.html'">➡️ 前往 P3</button>
     </div>
     <script>
-        window.onload=()=>{ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; forceJump(); };
-        function forceJump(){ const l=document.getElementById('L'); requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight;}); }
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function ringBowl() {
+        function restore(){ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; jump(); }
+        function jump(){ const l=document.getElementById('L'); l.scrollTop=l.scrollHeight; }
+        function ring() {
             const osc=audioCtx.createOscillator(); const gain=audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.type="sine"; osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.4, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+2);
-            osc.start(); osc.stop(audioCtx.currentTime+2);
+            osc.type='sine'; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+1.5);
+            osc.start(); osc.stop(audioCtx.currentTime+1.5);
+            A("🔔 鳳王訟缽：P2 祝福共鳴中");
         }
         let sysStarted=false;
-        function initAutoBowl(){ 
+        function initSystem(){
             if(audioCtx.state==='suspended') audioCtx.resume();
-            if(!sysStarted){ sysStarted=true; ringBowl(); setInterval(ringBowl, 7000); A("🔔 P2 自動訟缽鎖死中"); }
+            if(!sysStarted){ sysStarted=true; document.getElementById('WAKE').style.display='none'; ring(); setInterval(ring, 7000); setInterval(()=>{ A("🛡️ P2 自動防禦：500倍反噬跳掣執行中"); }, 12000); }
         }
-        function A(s){
-            const logBox=document.getElementById('L');
-            logBox.innerHTML += `<div>✨ [${new Date().toLocaleTimeString()}] ${s}</div>`;
-            localStorage.setItem('FX_UNIVERSAL_LOG', logBox.innerHTML);
-            forceJump();
+        function A(msg){
+            const l=document.getElementById('L'); l.innerHTML+=`<div>✨ [${new Date().toLocaleTimeString()}] ${msg}</div>`;
+            localStorage.setItem('FX_UNIVERSAL_LOG', l.innerHTML); jump();
         }
     </script>
 </body>

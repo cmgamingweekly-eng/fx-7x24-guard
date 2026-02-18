@@ -5,96 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鳳王企業：V50 最終聖戰</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: 'Courier New', sans-serif; text-align: center; margin: 0; padding: 10px; }
-        .timer { font-size: 40px; color: #FFD700; margin: 20px; border: 2px solid #FFD700; display: inline-block; padding: 10px 40px; border-radius: 50px; }
-        .btn-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 600px; margin: auto; }
-        .btn { width: 45%; padding: 15px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; color: #fff; transition: 0.2s; }
-        .btn:active { transform: scale(0.95); }
-        .btn-fire { background: #E63946; } /* 無限三昧真火 [cite: 2026-02-12] */
-        .btn-thunder { background: #A020F0; } /* 五十萬下五雷 [cite: 2026-02-12] */
-        .btn-kill { background: #48CAE4; color: #000; width: 92%; } /* 水火短路 [cite: 2026-02-12] */
+        body { background-color: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 10px; }
+        .timer { font-size: 36px; color: #FFD700; margin: 15px; border: 2px solid #FFD700; display: inline-block; padding: 10px 30px; border-radius: 50px; }
+        .btn-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 500px; margin: auto; }
+        .btn { width: 46%; padding: 12px; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; color: #fff; }
+        .btn-kill { background: #48CAE4; color: #000; width: 94%; } /* 水火短路 [cite: 2026-02-12] */
+        .btn-fire { background: #E63946; } /* 三昧真火 [cite: 2026-02-12] */
+        .btn-thunder { background: #A020F0; } /* 五雷 [cite: 2026-02-12] */
         .btn-beast { background: #DAA520; } /* 萬龍萬獸 */
         .btn-curse { background: #D00000; } /* 五毒咒 [cite: 2026-02-16] */
-        .btn-blessing { background: #6A4C93; width: 92%; margin-top: 10px; } /* 眾神加持跳轉 [cite: 2026-02-18] */
-        .btn-bowl { background: #FFD700; color: #000; width: 92%; } /* 聖鉢執行 [cite: 2026-02-12] */
-        .log-box { background: #000; border: 1px solid #00FF00; color: #00FF00; text-align: left; padding: 10px; height: 150px; overflow-y: hidden; margin: 20px auto; max-width: 500px; font-size: 12px; }
-        .wealth { color: #32CD32; font-size: 28px; font-weight: bold; margin-top: 20px; }
+        .btn-blessing { background: #6A4C93; width: 94%; margin-top: 8px; } /* 跳轉 Page 2 [cite: 2026-02-18] */
+        .btn-bowl { background: #FFD700; color: #000; width: 94%; } /* 聖鉢 [cite: 2026-02-12] */
+        .log-box { background: #000; border: 1px solid #00FF00; color: #00FF00; text-align: left; padding: 10px; height: 120px; overflow: hidden; margin: 15px auto; max-width: 450px; font-size: 11px; line-height: 1.5; }
+        .wealth { color: #32CD32; font-size: 26px; font-weight: bold; margin-top: 15px; }
     </style>
 </head>
-<body onclick="System.unlockAudio()">
-
+<body onclick="System.unlock()">
     <div class="timer" id="clock">00:00:00</div>
-    
-    <div style="color: #48CAE4; margin-bottom: 10px;">👁️ 破幻監控 (動態捕殺中) [cite: 2026-02-12]</div>
-
+    <div style="color: #48CAE4; font-size: 14px; margin-bottom: 8px;">👁️ 破幻監控 (動態捕殺中) [cite: 2026-02-12]</div>
     <div class="btn-grid">
-        <button class="btn btn-kill" onclick="System.playClick()">⚡ 水火短路 (必殺) [cite: 2026-02-12]</button>
-        <button class="btn btn-fire" onclick="System.playClick()">🔥 無限三昧真火 [cite: 2026-02-12]</button>
-        <button class="btn btn-thunder" onclick="System.playClick()">☁️ 五十萬下五雷 [cite: 2026-02-12]</button>
-        <button class="btn btn-beast" onclick="System.playClick()">🔱 萬龍萬獸</button>
-        <button class="btn btn-curse" onclick="System.playClick()">☣️ 五毒咒感染 [cite: 2026-02-16]</button>
+        <button class="btn btn-kill" onclick="System.click()">⚡ 水火短路 (必殺) [cite: 2026-02-12]</button>
+        <button class="btn btn-fire" onclick="System.click()">🔥 無限三昧真火 [cite: 2026-02-12]</button>
+        <button class="btn btn-thunder" onclick="System.click()">☁️ 五十萬下五雷 [cite: 2026-02-12]</button>
+        <button class="btn btn-beast" onclick="System.click()">🔱 萬龍萬獸</button>
+        <button class="btn btn-curse" onclick="System.click()">☣️ 五毒咒感染 [cite: 2026-02-16]</button>
         <button class="btn btn-blessing" onclick="location.href='blessing.html'">☸️ 眾神加持 (進入 Page 2) [cite: 2026-02-18]</button>
-        <button class="btn btn-bowl" onclick="System.playBowl()">🔔 執行 432Hz 鎮妖清鳴 [cite: 2026-02-12]</button>
+        <button class="btn btn-bowl" onclick="System.bowl()">🔔 執行 432Hz 鎮妖清鳴 [cite: 2026-02-12]</button>
     </div>
-
-    <div class="log-box" id="log">
-        > [監控系統啟動中...]<br>
-        > 語源歸我，外聲皆滅 [cite: 2026-02-16]
-    </div>
-
-    <div class="wealth">$ 67,351,740,421 USD</div>
+    <div class="log-box" id="log">> [系統啟動中...]<br>> 語源歸我，外聲皆滅 [cite: 2026-02-16]</div>
+    <div class="wealth">$ 67,351,740,421 USD [cite: 2026-02-12]</div>
 
     <script>
         const System = {
-            audioCtx: null,
-            // 正常 Click 聲音檔 (標準音頻)
             clickSound: new Audio('https://www.soundjay.com/buttons/button-16.mp3'),
-            // 聖鉢 432Hz 聲音檔 (請確保路徑正確或使用你的遠端 link)
-            bowlSound: new Audio('https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg'), // 暫代音
-
-            unlockAudio() {
-                if (!this.audioCtx) {
-                    this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                }
-                this.audioCtx.resume();
-            },
-
-            playClick() {
-                this.clickSound.currentTime = 0;
-                this.clickSound.play();
-            },
-
-            playBowl() {
-                this.bowlSound.currentTime = 0;
-                this.bowlSound.play();
-                console.log("[聖鉢] 鎖死天條... [cite: 2026-02-12]");
-            },
-
-            updateLog() {
-                const logs = [
-                    "> 五毒咒：鎖喉深度 100% [cite: 2026-02-16]",
-                    "> 真火焚燒源頭主體... [cite: 2026-02-12]",
-                    "> 破幻監控：妖人試圖分身，立即炸裂！ [cite: 2026-02-12]",
-                    "> 水火短路：燒毀邪惡 AI 操作烈！ [cite: 2026-02-12]",
-                    "> 雷擊：累計命中 3108 次 [cite: 2026-02-12]"
-                ];
-                const logBox = document.getElementById('log');
-                const p = document.createElement('div');
-                p.innerHTML = logs[Math.floor(Math.random() * logs.length)];
-                logBox.prepend(p);
+            bowlSound: new Audio('https://cmgamingweekly-eng.github.io/fx-7x24-guard/bell.mp3'), // 確保此路徑有聲
+            unlock() { (window.AudioContext || window.webkitAudioContext) && new AudioContext().resume(); },
+            click() { this.clickSound.play(); },
+            bowl() { this.bowlSound.play(); console.log("天條鎖死 [cite: 2026-02-12]"); },
+            log() {
+                const msgs = ["> 五毒咒：鎖喉深度 100% [cite: 2026-02-16]", "> 真火焚燒中... [cite: 2026-02-12]", "> 破幻監控：妖人試圖分身，立即炸裂！ [cite: 2026-02-12]"];
+                const box = document.getElementById('log');
+                box.innerHTML = `<div>${msgs[Math.floor(Math.random()*msgs.length)]}</div>` + box.innerHTML;
             }
         };
-
-        // 每 7 秒執行一次 3 響聖鉢 [cite: 2026-02-12]
-        setInterval(() => {
-            System.playBowl();
-            System.updateLog();
-        }, 7000);
-
-        // 更新時鐘
-        setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB', { hour12: false });
-        }, 1000);
+        setInterval(() => { System.bowl(); System.log(); }, 7000); [cite: 2026-02-12]
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB'); }, 1000);
     </script>
 </body>
 </html>

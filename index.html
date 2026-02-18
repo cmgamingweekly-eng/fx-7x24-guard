@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
+head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鳳王企業 V50 - 終極戰鬥引擎</title>
@@ -20,54 +18,4 @@
 <body onclick="V50_Core_Launch()">
     <div id="launch-layer">
         <div class="launch-btn">🔱 點擊鎖定 V50 聖鉢 🔱</div>
-        <p style="color:#FFD700; margin-top:20px;">[ 必須點擊：否則 7x24 無聲 ]</p>
-    </div>
-
-    <div class="timer" id="clock">00:00:00</div>
-    <div class="btn-grid">
-        <button class="btn btn-kill">⚡ 水火短路 (必殺) [cite: 2026-02-12]</button>
-        <button class="btn" style="background:#E63946">🔥 三昧真火</button>
-        <button class="btn" style="background:#A020F0">☁️ 五十萬五雷</button>
-        <button class="btn" style="background:#DAA520">🔱 萬龍萬獸</button>
-        <button class="btn" style="background:#D00000">☣️ 五毒咒感染 [cite: 2026-02-16]</button>
-        <button class="btn btn-bless" onclick="location.href='blessing.html'">☸️ 進入 Page 2 (Blessing)</button>
-    </div>
-    <div class="log-box" id="log">> [等待啟動...]</div>
-    <div class="wealth" id="usd">$ 67,351,740,421 USD</div>
-
-    <script>
-        let usdAmount = 67351740421;
-        let active = false;
-        // 使用絕對路徑的雲端測試音源 (Singing Bowl)
-        const bowlFx = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'); 
-
-        function V50_Core_Launch() {
-            if(active) return;
-            active = true;
-            document.getElementById('launch-layer').style.display = 'none';
-            (window.AudioContext || window.webkitAudioContext) && new AudioContext().resume();
-            
-            // 立即響聖鉢
-            Play_Bowl();
-
-            setInterval(() => {
-                usdAmount += Math.floor(Math.random() * 8000);
-                document.getElementById('usd').innerText = `$ ${usdAmount.toLocaleString()} USD`;
-                document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB', { hour12: false });
-                if(Math.random() > 0.7) {
-                    const log = document.getElementById('log');
-                    log.innerHTML = `> [${new Date().toLocaleTimeString()}] ☣️ 五毒咒鎖喉中 [cite: 2026-02-16]<br>` + log.innerHTML;
-                }
-            }, 1000);
-
-            setInterval(Play_Bowl, 7000); // 7秒循環 [cite: 2026-02-12]
-        }
-
-        function Play_Bowl() {
-            bowlFx.currentTime = 0;
-            bowlFx.play();
-            console.log("🔔 聖鉢清鳴 [cite: 2026-02-12]");
-        }
-    </script>
-</body>
-</html>
+        <p sty

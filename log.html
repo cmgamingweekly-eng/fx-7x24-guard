@@ -19,28 +19,29 @@
         <button class="b-btn" onclick="A('10) 語源歸我')">10) 語源歸我</button>
         <button class="b-btn" onclick="A('11) 福氣同步')">11) 福氣同步</button>
     </div>
-    <div id="L">>>> [等待點擊啟動數據鎖死]</div>
+    <div id="L">>>> [P3 擴展待命]</div>
     <button style="width:100%; padding:15px; margin-top:15px; border-radius:10px; background:#333; color:#fff; border:none; position:relative; z-index:1;" onclick="location.href='blessing.html'">🔙 返回 P2</button>
     <script>
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        function restore(){ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; jump(); }
-        function jump(){ const l=document.getElementById('L'); l.scrollTop=l.scrollHeight; }
+        // 專屬 P3 記憶體
+        function restore(){ const s=localStorage.getItem('FX_LOG_P3'); if(s)document.getElementById('L').innerHTML=s; jump(); }
+        function jump(){ const l=document.getElementById('L'); requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight;}); }
         function ring() {
             const osc=audioCtx.createOscillator(); const gain=audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type='sine'; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
             gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+1.5);
             osc.start(); osc.stop(audioCtx.currentTime+1.5);
-            A("🔔 鳳王訟缽：P3 全紀錄鎖死同步");
+            A("🔔 7秒全自動訟缽：P3 擴展鎖死同步");
         }
         let sysStarted=false;
         function initSystem(){
             if(audioCtx.state==='suspended') audioCtx.resume();
-            if(!sysStarted){ sysStarted=true; document.getElementById('WAKE').style.display='none'; ring(); setInterval(ring, 7000); setInterval(()=>{ A("🛡️ P3 自動防禦：入侵者反噬跳掣中"); }, 12000); }
+            if(!sysStarted){ sysStarted=true; document.getElementById('WAKE').style.display='none'; ring(); setInterval(ring, 7000); setInterval(()=>{ A("🛡️ P3 自動防禦：偵測入侵者跳掣反噬"); }, 12000); }
         }
         function A(msg){
             const l=document.getElementById('L'); l.innerHTML+=`<div>💠 [${new Date().toLocaleTimeString()}] ${msg}</div>`;
-            localStorage.setItem('FX_UNIVERSAL_LOG', l.innerHTML); jump();
+            localStorage.setItem('FX_LOG_P3', l.innerHTML); jump();
         }
     </script>
 </body>

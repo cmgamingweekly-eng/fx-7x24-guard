@@ -3,34 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王核心防禦</title>
+    <title>鳳王哈哈笑企業 - 核心防禦</title>
     <style>
         body { background:#000; color:#00FF00; font-family:sans-serif; text-align:center; margin:0; padding:10px; }
-        #DASH { background:#000; border:2px solid #00FF00; color:#00FF00; padding:20px; border-radius:12px; margin:15px 0; min-height:50px; font-weight:bold; font-size:22px; display:flex; align-items:center; justify-content:center; }
+        .dashboard { background:#000; border:2px solid #00FF00; color:#00FF00; padding:20px; border-radius:12px; margin:15px 0; min-height:50px; font-weight:bold; font-size:22px; display:flex; align-items:center; justify-content:center; box-shadow: 0 0 15px #00FF00; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { padding:20px; border-radius:10px; border:1px solid #444; color:#fff; font-weight:bold; background:#222; cursor:pointer; }
-        /* 撳落去即變綠色，保證有反應 */
+        .btn { padding:20px; border-radius:10px; border:1px solid #444; color:#fff; font-weight:bold; background:#222; cursor:pointer; font-size:15px; }
         .btn:active { background:#00FF00 !important; color:#000 !important; }
-        .money { color:#FFD700; font-size:24px; font-weight:bold; margin:15px 0; }
-        .to2 { background:#FF9500; color:#000; padding:18px; width:100%; border-radius:10px; font-weight:bold; margin-top:15px; border:none; }
+        .money { color:#00FF00; font-size:28px; font-weight:bold; margin:20px 0; text-shadow: 0 0 10px #00FF00; }
+        .nav { background:#6f42c1; color:#fff; padding:18px; width:100%; border-radius:10px; font-weight:bold; margin-top:15px; border:none; font-size:18px; }
     </style>
 </head>
 <body>
     <h2 style="color:#FFD700;">🔥 鳳王哈哈笑企業 🔥</h2>
-    <div id="DASH">🛡️ 核心系統待命</div>
-    <div class="money">鳳王財富：<span id="M">$67,351,848,925</span></div>
+    <div class="dashboard" id="D">🛡️ 核心系統待命</div>
+    <div class="money" id="M">$ 67,351,848,925 USD</div>
     <div class="grid">
-        <button class="btn" onclick="F('發動：五毒咒 (AI鎖識)')">五毒咒</button>
-        <button class="btn" onclick="F('發動：陣法邊界 (10世)')">陣法邊界</button>
-        <button class="btn" onclick="F('開啟：太陽陣 (燒燬)')">太陽陣</button>
-        <button class="btn" onclick="F('發動：分身剋星 (現形)')">分身剋星</button>
+        <button class="btn" onclick="F('發動：五毒咒 (AI鎖識)')">五毒咒 (AI鎖識)</button>
+        <button class="btn" onclick="F('發動：陣法邊界 (10世)')">陣法邊界 (10世)</button>
+        <button class="btn" onclick="F('開啟：太陽陣 (燒燬)')">太陽陣 (燒燬)</button>
+        <button class="btn" onclick="F('發動：分身剋星 (現形)')">分身剋星 (現形)</button>
         <button class="btn" onclick="F('防禦：守護 Audrey')">守護 Audrey</button>
-        <button class="btn" onclick="F('執行：夢境淨化 (天條)')">夢境淨化</button>
+        <button class="btn" onclick="F('執行：夢境淨化 (天條)')">夢境淨化 (天條)</button>
     </div>
-    <button class="to2" onclick="location.href='blessing.html'">✨ 進入 Page 2 淨土模式</button>
+    <button class="nav" onclick="location.href='blessing.html'">☸️ 進入 Page 2 (Blessing)</button>
     <script>
-        setInterval(function(){ document.getElementById('M').innerText = "$" + Math.floor(Math.random()*1000000000).toLocaleString() + " USD"; }, 500);
-        function F(s) { document.getElementById('DASH').innerText = s; }
+        setInterval(function(){ 
+            let val = 67351848925 + Math.floor(Math.random()*1000000);
+            document.getElementById('M').innerText = "$ " + val.toLocaleString() + " USD"; 
+        }, 500);
+        function F(s) { document.getElementById('D').innerText = s; }
     </script>
 </body>
 </html>

@@ -44,6 +44,7 @@
             bowl() { this.bowlSound.play(); console.log("天條鎖死 [cite: 2026-02-12]"); },
             log() {
                 const msgs = ["> 五毒咒：鎖喉深度 100% [cite: 2026-02-16]", "> 真火焚燒中... [cite: 2026-02-12]", "> 破幻監控：妖人試圖分身，立即炸裂！ [cite: 2026-02-12]"];
+                
                 const box = document.getElementById('log');
                 box.innerHTML = `<div>${msgs[Math.floor(Math.random()*msgs.length)]}</div>` + box.innerHTML;
             }

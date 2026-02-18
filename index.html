@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P1-戰鬥</title>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P1-戰鬥核心</title>
     <style>
-        body { background:#000; color:#0f0; text-align:center; font-family:sans-serif; }
-        .dash { border:2px solid #0f0; padding:15px; margin:10px; font-weight:bold; }
-        .grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:10px; }
+        body { background:#000; color:#0f0; text-align:center; font-family:sans-serif; margin:0; padding:10px; }
+        .dash { border:2px solid #0f0; padding:15px; margin-bottom:10px; font-weight:bold; }
+        .grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
         button { padding:15px; font-weight:bold; border-radius:8px; border:none; cursor:pointer; }
         .b-gold { background:#FFD700; color:#000; }
-        .b-poison { background:#32CD32; color:#000; grid-column:span 2; }
-        #L { background:#111; height:120px; overflow:auto; text-align:left; padding:10px; border:1px solid #333; margin:10px; font-size:12px; }
+        .b-poison { background:linear-gradient(45deg, #000, #32CD32); color:#fff; grid-column:span 2; border:1px solid #0f0; }
+        #L { background:#111; height:150px; overflow:auto; text-align:left; padding:10px; border:1px solid #333; margin-top:10px; font-size:12px; }
     </style>
 </head>
-<body onclick="if(!window.C) window.C=new AudioContext()">
-    <div class="dash" id="D">🛡️ 戰鬥陣：待命</div>
-    <div style="font-size:24px; color:#FFD700; margin:10px;" id="M">67,351,848,925</div>
+<body>
+    <div class="dash" id="D">🛡️ 鳳王陣：戰鬥就緒</div>
+    <div style="font-size:26px; color:#FFD700; margin:10px;" id="M">67,351,848,925</div>
     <div class="grid">
         <button class="b-gold" onclick="A('🔱 萬龍萬獸')">🔱 萬龍萬獸</button>
         <button class="b-gold" onclick="A('🌩️ 五雷轟頂')">🌩️ 五雷轟頂</button>
-        <button class="b-poison" onclick="A('🐍 五毒咒：鎖喉鎖識！')">⚠️ 五毒咒：無限感染</button>
+        <button class="b-poison" onclick="A('🐍 五毒咒：無限感染！鎖喉鎖識！')">⚠️ 五毒咒：發動反噬</button>
     </div>
     <div id="L">>>> 戰鬥紀錄待命...</div>
-    <button style="width:90%; padding:15px; background:#FF9500;" onclick="location.href='blessing.html'">✨ 前往 Page 2 祝福</button>
+    <button style="width:100%; padding:15px; background:#FF9500; color:#000; font-weight:bold; margin-top:10px;" onclick="location.href='blessing.html'">✨ 前往 P2 祝福</button>
     <script>
-        window.onload=()=>{const s=localStorage.getItem('L1'); if(s)document.getElementById('L').innerHTML=s;};
+        window.onload=()=>{const s=localStorage.getItem('FX_P1'); if(s)document.getElementById('L').innerHTML=s;};
         function A(s){
             document.getElementById('D').innerText=s;
-            let log = `[${new Date().toLocaleTimeString()}] ${s}<br>` + document.getElementById('L').innerHTML;
+            let log = `<span style="color:${s.includes('五毒')?'#32CD32':'#0f0'}">[${new Date().toLocaleTimeString()}] ${s}</span><br>` + document.getElementById('L').innerHTML;
             document.getElementById('L').innerHTML = log.split('<br>').slice(0,30).join('<br>');
-            localStorage.setItem('L1', document.getElementById('L').innerHTML);
+            localStorage.setItem('FX_P1', document.getElementById('L').innerHTML);
         }
-        setInterval(()=>{document.getElementById('M').innerText=(67351848925+Math.floor(Math.random()*1000000)).toLocaleString();},400);
+        setInterval(()=>{document.getElementById('M').innerText=(67351848925+Math.floor(Math.random()*2000000)).toLocaleString();},400);
     </script>
 </body>
 </html>

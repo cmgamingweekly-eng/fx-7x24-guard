@@ -68,7 +68,7 @@
     </div>
 
     <div class="footer">
-        🛡️ 永久免疫：阿洛、Audrey、Matias、Claudia、Grandmum、父母
+        [span_0](start_span)🛡️ 永久免疫：阿洛、Audrey、Matias、Claudia、Grandmum、父母[span_0](end_span)
     </div>
 
     <button class="back-home" onclick="location.href='index.html'">🔙 返回 Page 1 戰鬥模式</button>
@@ -78,17 +78,16 @@
         var running = false;
 
         function Cast(spellName) {
-            // 1. 強制更新「儀表板」，顯示你撳緊嗰粒咒語，唔好俾進度條洗底
+            // 1. 更新儀表板，只顯示咒語，唔俾藥師佛引擎洗底
             document.getElementById('display-board').innerText = "發動：" + spellName;
 
-            // 2. 啟動後台修復引擎，進度只更新喺 hp-percent
+            // 2. 啟動後台引擎，只更新百分比文字
             if(!running) {
                 running = true;
                 setInterval(function() {
                     progress = (progress + 1) > 100 ? 0 : progress + 1;
-                    // 更新進度條視覺
                     document.getElementById('hp-bar').style.width = progress + "%";
-                    // 更新進度條文字，絕對唔會更新 display-board
+                    // 重點：只更新進度條內部文字，唔更新 display-board
                     document.getElementById('hp-percent').innerText = "藥師佛全家細胞修復中：" + progress + "%";
                 }, 250);
             }

@@ -5,13 +5,11 @@
     <title>P3-擴展陣</title>
     <style>
         body { background:#000; color:#fff; text-align:center; font-family:sans-serif; padding:10px; margin:0; overflow:hidden; }
-        .act-btn { background:#FF1493; color:#fff; width:100%; padding:20px; font-weight:bold; border-radius:12px; font-size:20px; margin-bottom:15px; border:none; box-shadow:0 0 20px #FF1493; }
         .b-btn { width:100%; padding:15px; margin-bottom:8px; background:#111; color:#FFD700; border:1px solid #6f42c1; font-weight:bold; border-radius:10px; }
-        #L { background:#000; border:2px solid #6f42c1; border-radius:12px; height:250px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#E6E6FA; font-family:monospace; font-size:14px; }
+        #L { background:#000; border:2px solid #6f42c1; border-radius:12px; height:280px; overflow-y:scroll; text-align:left; padding:10px; margin-top:10px; color:#E6E6FA; font-family:monospace; font-size:14px; }
     </style>
 </head>
-<body onclick="initSystem()">
-    <button class="act-btn" onclick="initSystem()">🔥 啟動鳳王訟缽同步</button>
+<body onclick="initAutoBowl()">
     <div class="grid">
         <button class="b-btn" onclick="A('7) 不動明王咒')">7) 不動明王咒</button>
         <button class="b-btn" onclick="A('8) 心經')">8) 心經</button>
@@ -19,33 +17,29 @@
         <button class="b-btn" onclick="A('10) 語源歸我')">10) 語源歸我</button>
         <button class="b-btn" onclick="A('11) 福氣同步')">11) 福氣同步</button>
     </div>
-    <div id="L">>>> [等待啟動]</div>
-    <button style="width:100%; padding:15px; margin-top:15px; border-radius:10px; background:#333; color:#fff;" onclick="location.href='blessing.html'">🔙 返回 P2</button>
-
+    <div id="L">>>> [等待全紀錄同步]</div>
+    <button style="width:100%; padding:15px; margin-top:15px; border-radius:10px; background:#333; color:#fff; border:none;" onclick="location.href='blessing.html'">🔙 返回 P2</button>
     <script>
-        window.onload=()=>{ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; jumpToBottom(); };
-        function jumpToBottom(){ const l=document.getElementById('L'); setTimeout(()=>{l.scrollTop=l.scrollHeight;},50); }
-
+        window.onload=()=>{ const s=localStorage.getItem('FX_UNIVERSAL_LOG'); if(s)document.getElementById('L').innerHTML=s; forceJump(); };
+        function forceJump(){ const l=document.getElementById('L'); requestAnimationFrame(()=>{l.scrollTop=l.scrollHeight;}); }
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function ringBowl() {
             const osc=audioCtx.createOscillator(); const gain=audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type="sine"; osc.frequency.setValueAtTime(440, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+1.5);
-            osc.start(); osc.stop(audioCtx.currentTime+1.5);
+            gain.gain.setValueAtTime(0.4, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+2);
+            osc.start(); osc.stop(audioCtx.currentTime+2);
         }
-
         let sysStarted=false;
-        function initSystem(){ 
-            if(audioCtx.state==='suspended') audioCtx.resume(); ringBowl();
-            if(!sysStarted){ sysStarted=true; setInterval(ringBowl, 7000); A("🔔 P3 終極紀錄同步中"); }
+        function initAutoBowl(){ 
+            if(audioCtx.state==='suspended') audioCtx.resume();
+            if(!sysStarted){ sysStarted=true; ringBowl(); setInterval(ringBowl, 7000); A("🔔 P3 全自動數據鎖死"); }
         }
-
         function A(s){
             const logBox=document.getElementById('L');
-            logBox.innerHTML += `<div>💠 [${new Date().toLocaleTimeString()}] ${s} 鎖死</div>`;
+            logBox.innerHTML += `<div>💠 [${new Date().toLocaleTimeString()}] ${s}</div>`;
             localStorage.setItem('FX_UNIVERSAL_LOG', logBox.innerHTML);
-            jumpToBottom();
+            forceJump();
         }
     </script>
 </body>

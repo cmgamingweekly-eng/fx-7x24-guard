@@ -2,26 +2,28 @@
 <html>
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P3-擴展術式</title>
+    <title>P3-擴展祝福</title>
     <style>
         body { background:#000; color:#fff; text-align:center; font-family:sans-serif; padding:10px; }
-        .b-btn { width:100%; padding:15px; margin-bottom:8px; background:#111; color:#FFD700; border:1px solid #6f42c1; font-weight:bold; }
-        #L { background:#080808; height:200px; overflow:auto; text-align:left; padding:10px; border:1px solid #6f42c1; font-size:12px; }
+        .b-btn { width:100%; padding:15px; margin-bottom:8px; background:#111; color:#FFD700; border:1px solid #6f42c1; font-weight:bold; border-radius:10px; font-size:16px; }
+        #L { background:#080808; height:250px; overflow:auto; text-align:left; padding:10px; border:1px solid #6f42c1; font-size:13px; margin-top:10px; color:#E6E6FA; }
     </style>
 </head>
 <body>
-    <h3 style="color:#0f0;">🌟 鳳王擴展陣</h3>
-    <button class="b-btn" onclick="S('1) Lucky 咒')">1) Lucky 咒</button>
-    <button class="b-btn" onclick="S('11) 福氣同步')">11) 福氣同步</button>
+    <h2 style="color:#0f0;">🌟 鳳王擴展陣 (7-11 咒)</h2>
+    <button class="b-btn" onclick="S('7) 不動明王咒')">7) 不動明王咒</button>
+    <button class="b-btn" onclick="S('8) 心經')">8) 心經</button>
+    <button class="b-btn" onclick="S('9) 睡眠守護咒')">9) 睡眠守護咒</button>
     <button class="b-btn" onclick="S('10) 語源歸我')">10) 語源歸我</button>
+    <button class="b-btn" onclick="S('11) 福氣同步')">11) 福氣同步</button>
     <div id="L">>>> 擴展紀錄待命...</div>
-    <button style="width:100%; padding:15px; margin-top:15px;" onclick="location.href='blessing.html'">🔙 返回 P2</button>
+    <button style="width:100%; padding:15px; margin-top:15px; background:#333; color:#fff; border-radius:10px;" onclick="location.href='blessing.html'">🔙 返回 P2</button>
     <script>
-        window.onload=()=>{const s=localStorage.getItem('FX_P3'); if(s)document.getElementById('L').innerHTML=s;};
+        window.onload=()=>{const s=localStorage.getItem('FX_P3_FULL'); if(s)document.getElementById('L').innerHTML=s;};
         function S(v){
-            let log = `[${new Date().toLocaleTimeString()}] ${v} 已鎖死同步<br>` + document.getElementById('L').innerHTML;
-            document.getElementById('L').innerHTML = log.split('<br>').slice(0,30).join('<br>');
-            localStorage.setItem('FX_P3', document.getElementById('L').innerHTML);
+            let log = `[${new Date().toLocaleTimeString()}] ${v} 已鎖死同步加持<br>` + document.getElementById('L').innerHTML;
+            document.getElementById('L').innerHTML = log;
+            localStorage.setItem('FX_P3_FULL', log);
         }
     </script>
 </body>

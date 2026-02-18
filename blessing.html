@@ -2,31 +2,37 @@
 <html>
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P2-祝福淨土</title>
+    <title>P2-祝福陣</title>
     <style>
         body { background:#000; color:#FFD700; text-align:center; font-family:sans-serif; padding:10px; }
-        .act { background:#FF1493; color:#fff; width:100%; padding:20px; font-weight:bold; border-radius:12px; margin-bottom:10px; }
-        .b-btn { width:100%; padding:15px; margin-bottom:8px; background:#222; color:#FFD700; border:1px solid #FF9500; font-weight:bold; }
-        #L { background:#080808; height:150px; overflow:auto; text-align:left; padding:10px; border:1px solid #FFD700; font-size:12px; }
+        .act { background:#FF1493; color:#fff; width:100%; padding:20px; font-weight:bold; border-radius:12px; margin-bottom:10px; font-size:18px; }
+        .b-btn { width:100%; padding:15px; margin-bottom:8px; background:#222; color:#FFD700; border:1px solid #FF9500; font-weight:bold; border-radius:10px; font-size:16px; }
+        #L { background:#080808; height:180px; overflow:auto; text-align:left; padding:10px; border:1px solid #FFD700; font-size:13px; margin-top:10px; }
     </style>
 </head>
 <body>
     <button class="act" onclick="document.getElementById('A').play();">🔥 點擊：啟動聖號共鳴</button>
-    <button class="b-btn" onclick="S('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
-    <button class="b-btn" onclick="S('5) 南無地藏王菩薩')">5) 南無地藏王菩薩</button>
+    <div class="grid">
+        <button class="b-btn" onclick="S('1) Lucky 咒')">1) Lucky 咒</button>
+        <button class="b-btn" onclick="S('2) 藥師佛健康咒')">2) 藥師佛健康咒</button>
+        <button class="b-btn" onclick="S('3) 人緣增幅咒')">3) 人緣增幅咒</button>
+        <button class="b-btn" onclick="S('4) 財神咒')">4) 財神咒</button>
+        <button class="b-btn" style="background:#4B0082; color:#fff;" onclick="S('5) 南無地藏王菩薩')">5) 南無地藏王菩薩</button>
+        <button class="b-btn" onclick="S('6) 四大護法咒')">6) 四大護法咒</button>
+    </div>
     <div id="L">>>> 祝福紀錄待命...</div>
     <audio id="A" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
-    <div style="display:flex; gap:10px; margin-top:10px;">
-        <button style="flex:1; padding:15px;" onclick="location.href='index.html'">🔙 返回 P1</button>
-        <button style="flex:1; padding:15px; background:#4B0082; color:#fff;" onclick="location.href='log.html'">➡️ 前往 P3</button>
+    <div style="display:flex; gap:10px; margin-top:15px;">
+        <button style="flex:1; padding:15px; border-radius:10px;" onclick="location.href='index.html'">🔙 返回 P1</button>
+        <button style="flex:1; padding:15px; background:#4B0082; color:#fff; border-radius:10px;" onclick="location.href='log.html'">➡️ 前往 P3</button>
     </div>
     <script>
-        window.onload=()=>{const s=localStorage.getItem('FX_P2'); if(s)document.getElementById('L').innerHTML=s;};
+        window.onload=()=>{const s=localStorage.getItem('FX_P2_FULL'); if(s)document.getElementById('L').innerHTML=s;};
         function S(v){
             if(v.includes('地藏王')) document.getElementById('A').play();
             let log = `[${new Date().toLocaleTimeString()}] ${v} 成功！<br>` + document.getElementById('L').innerHTML;
-            document.getElementById('L').innerHTML = log.split('<br>').slice(0,30).join('<br>');
-            localStorage.setItem('FX_P2', document.getElementById('L').innerHTML);
+            document.getElementById('L').innerHTML = log;
+            localStorage.setItem('FX_P2_FULL', log);
         }
     </script>
 </body>

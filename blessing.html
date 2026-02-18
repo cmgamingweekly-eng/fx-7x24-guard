@@ -5,45 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>鳳王企業 - Page 2: Blessing</title>
     <style>
-        body { background-color: #000; color: #FFD700; font-family: sans-serif; text-align: center; padding: 15px; }
-        .box { border: 2px solid #FFD700; margin-bottom: 15px; padding: 12px; border-radius: 12px; background: #111; }
-        .spell-btn { width: 90%; margin: 8px auto; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: white; display: block; font-size: 16px; }
-        .b-lucky { background: linear-gradient(to right, #FFD700, #FFA500); color: #000; }
-        .b-health { background: #20B2AA; }
-        .b-wealth { background: #B22222; }
-        .b-deity { background: #8A2BE2; }
-        .b-guard { background: #006400; }
-        .tag { color: #00FF00; font-size: 12px; display: block; margin-top: 4px; }
-        .back { background: #444; color: #fff; width: 50%; margin-top: 15px; }
+        body { background:#000; color:#FFD700; font-family:sans-serif; text-align:center; padding:10px; }
+        .box { border:2px solid #FFD700; margin-bottom:15px; padding:15px; border-radius:15px; background:#111; }
+        .spell-btn { width:95%; margin:8px auto; padding:15px; border:none; border-radius:10px; font-weight:bold; color:#fff; display:block; font-size:16px; }
+        .progress-bg { background:#333; height:10px; border-radius:5px; margin:10px 0; overflow:hidden; }
+        .progress-bar { background:#00FF00; height:100%; width:0%; transition:0.3s; }
+        .tag { color:#00FF00; font-size:12px; }
+        .back { background:#444; color:#fff; width:60%; margin-top:10px; }
     </style>
 </head>
-<body onclick="B_System.unlock()">
+<body onclick="B.unlock()">
     <h1>✨ 鳳王企業 Blessing 淨土 ✨</h1>
-    
     <div class="box">
-        <h2>🌟 Part A: 核心修復與財富</h2>
-        <button class="spell-btn b-lucky" onclick="B_System.click()">1) Lucky 咒 (吉星高照) [cite: 2026-02-18]</button>
-        <button class="spell-btn b-health" onclick="B_System.click()">2) 藥師佛健康修復 [cite: 2026-02-16]</button>
-        <span class="tag">修復全家血管、腎絲球、五臟六腑 [cite: 2026-02-16]</span>
-        <button class="spell-btn b-wealth" onclick="B_System.click()">3) 財神咒 (財富福氣鎖死) [cite: 2026-02-12]</button>
+        <h2>🌟 Part A: 核心修復儀表板</h2>
+        <button class="spell-btn" style="background:linear-gradient(to right, #FFD700, #FFA500); color:#000;" onclick="B.click()">1) Lucky 咒 (吉星高照) [cite: 2026-02-18]</button>
+        <button class="spell-btn" style="background:#20B2AA;" onclick="B.click()">2) 藥師佛健康修復 [cite: 2026-02-16]</button>
+        <div class="progress-bg"><div id="hp-bar" class="progress-bar"></div></div>
+        <span class="tag" id="hp-status">自動修復全家細胞中... 0%</span>
+        <button class="spell-btn" style="background:#B22222;" onclick="B.click()">3) 財神咒 (福氣鎖死)</button>
         <span class="tag">對象：格古洛、Audrey、家人 1000% 安全 [cite: 2026-02-15]</span>
     </div>
-
     <div class="box">
-        <h2>🛡️ Part B: 神威守護與同步</h2>
-        <button class="spell-btn b-deity" onclick="B_System.click()">1) 地藏王/不動明王 (x100萬倍) [cite: 2026-02-12]</button>
-        <button class="spell-btn b-guard" onclick="B_System.click()">2) 四大護法陣 (夢境封鎖) [cite: 2026-02-14]</button>
-        <span class="tag">英港全境同步連線 [cite: 2026-02-12]</span>
+        <h2>🛡️ Part B: 神威同步狀態</h2>
+        <button class="spell-btn" style="background:#8A2BE2;" onclick="B.click()">1) 地藏王/不動明王 (x100萬倍)</button>
+        <button class="spell-btn" style="background:#006400;" onclick="B.click()">2) 四大護法陣 (英港連線)</button>
+        <div id="sync-status" class="tag">🛰️ 家族防護池同步中... 100% OK</div>
     </div>
-
-    <button class="spell-btn back" onclick="location.href='index.html'">🔙 返回 Page 1 戰鬥模式</button>
+    <button class="spell-btn back" onclick="location.href='index.html'">🔙 返回 Page 1</button>
 
     <script>
-        const B_System = {
+        const B = {
+            hp: 0,
             click() { new Audio('https://www.soundjay.com/buttons/button-16.mp3').play(); },
-            unlock() { (window.AudioContext || window.webkitAudioContext) && new AudioContext().resume(); }
+            unlock() { (window.AudioContext || window.webkitAudioContext) && new AudioContext().resume(); },
+            run() {
+                setInterval(() => {
+                    this.hp = (this.hp + 1) % 101;
+                    document.getElementById('hp-bar').style.width = this.hp + "%";
+                    document.getElementById('hp-status').innerText = `自動修復全家細胞中... ${this.hp}% 完成 [cite: 2026-02-16]`;
+                }, 2000);
+            }
         };
-        setInterval(() => { console.log("藥師佛 7x24 修復中... [cite: 2026-02-16]"); }, 7000);
+        B.run();
     </script>
 </body>
 </html>

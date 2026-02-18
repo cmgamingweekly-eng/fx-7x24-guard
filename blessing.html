@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>鳳王淨土 - 11咒全回歸</title>
+    <title>鳳王淨土 - 聖號共鳴版</title>
     <style>
         body { background:#000; color:#FFD700; font-family:sans-serif; text-align:center; padding:10px; margin:0; }
-        #REAL_DASH { background:#000; border:4px solid #00FF00; color:#00FF00; padding:20px; border-radius:15px; margin:10px 0; font-weight:bold; font-size:24px; }
+        #DASH { background:#000; border:4px solid #00FF00; color:#00FF00; padding:20px; border-radius:15px; margin:10px 0; font-weight:bold; font-size:24px; }
         .box { border:1px solid #FF9500; border-radius:12px; padding:10px; margin-bottom:10px; background:#111; }
         .b-btn { width:100%; padding:14px; border-radius:8px; border:none; color:#fff; font-weight:bold; margin-bottom:6px; font-size:16px; cursor:pointer; }
         .c1 { background:linear-gradient(45deg, #FFD700, #FFA500); color:#000; }
@@ -14,12 +14,13 @@
         .c3 { background:linear-gradient(45deg, #2F4F4F, #008080); }
         .log-box { background:#080808; border:1px solid #FFD700; border-radius:8px; padding:10px; text-align:left; position:relative; }
         #BL { font-family:monospace; font-size:12px; height:150px; overflow-y:auto; color:#FFD700; line-height:1.6; }
-        .start-btn { background:#FF1493; color:#fff; padding:15px; width:100%; border-radius:12px; font-weight:bold; margin-bottom:10px; border:2px solid #fff; }
+        .act-btn { background:#FF1493; color:#fff; padding:18px; width:100%; border-radius:12px; font-weight:bold; margin-bottom:15px; border:2px solid #fff; font-size:20px; box-shadow: 0 0 15px #FF1493; }
     </style>
 </head>
-<body onclick="init()">
-    <div id="REAL_DASH">✨ 淨土待命</div>
-    <button id="ST" class="start-btn" onclick="init()">🔥 啟動祝福術式 (修正唔郁)</button>
+<body onclick="startLogic()">
+    <div id="DASH">✨ 淨土術式：待命</div>
+    
+    <button id="ACT" class="act-btn" onclick="startLogic()">🔥 點擊激活淨土 (解鎖 Log & 聖號)</button>
     
     <div class="box">
         <button class="b-btn c1" onclick="S('1) Lucky 咒')">1) Lucky 咒</button>
@@ -38,33 +39,53 @@
         <button class="b-btn c3" onclick="S('10) 語源歸我')">10) 語源歸我</button>
         <button class="b-btn c3" onclick="S('11) 福氣同步')">11) 福氣同步</button>
     </div>
+
     <div class="log-box">
-        <div id="BL">>>> [System] 祝福引擎待命...</div>
+        <div id="BL">>>> [System] 術式記憶已加載，等待激活...</div>
     </div>
-    <audio id="DZ" loop><source src="https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8a7315b.mp3" type="audio/mpeg"></audio>
-    <button style="width:100%; padding:15px; border-radius:10px; background:#333; color:#fff; border:none; margin-top:10px;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
+
+    <audio id="DZ_AUDIO" loop><source src="https://www.buddha-dharma.org.hk/mp3/dzw.mp3" type="audio/mpeg"></audio>
+
+    <button style="width:100%; padding:15px; border-radius:10px; background:#333; color:#fff; border:none; margin-top:15px;" onclick="location.href='index.html'">🔙 返回 Page 1</button>
 
     <script>
-        let isInit = false;
+        let initialized = false;
+
+        // 頁面載入時讀取舊 Log [cite: 2026-02-12]
         window.onload = () => {
             const saved = localStorage.getItem('FX_LOG_P2');
             if (saved) document.getElementById('BL').innerHTML = saved;
         };
-        function init() {
-            if(isInit) return;
-            isInit = true;
-            document.getElementById('ST').style.display = 'none';
-            document.getElementById('REAL_DASH').innerText = "✨ 術式已激活";
+
+        function startLogic() {
+            if (initialized) return;
+            initialized = true;
+            document.getElementById('ACT').style.display = 'none';
+            document.getElementById('DASH').innerText = "✨ 術式已全面激活";
+            addLog(">>> [System] 瀏覽器權限已解鎖，術式運作中...");
         }
-        function S(v){
-            if(!isInit) init();
-            document.getElementById('REAL_DASH').innerText = "發動：" + v;
-            if(v.includes("地藏王")) document.getElementById('DZ').play();
-            let log = document.getElementById('BL');
+
+        function S(v) {
+            if (!initialized) startLogic();
+            document.getElementById('DASH').innerText = "發動：" + v; [cite: 2026-02-18]
+            
+            // 地藏王聖號觸發 [cite: 2026-02-18]
+            if (v.includes("地藏王")) {
+                const a = document.getElementById('DZ_AUDIO');
+                a.play().catch(e => addLog(">>> [Error] 音頻播放受阻，請再點擊畫面"));
+            }
+
             let now = new Date().toLocaleTimeString();
-            let msg = `[${now}] 執行：${v} - 成功！<br>`;
-            if(v.includes("藥師佛")) msg += `<span style="color:#00FF00;">[${now}] ☸️ 器官自動修復中...</span><br>`;
-            log.innerHTML = (msg + log.innerHTML).split('<br>').slice(0, 50).join('<br>');
+            let msg = `[${now}] 執行：${v} - 成功增幅！<br>`;
+            if (v.includes("藥師佛")) msg += `<span style="color:#00FF00;">[${now}] ☸️ 藥師金光灌頂，器官修復中...</span><br>`; [cite: 2026-02-16]
+            
+            addLog(msg);
+        }
+
+        function addLog(msg) {
+            let log = document.getElementById('BL');
+            log.innerHTML = msg + log.innerHTML;
+            // 轉成 String 保存到手機記憶體 [cite: 2026-02-12]
             localStorage.setItem('FX_LOG_P2', log.innerHTML);
         }
     </script>

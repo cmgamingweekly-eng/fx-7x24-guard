@@ -51,3 +51,15 @@
     </script>
 </body>
 </html>
+
+<script>
+  // 開放後門接收 Page 4 傳嚟嘅正偏財與健康元氣
+  Page4.on("Energy_Purified", (gold_blessing) => {
+      // 舊碼鎖死，新能量直接累加至財福跳動指數
+      BlessingVault.add(gold_blessing);
+      // 同步執行全家洗髓排毒效果
+      FamilyHealth.apply("Divine_Light_Cleansing");
+      console.log("Page 4 淨化成功，正偏財利息已直通入庫！");
+  });
+</script>
+

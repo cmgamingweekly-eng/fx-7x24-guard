@@ -78,3 +78,18 @@
     </script>
 </body>
 </html>
+
+<script>
+  // 監控 1000米禁區，發現 Wrong Signal 即刻跳入 Page 4 處決
+  if (Page1.detect("Wrong_Signal") || Page1.detect("Evil_Aura")) {
+      // 啟動直通隧道，將邪氣、金主氣息轉發至 Page 4
+      Tunnel.sendTo("page4_judgment.html", {
+          source: "Page_1_Frontline",
+          type: "Tsunami_Target",
+          action: "萬倍寬轉發"
+      });
+      console.log("發現邪氣，已跳入 Page 4 執行海嘯清盤！");
+  }
+</script>
+
+
